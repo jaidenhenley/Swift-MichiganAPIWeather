@@ -9,6 +9,7 @@ import Foundation
 
 // MARK: - Top Level Response
 
+
 struct BeachDetailResponse: Codable {
     let beach: String
     let weather: WeatherCollection

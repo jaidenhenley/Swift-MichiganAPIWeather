@@ -14,27 +14,27 @@ struct ContentView: View {
                 NavigationLink {
                     BeachView(beachID: 1)
                 } label: {
-                    Text("Beach 1")
+                    Text("Belle Isle Beach")
                 }
                 NavigationLink {
                     BeachView(beachID: 2)
                 } label: {
-                    Text("Beach 2")
+                    Text("Grand Haven State Park")
                 }
                 NavigationLink {
                     BeachView(beachID: 3)
                 } label: {
-                    Text("Beach 3")
+                    Text("Silver Lake Beach")
                 }
                 NavigationLink {
                     BeachView(beachID: 4)
                 } label: {
-                    Text("Beach 4")
+                    Text("Sleeping Bear Dunes")
                 }
                 NavigationLink {
                     BeachView(beachID: 5)
                 } label: {
-                    Text("Beach 5")
+                    Text("Tawas Point State Park")
                 }
             }
         }

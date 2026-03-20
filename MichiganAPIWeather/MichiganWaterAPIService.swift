@@ -9,25 +9,73 @@ import Foundation
 
 class MichiganWaterAPIService {
     private let baseURL = "https://michiganwaterapi.onrender.com"
-    
+    private let session: URLSession
+
+    init(session: URLSession = .shared) {
+        self.session = session
+    }
+
     func fetchBeachDetails(beachID: Int) async throws -> BeachDetailResponse {
-        guard let url = URL(string: "\(baseURL)/beaches/\(beachID)/details") else {
+        let data = try await get(path: "/beaches/\(beachID)/details")
+        return try JSONDecoder().decode(BeachDetailResponse.self, from: data)
+    }
+
+    func fetchAllBeaches() async throws -> [BeachSummary] {
+        let data = try await get(path: "/beaches")
+        return try JSONDecoder().decode([BeachSummary].self, from: data)
+    }
+
+    // MARK: - Private
+
+    private func get(path: String) async throws -> Data {
+        guard let url = URL(string: "\(baseURL)\(path)") else {
             throw BeachError.badURL
         }
-        
-        let (data, response) = try await URLSession.shared.data(from: url)
-        
-        guard let httpResponse = response as? HTTPURLResponse,
-              httpResponse.statusCode == 200 else {
+
+        let (data, response) = try await session.data(from: url)
+
+        guard let http = response as? HTTPURLResponse else {
             throw BeachError.badResponse
         }
-        
-        let decoder = JSONDecoder()
-        return try decoder.decode(BeachDetailResponse.self, from: data)
+
+        switch http.statusCode {
+        case 200...299:
+            return data
+        case 404:
+            throw BeachError.notFound
+        case 500...599:
+            throw BeachError.serverError(http.statusCode)
+        default:
+            throw BeachError.badResponse
+        }
     }
 }
 
-enum BeachError: Error {
+// MARK: - Beach Summary (list endpoint)
+
+struct BeachSummary: Codable, Identifiable {
+    let id: Int
+    let name: String
+}
+
+// MARK: - Errors
+
+enum BeachError: LocalizedError {
     case badURL
     case badResponse
+    case notFound
+    case serverError(Int)
+
+    var errorDescription: String? {
+        switch self {
+        case .badURL:
+            return "Invalid URL"
+        case .badResponse:
+            return "Unexpected response from server"
+        case .notFound:
+            return "Beach not found"
+        case .serverError(let code):
+            return "Server error (\(code))"
+        }
+    }
 }

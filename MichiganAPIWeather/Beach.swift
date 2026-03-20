@@ -7,15 +7,22 @@
 
 import Foundation
 
-class Beach: Codable {
+struct Beach: Codable, Identifiable {
+    let id: Int
     let location: String
     let temp: Int
     let conditions: String
     let wind: String
     let humidity: Int
-    let visability: String
+    let visibility: String
     let barometricPressure: String
     let windChill: String
     let buoyData: String
     let alerts: String
+
+    enum CodingKeys: String, CodingKey {
+        case id, location, temp, conditions, wind, humidity
+        case visibility = "visability"
+        case barometricPressure, windChill, buoyData, alerts
+    }
 }

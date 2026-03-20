@@ -50,7 +50,7 @@ struct BeachView: View {
 
     // MARK: - Subviews
 
-    private var loadingView: some View {
+    var loadingView: some View {
         VStack(spacing: 12) {
             ProgressView()
                 .scaleEffect(1.5)
@@ -61,7 +61,7 @@ struct BeachView: View {
         .frame(maxWidth: .infinity, minHeight: 300)
     }
 
-    private func errorView(_ message: String) -> some View {
+    func errorView(_ message: String) -> some View {
         VStack(spacing: 16) {
             Image(systemName: "exclamationmark.icloud")
                 .font(.system(size: 48))
@@ -79,7 +79,7 @@ struct BeachView: View {
         .frame(maxWidth: .infinity, minHeight: 300)
     }
 
-    private var temperatureCard: some View {
+    var temperatureCard: some View {
         VStack(spacing: 8) {
             Text(viewModel.temperatureDisplay)
                 .font(.system(size: 72, weight: .ultraLight, design: .rounded))
@@ -105,7 +105,7 @@ struct BeachView: View {
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
     }
 
-    private var conditionsGrid: some View {
+    var conditionsGrid: some View {
         LazyVGrid(columns: [
             GridItem(.flexible()),
             GridItem(.flexible()),
@@ -125,7 +125,7 @@ struct BeachView: View {
         }
     }
 
-    private func weatherTile(icon: String, title: String, value: String) -> some View {
+    func weatherTile(icon: String, title: String, value: String) -> some View {
         VStack(spacing: 8) {
             Image(systemName: icon)
                 .font(.title2)
@@ -143,7 +143,7 @@ struct BeachView: View {
     }
 
     @ViewBuilder
-    private var alertsBanner: some View {
+    var alertsBanner: some View {
         if viewModel.activeAlerts > 0 {
             HStack {
                 Image(systemName: "exclamationmark.triangle.fill")

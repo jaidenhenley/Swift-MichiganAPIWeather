@@ -38,7 +38,7 @@ git clone https://github.com/jaidenhenley/Swift-MichiganAPIWeather.git
 
 Open in Xcode and run on a physical device or Simulator. The app points to the deployed backend on Render so no local server setup is needed.
 
-## Developer
+## Developers
 
 Jaiden Henley | [Portfolio](https://jaidenhenley.github.io/JaidenHenleyPort/) | [LinkedIn](https://www.linkedin.com/in/jaiden-henley) | [jaidenhenleydev@gmail.com](mailto:jaidenhenleydev@gmail.com)
 

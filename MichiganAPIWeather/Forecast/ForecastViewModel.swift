@@ -1,5 +1,5 @@
 //
-//  ForecardViewModel.swift
+//  ForecastViewModel.swift
 //  MichiganAPIWeather
 //
 //  Created by Jaiden Henley on 3/27/26.
@@ -10,42 +10,34 @@ import Foundation
 
 @MainActor
 class ForecastViewModel: ObservableObject {
-    // forecast
-    @Published var number: Int = 0
-    @Published var name: String = ""
-    @Published var startTime: Date?
-    @Published var endTime: Date?
-    @Published var temp: Int = 0
-    @Published var tempUnit: Int = 0
-    @Published var propOfPrecip: Double?
-    @Published var windSpeed: Int = 0
-    @Published var windDirection: String = ""
-    @Published var icon: URL?
-    @Published var shortForecast: String = ""
-    @Published var detailForecast: String = ""
-    
+    @Published var days: [ForecastDay] = []
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
-    
 
-    var hasData: Bool { number == 0 }
-    
     private let service = MichiganWaterAPIService()
-    private let rawTempF: Double = 0 
-    
-    
-    func loadForecast(number: Int) async {
-        isLoading = false
+
+    func loadForecast(beachID: Int) async {
+        isLoading = true
         errorMessage = nil
-        
+
         do {
-            let response = try await service.fetchBeachDetails(beachID: number)
-            
-            shortForecast = response.forecast.properties.periods.first?.shortForecast ?? ""
-            
+            let response = try await service.fetchBeachDetails(beachID: beachID)
+            let periods = response.forecast.properties.periods
+
+            days = periods.compactMap { period in
+                guard let iconURL = URL(string: period.icon) else { return nil }
+                return ForecastDay(
+                    name: period.name,
+                    temp: period.temperature,
+                    icon: iconURL,
+                    shortForecast: period.shortForecast
+                )
+            }
         } catch {
-            print("Failed \(error.localizedDescription)")
+            errorMessage = "Failed to load forecast"
+            print("Forecast fetch error: \(error)")
         }
+
+        isLoading = false
     }
-    
 }

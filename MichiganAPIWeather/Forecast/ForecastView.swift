@@ -8,15 +8,20 @@
 import SwiftUI
 
 struct ForecastView: View {
-    @StateObject var viewModel = ForecastViewModel()
-    @StateObject var bViewModel = BeachViewModel()
-    
-    @Binding var number: Int
-    
+    let days: [ForecastDay]
+
     var body: some View {
-        Text(viewModel.shortForecast)
-            .task {
-                await viewModel.loadForecast(number: number)
+        if days.isEmpty {
+            EmptyView()
+        } else {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Forecast")
+                    .font(.headline)
+
+                ForEach(days) { day in
+                    ForecastRow(day: day)
+                }
             }
+        }
     }
 }

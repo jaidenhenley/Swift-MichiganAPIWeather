@@ -25,6 +25,7 @@ class BeachViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
     @Published var useCelsius: Bool = false
+    
 
     /// Whether we have successfully loaded data at least once
     var hasData: Bool { !beachName.isEmpty }

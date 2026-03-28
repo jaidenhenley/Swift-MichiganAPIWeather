@@ -10,7 +10,7 @@ import SwiftUI
 struct BeachView: View {
     @StateObject private var viewModel = BeachViewModel()
 
-    let beachID: Int
+    @State var beachID: Int
     let beachName: String
 
     var body: some View {
@@ -99,6 +99,8 @@ struct BeachView: View {
                     .font(.caption2)
                     .foregroundStyle(.tertiary)
             }
+            
+            ForecastView(number: $beachID)
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 24)

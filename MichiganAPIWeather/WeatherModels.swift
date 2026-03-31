@@ -15,9 +15,17 @@ struct BeachDetailResponse: Codable {
     let weather: WeatherCollection
     let buoy: BuoyData?
     let alerts: AlertCollection
+    let forecast: ForecastResponse
 }
 
 // MARK: - Weather
+struct ForecastResponse: Codable {
+    let properties: ForecastProperties
+}
+
+struct ForecastProperties: Codable {
+    let periods: [Forecast]
+}
 
 struct WeatherCollection: Codable {
     let features: [WeatherFeature]

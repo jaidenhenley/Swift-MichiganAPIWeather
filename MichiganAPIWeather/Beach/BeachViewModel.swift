@@ -21,10 +21,12 @@ class BeachViewModel: ObservableObject {
     @Published var pressure: String?
     @Published var stationName: String?
     @Published var lastUpdated: String?
+    @Published var forecastDays: [ForecastDay] = []
     @Published var activeAlerts: Int = 0
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
     @Published var useCelsius: Bool = false
+    
 
     /// Whether we have successfully loaded data at least once
     var hasData: Bool { !beachName.isEmpty }
@@ -105,6 +107,17 @@ class BeachViewModel: ObservableObject {
                 pressure = String(format: "%.1f hPa", hpa)
             } else {
                 pressure = nil
+            }
+
+            // Forecast
+            forecastDays = response.forecast.properties.periods.compactMap { period in
+                guard let iconURL = URL(string: period.icon) else { return nil }
+                return ForecastDay(
+                    name: period.name,
+                    temp: period.temperature,
+                    icon: iconURL,
+                    shortForecast: period.shortForecast
+                )
             }
 
         } catch {

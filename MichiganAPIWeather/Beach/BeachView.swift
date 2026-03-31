@@ -9,8 +9,7 @@ import SwiftUI
 
 struct BeachView: View {
     @StateObject private var viewModel = BeachViewModel()
-
-    let beachID: Int
+    @State var beachID: Int
     let beachName: String
 
     var body: some View {
@@ -23,6 +22,7 @@ struct BeachView: View {
                 } else {
                     temperatureCard
                     conditionsGrid
+                    ForecastView(days: viewModel.forecastDays)
                     alertsBanner
                 }
             }
@@ -80,24 +80,26 @@ struct BeachView: View {
     }
 
     var temperatureCard: some View {
-        VStack(spacing: 8) {
-            Text(viewModel.temperatureDisplay)
-                .font(.system(size: 72, weight: .ultraLight, design: .rounded))
-
-            Text(viewModel.condition)
-                .font(.title3)
-                .foregroundStyle(.secondary)
-
-            if let stationName = viewModel.stationName {
-                Text("Station: \(stationName)")
-                    .font(.caption)
-                    .foregroundStyle(.tertiary)
-            }
-
-            if let timestamp = viewModel.lastUpdated {
-                Text("Updated: \(timestamp)")
-                    .font(.caption2)
-                    .foregroundStyle(.tertiary)
+        NavigationStack{
+            VStack(spacing: 8) {
+                Text(viewModel.temperatureDisplay)
+                    .font(.system(size: 72, weight: .ultraLight, design: .rounded))
+                
+                Text(viewModel.condition)
+                    .font(.title3)
+                    .foregroundStyle(.secondary)
+                
+                if let stationName = viewModel.stationName {
+                    Text("Station: \(stationName)")
+                        .font(.caption)
+                        .foregroundStyle(.tertiary)
+                }
+                
+                if let timestamp = viewModel.lastUpdated {
+                    Text("Updated: \(timestamp)")
+                        .font(.caption2)
+                        .foregroundStyle(.tertiary)
+                }
             }
         }
         .frame(maxWidth: .infinity)

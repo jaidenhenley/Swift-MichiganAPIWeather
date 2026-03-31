@@ -8,9 +8,9 @@
 import Foundation
 
 class MichiganWaterAPIService {
-    private let baseURL = "https://michiganwaterapi.onrender.com"
+    private let baseURL = URL(string: "https://michiganwaterapi.onrender.com")
     private let session: URLSession
-
+    
     init(session: URLSession = .shared) {
         self.session = session
     }
@@ -28,11 +28,14 @@ class MichiganWaterAPIService {
     // MARK: - Private
 
     private func get(path: String) async throws -> Data {
-        guard let url = URL(string: "\(baseURL)\(path)") else {
+        guard let base = baseURL, let url = URL(string: "\(base)\(path)") else {
             throw BeachError.badURL
         }
 
-        let (data, response) = try await session.data(from: url)
+        var request = URLRequest(url: url)
+        request.cachePolicy = .returnCacheDataElseLoad
+
+        let (data, response) = try await session.data(for: request)
 
         guard let http = response as? HTTPURLResponse else {
             throw BeachError.badResponse

@@ -14,4 +14,15 @@ struct MichiganAPIWeatherApp: App {
             ContentView()
         }
     }
+    
+    init() {
+        URLCache.shared = URLCache(
+            memoryCapacity: 10_000_000, // 10 MB
+            diskCapacity: 50_000_000, // 50 MB
+            diskPath: "coastcast_cache"
+        )
+    }
+    
+    
+
 }

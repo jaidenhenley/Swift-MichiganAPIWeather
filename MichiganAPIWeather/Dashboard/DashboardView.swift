@@ -29,6 +29,7 @@ struct DashboardView: View {
                         .frame(height: 20)
                     VStack {
                         CustomSearchBar(text: $searchText)
+                            .padding(.horizontal, 8)
                         
                         //Beach of the Day
                         Text("Beach of the Day")

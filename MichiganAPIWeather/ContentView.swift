@@ -50,73 +50,10 @@ struct ContentView: View {
     }
 
     var body: some View {
-        NavigationStack {
-            List {
-                if !favoriteBeaches.isEmpty {
-                    Section("Favorites") {
-                        ForEach(favoriteBeaches) { beach in
-                            beachRow(beach)
-                        }
-                    }
-                }
-
-                ForEach(regions, id: \.self) { region in
-                    Section(region) {
-                        ForEach(nonFavoriteBeaches.filter { $0.region == region }) { beach in
-                            beachRow(beach)
-                        }
-                    }
-                }
-            }
-            .navigationTitle("Michigan Beaches")
-            .searchable(text: $searchText, prompt: "Search beaches or regions")
-            .overlay {
-                if filteredBeaches.isEmpty {
-                    ContentUnavailableView.search(text: searchText)
-                }
-            }
-            .onAppear {
-                testCrowdModel()
-                debugModel()
-            }
-            
+        VStack {
+            Text("This is the Main View")
         }
         
         
-    }
-
-    @ViewBuilder
-    private func beachRow(_ beach: BeachEntry) -> some View {
-        NavigationLink {
-            BeachView(beachID: beach.id, beachName: beach.name)
-        } label: {
-            HStack(spacing: 12) {
-                Image(systemName: beach.iconName)
-                    .font(.title3)
-                    .foregroundStyle(.blue)
-                    .frame(width: 32)
-
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(beach.name)
-                        .font(.body.weight(.medium))
-                    Text(beach.region)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-
-                Spacer()
-
-                Button {
-                    withAnimation {
-                        favorites.toggle(beach.id)
-                    }
-                } label: {
-                    Image(systemName: favorites.isFavorite(beach.id) ? "star.fill" : "star")
-                        .foregroundStyle(favorites.isFavorite(beach.id) ? .yellow : .gray)
-                }
-                .buttonStyle(.plain)
-            }
-            .padding(.vertical, 4)
-        }
     }
 }

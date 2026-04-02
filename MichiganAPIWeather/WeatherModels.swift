@@ -10,12 +10,34 @@ import Foundation
 // MARK: - Top Level Response
 
 
-struct BeachDetailResponse: Codable {
+struct BeachDetailResponse: Decodable {
     let beach: String
     let weather: WeatherCollection
     let buoy: BuoyData?
     let alerts: AlertCollection
     let forecast: ForecastResponse
+
+    enum CodingKeys: String, CodingKey {
+        case beach
+        case beachName = "beach_name"
+        case name
+        case weather
+        case buoy
+        case alerts
+        case forecast
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        beach = try container.decodeIfPresent(String.self, forKey: .beach)
+            ?? container.decodeIfPresent(String.self, forKey: .beachName)
+            ?? container.decodeIfPresent(String.self, forKey: .name)
+            ?? "Unknown Beach"
+        weather = try container.decode(WeatherCollection.self, forKey: .weather)
+        buoy = try container.decodeIfPresent(BuoyData.self, forKey: .buoy)
+        alerts = try container.decode(AlertCollection.self, forKey: .alerts)
+        forecast = try container.decode(ForecastResponse.self, forKey: .forecast)
+    }
 }
 
 // MARK: - Weather

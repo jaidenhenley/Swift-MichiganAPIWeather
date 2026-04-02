@@ -75,7 +75,14 @@ struct ContentView: View {
                     ContentUnavailableView.search(text: searchText)
                 }
             }
+            .onAppear {
+                testCrowdModel()
+                debugModel()
+            }
+            
         }
+        
+        
     }
 
     @ViewBuilder

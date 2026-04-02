@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Beach: Codable, Sendable {
+struct Beach: Codable, Sendable, Identifiable {
     let id: Int
     let location: String
     let temp: Int

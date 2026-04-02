@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct BeachEntry: Identifiable {
+struct BeachEntry: Identifiable, Hashable {
     let id: Int
     let name: String
     let region: String
@@ -50,10 +50,6 @@ struct ContentView: View {
     }
 
     var body: some View {
-        VStack {
-            Text("This is the Main View")
-        }
-        
-        
+        DashboardView()
     }
 }

@@ -77,6 +77,7 @@ struct ContentView: View {
             }
             .onAppear {
                 testCrowdModel()
+                debugModel()
             }
             
         }

@@ -10,7 +10,13 @@ import SwiftUI
 struct DashboardView: View {
     @State private var searchText = ""
     
-    var favorites: [Beach] = []
+    var favorites: [BeachEntry] = [
+        BeachEntry(id: 1, name: "Belle Isle Beach", region: "Southeast", iconName: "building.2"),
+        BeachEntry(id: 2, name: "Grand Haven State Park", region: "West", iconName: "leaf"),
+        BeachEntry(id: 3, name: "Silver Lake Beach", region: "West", iconName: "sparkles"),
+        BeachEntry(id: 4, name: "Sleeping Bear Dunes", region: "Northwest", iconName: "mountain.2"),
+        BeachEntry(id: 5, name: "Tawas Point State Park", region: "Northeast", iconName: "bird"),
+    ]
     
     var body: some View {
         NavigationStack {
@@ -91,8 +97,8 @@ struct DashboardView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, 16)
                         
-                        List(favorites) { _ in
-                            
+                        ForEach(favorites, id: \.self) { beach in
+                            FavoritesRow(beachName: beach.name)
                         }
                         
                     }

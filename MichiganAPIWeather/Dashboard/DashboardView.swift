@@ -52,41 +52,13 @@ struct DashboardView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, 16)
                         
-                        
                         ScrollView(.horizontal) {
                             HStack {
-                                NavigationLink {
-                                    PlaceholderView(text: "Beach near you placeholder view")
-                                } label: {
-                                    Image(.smallImagePlaceholder)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 130, height: 101)
-                                }
-                                NavigationLink {
-                                    PlaceholderView(text: "Beach near you placeholder view")
-                                } label: {
-                                    Image(.smallImagePlaceholder)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 130, height: 101)
-                                }
-                                NavigationLink {
-                                    PlaceholderView(text: "Beach near you placeholder view")
-                                } label: {
-                                    Image(.smallImagePlaceholder)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 130, height: 101)
-                                }
-                                NavigationLink {
-                                    PlaceholderView(text: "Beach near you placeholder view")
-                                } label: {
-                                    Image(.smallImagePlaceholder)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 130, height: 101)
-                                }
+                                NearBeachRow(image: .smallImagePlaceholder)
+                                NearBeachRow(image: .smallImagePlaceholder)
+                                NearBeachRow(image: .smallImagePlaceholder)
+                                NearBeachRow(image: .smallImagePlaceholder)
+
                             }
                             .padding(.horizontal, 16)
                         }

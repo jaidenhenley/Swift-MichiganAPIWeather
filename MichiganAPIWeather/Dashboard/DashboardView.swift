@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct DashboardView: View {
+    @StateObject private var viewModel = BeachViewModel()
     @State private var searchText = ""
+    
     
     var favorites: [BeachEntry] = [
         BeachEntry(id: 1, name: "Belle Isle Beach", region: "Southeast", iconName: "building.2"),
@@ -38,7 +40,7 @@ struct DashboardView: View {
                             .padding(.horizontal, 16)
                         
                         NavigationLink {
-                            PlaceholderView(text: "Beach of the day PlaceholderView")
+                            BeachView(beach: .belleIsleBeach, beachID: 1)
                         } label: {
                             Image(.mainImagePlaceholder)
                                 .resizable()
@@ -54,10 +56,11 @@ struct DashboardView: View {
                         
                         ScrollView(.horizontal) {
                             HStack {
-                                NearBeachRow(image: .smallImagePlaceholder)
-                                NearBeachRow(image: .smallImagePlaceholder)
-                                NearBeachRow(image: .smallImagePlaceholder)
-                                NearBeachRow(image: .smallImagePlaceholder)
+                                NearBeachRow(image: .smallImagePlaceholder, beach: .belleIsleBeach, beachID: 1)
+                                NearBeachRow(image: .smallImagePlaceholder, beach: .grandHavenStatePark, beachID: 2)
+                                NearBeachRow(image: .smallImagePlaceholder, beach: .silverLakeBeach, beachID: 3)
+                                NearBeachRow(image: .smallImagePlaceholder, beach: .sleepingBear, beachID: 4)
+                                NearBeachRow(image: .smallImagePlaceholder, beach: .tawasPointStatePark, beachID: 5)
 
                             }
                             .padding(.horizontal, 16)

@@ -8,12 +8,15 @@
 import SwiftUI
 
 struct NearBeachRow: View {
+    @StateObject private var viewModel = BeachViewModel()
     let image: ImageResource
+    let beach: BeachViewModel.ViewBeach
+    let beachID: Int
     
     var body: some View {
         
         NavigationLink {
-            PlaceholderView(text: "Beach near you placeholder view")
+            BeachView(beach: beach, beachID: beachID)
         } label: {
             Image(image)
                 .resizable()
@@ -21,8 +24,4 @@ struct NearBeachRow: View {
                 .frame(width: 130, height: 101)
         }
     }
-}
-
-#Preview {
-    NearBeachRow(image: .smallImagePlaceholder)
 }

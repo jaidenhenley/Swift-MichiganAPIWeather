@@ -17,7 +17,16 @@ class MichiganWaterAPIService {
 
     func fetchBeachDetails(beachID: Int) async throws -> BeachDetailResponse {
         let data = try await get(path: "/beaches/\(beachID)/details")
-        return try JSONDecoder().decode(BeachDetailResponse.self, from: data)
+        do {
+            return try JSONDecoder().decode(BeachDetailResponse.self, from: data)
+        } catch {
+            if let raw = String(data: data, encoding: .utf8) {
+                print("Decode failed for beachID \(beachID). Raw JSON:\n\(raw)")
+            } else {
+                print("Decode failed for beachID \(beachID). Raw data size: \(data.count) bytes")
+            }
+            throw error
+        }
     }
 
     func fetchAllBeaches() async throws -> [BeachSummary] {

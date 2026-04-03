@@ -22,6 +22,7 @@ struct IndividualWeatherDayView: View {
     var body: some View {
         VStack {
             Text(day.time)
+                .bold()
                 .padding(4)
             Image(systemName: day.weatherImage)
                 .padding(4)

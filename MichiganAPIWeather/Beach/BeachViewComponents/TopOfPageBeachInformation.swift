@@ -9,11 +9,11 @@ import SwiftUI
 
 struct TopOfPageBeachInformation: View {
     var body: some View {
-        HStack {
+        HStack(spacing: 10) {
             ZStack {
                 Text("image of beach")
                 RoundedRectangle(cornerRadius: 25)
-                    .frame(width: 200, height: 200).foregroundColor(.gray.opacity(0.2))
+                    .frame(width: 230, height: 230).foregroundColor(.gray.opacity(0.2))
             }
             
                 VStack(spacing: 5) {
@@ -26,7 +26,7 @@ struct TopOfPageBeachInformation: View {
 
                         }
                     RoundedRectangle(cornerRadius: 25)
-                        .frame(width: 100, height: 100)
+                        .frame(width: 110, height: 110)
                         .foregroundColor(.gray.opacity(0.2))
                 }
                 ZStack {
@@ -38,7 +38,7 @@ struct TopOfPageBeachInformation: View {
                             .bold()
                     }
                     RoundedRectangle(cornerRadius: 25)
-                        .frame(width: 100, height: 100)
+                        .frame(width: 110, height: 110)
                         .foregroundColor(.gray.opacity(0.2))
                 }
             }

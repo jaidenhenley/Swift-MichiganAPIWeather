@@ -17,34 +17,34 @@ struct WeatherForecastRow: View {
         WeatherDay(time: "5PM", weatherImage: "sun.max.fill", temperature: 51)
     ]
     var body: some View {
-            VStack (alignment: .leading){
-                ScrollView(.horizontal) {
-                    HStack(spacing: 20) {
-                        ForEach(forecast, id: \.self) {day in
-                            IndividualWeatherDayView(day: day)
-                        }
-                    }
-                    .padding(.horizontal)
-                    NavigationLink {
-                       WeatherDetailView()
-                    } label: {
-                        HStack {
-                            Text("SEE MORE")
-                                .font(.caption)
-                            Spacer()
-                            Image(systemName: "chevron.right")
-                        }
-                        .padding()
-                    }
-                    .buttonStyle(.plain)
-
+        VStack (alignment: .leading){
+            ScrollView (.horizontal){
+            HStack(spacing: 20) {
+                ForEach(forecast, id: \.self) {day in
+                    IndividualWeatherDayView(day: day)
                 }
-                .background(
-                    RoundedRectangle(cornerRadius: 25)
-                        .fill(Color.gray).opacity(0.2)
-                )
+                .padding(.top)
             }
-        
+            }
+            .padding(.horizontal)
+            
+            NavigationLink {
+                WeatherDetailView()
+                
+            } label: {
+                HStack {
+                    Text("SEE MORE")
+                        .font(.caption)
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                }
+                .padding()
+            }
+            .buttonStyle(.plain)
+        }
+            .background(
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(Color.gray).opacity(0.2))
     }
 }
 

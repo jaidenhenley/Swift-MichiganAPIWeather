@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TopOfPageBeachInformation: View {
+struct BeachHeader: View {
     var body: some View {
         HStack(spacing: 10) {
             ZStack {
@@ -44,8 +44,4 @@ struct TopOfPageBeachInformation: View {
             }
         }
     }
-}
-
-#Preview {
-    TopOfPageBeachInformation()
 }

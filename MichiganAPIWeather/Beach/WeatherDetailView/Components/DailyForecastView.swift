@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ListOfDaysDetailView: View {
+struct DailyForecastView: View {
     
     let days = ["TOMMROW", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY", "MONDAY"]
     var body: some View {
@@ -28,8 +28,4 @@ struct ListOfDaysDetailView: View {
             .padding(.horizontal)
         }
     }
-}
-
-#Preview {
-    ListOfDaysDetailView()
 }

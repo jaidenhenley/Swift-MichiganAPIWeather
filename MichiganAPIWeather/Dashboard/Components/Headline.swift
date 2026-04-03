@@ -12,6 +12,9 @@ struct Headline: View {
     
     var body: some View {
         Text(text)
-        
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .font(.headline)
+            .padding(.horizontal, 16)
+            .bold()
     }
 }

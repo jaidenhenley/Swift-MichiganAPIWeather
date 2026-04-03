@@ -12,12 +12,8 @@ struct DashboardView: View {
     @State private var searchText = ""
     
     
-    var favorites: [BeachEntry] = [
-        BeachEntry(id: 1, name: "Belle Isle Beach", region: "Southeast", iconName: "building.2"),
-        BeachEntry(id: 2, name: "Grand Haven State Park", region: "West", iconName: "leaf"),
-        BeachEntry(id: 3, name: "Silver Lake Beach", region: "West", iconName: "sparkles"),
-        BeachEntry(id: 4, name: "Sleeping Bear Dunes", region: "Northwest", iconName: "mountain.2"),
-        BeachEntry(id: 5, name: "Tawas Point State Park", region: "Northeast", iconName: "bird"),
+    var favorites: [BeachViewModel.ViewBeach] = [
+        .belleIsleBeach, .grandHavenStatePark, .silverLakeBeach, .sleepingBear, .tawasPointStatePark
     ]
     
     var body: some View {
@@ -53,7 +49,7 @@ struct DashboardView: View {
                                 NearBeachRow(image: .smallImagePlaceholder, beach: .silverLakeBeach, beachID: 3)
                                 NearBeachRow(image: .smallImagePlaceholder, beach: .sleepingBear, beachID: 4)
                                 NearBeachRow(image: .smallImagePlaceholder, beach: .tawasPointStatePark, beachID: 5)
-
+                                
                             }
                             .padding(.horizontal, 16)
                         }
@@ -63,9 +59,8 @@ struct DashboardView: View {
                         Headline(text: "Favorites")
                         
                         ForEach(favorites, id: \.self) { beach in
-                            FavoritesRow(beachName: beach.name)
+                            FavoritesRow(image: .star, beach: beach, beachID: 1)
                         }
-                        
                     }
                 }
             }

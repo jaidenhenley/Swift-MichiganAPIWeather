@@ -8,14 +8,17 @@
 import SwiftUI
 
 struct FavoritesRow: View {
-    let beachName: String
+    @StateObject private var viewModel = BeachViewModel()
+    let image: ImageResource
+    let beach: BeachViewModel.ViewBeach
+    let beachID: Int
     
     var body: some View {
         NavigationLink {
-            PlaceholderView(text: "This will be a favorite beach")
+            BeachView(beach: beach, beachID: beachID)
         } label: {
             HStack {
-                Text(beachName)
+                Text(viewModel.beachName)
                     .font(.subheadline)
                     .opacity(0.8)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -41,6 +44,3 @@ struct FavoritesRow: View {
     }
 }
 
-#Preview {
-    FavoritesRow(beachName: "Sleeping Bear Dunes")
-}

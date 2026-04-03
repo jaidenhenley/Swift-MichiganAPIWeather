@@ -22,11 +22,11 @@ struct BeachView: View {
                 ScrollView {
                     VStack {
                         Spacer()
-                        TopOfPageBeachInformation()
+                        BeachHeader()
                         WeatherForecastRow().padding(.horizontal, 16)
                         CrowdMeterView()
                         
-                        BeachOverViewView(beachName: viewModel.beachName.isEmpty ? "" : viewModel.beachName, beachdescription: viewModel.beachDescription)
+                        BeachSummaryView(beachName: viewModel.beachName.isEmpty ? "" : viewModel.beachName, beachdescription: viewModel.beachDescription)
                             .padding(.horizontal, 16)
                     }
                 }

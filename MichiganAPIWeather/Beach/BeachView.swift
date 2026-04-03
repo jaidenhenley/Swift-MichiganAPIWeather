@@ -19,6 +19,7 @@ struct BeachView: View {
                     .ignoresSafeArea()
                 ScrollView {
                     VStack {
+                        Spacer()
                         TopOfPageBeachInformation()
                         WeatherForecastRow().padding(.horizontal, 16)
                         CrowdMeterView()

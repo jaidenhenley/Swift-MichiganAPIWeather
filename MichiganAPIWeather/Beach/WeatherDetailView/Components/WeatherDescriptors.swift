@@ -38,16 +38,3 @@ struct WeatherDescriptors: View {
         .frame(width: 90)
         }
     }
-
-
-#Preview {
-    let sampleStat = WeatherStat(
-        icon: "thermometer.variable",
-        name: "AIR TEMP",
-        value: "72",
-        unit: "°"
-    )
-    
-    WeatherDescriptors(stat: sampleStat)
-}
-

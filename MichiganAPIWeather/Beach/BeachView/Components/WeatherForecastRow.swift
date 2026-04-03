@@ -21,7 +21,7 @@ struct WeatherForecastRow: View {
             ScrollView (.horizontal){
             HStack(spacing: 20) {
                 ForEach(forecast, id: \.self) {day in
-                    IndividualWeatherDayView(day: day)
+                    HourColumn(day: day)
                 }
                 .padding(.top)
             }

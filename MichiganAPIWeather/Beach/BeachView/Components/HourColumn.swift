@@ -16,7 +16,7 @@ struct WeatherDay: Identifiable, Hashable {
     let temperature: Int
 }
 
-struct IndividualWeatherDayView: View {
+struct HourColumn: View {
     let day: WeatherDay
     
     var body: some View {

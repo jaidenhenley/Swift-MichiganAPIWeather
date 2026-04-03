@@ -14,7 +14,7 @@ struct WeatherDetailView: View {
                 .ignoresSafeArea()
             VStack {
                 WeatherDashboard()
-                ListOfDaysDetailView()
+                DailyForecastView()
                 Spacer()
             }
         }

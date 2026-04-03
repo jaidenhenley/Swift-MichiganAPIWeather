@@ -26,6 +26,35 @@ class BeachViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
     @Published var useCelsius: Bool = false
+    @Published var selectedBeach: ViewBeach?
+    var beachDescription: String {
+        switch selectedBeach {
+        case .sleepingBear:
+            return "Stretching across 35 miles of Lake Michigan shoreline, Sleeping Bear Dunes National Lakeshore offers towering sand dunes, crystal-clear water, and some of the most scenic views in the Midwest."
+
+        case .grandHavenStatePark:
+            return "Sitting at the mouth of the Grand River, Grand Haven State Park is known for its iconic lighthouse, long sandy shoreline, and some of the best sunsets on Lake Michigan."
+
+        case .silverLakeBeach:
+            return "Tucked alongside the Silver Lake Sand Dunes, this West Michigan beach is a favorite for off-road dune riding, swimming, and wide-open views of Lake Michigan just over the ridge."
+
+        case .belleIsleBeach:
+            return "Right in the heart of Detroit, Belle Isle Beach sits on the island park in the Detroit River and offers a unique urban waterfront experience with views of the city skyline and the Canadian shore."
+
+        case .tawasPointStatePark:
+            return "Known as the Sleeping Bear of Lake Huron, Tawas Point State Park features a curved sandy spit, a historic lighthouse, and calm, shallow waters that make it one of Michigan's most family-friendly beaches."
+        case .none:
+            return "Failed to load"
+        }
+    }
+    
+    enum ViewBeach: CaseIterable {
+        case sleepingBear
+        case grandHavenStatePark
+        case silverLakeBeach
+        case belleIsleBeach
+        case tawasPointStatePark
+    }
     
 
     /// Whether we have successfully loaded data at least once
@@ -37,6 +66,11 @@ class BeachViewModel: ObservableObject {
     func toggleUnit() {
         useCelsius.toggle()
         updateTemperatureDisplay()
+    }
+    
+    func selectBeach(_ beach: ViewBeach, beachID: Int) async {
+        selectedBeach = beach
+        await loadBeach(id: beachID)
     }
 
     func loadBeach(id: Int) async {
@@ -119,6 +153,22 @@ class BeachViewModel: ObservableObject {
                     shortForecast: period.shortForecast
                 )
             }
+            
+            print("=== Beach Loaded ===")
+                    print("Name: \(beachName)")
+                    print("Description: \(beachDescription)")
+                    print("Condition: \(condition)")
+                    print("Temperature: \(temperatureDisplay)")
+                    print("Wind: \(windMPH) \(windDirection)")
+                    print("Humidity: \(humidity)")
+                    print("Visibility: \(visibility)")
+                    print("Dewpoint: \(dewpoint ?? "N/A")")
+                    print("Pressure: \(pressure ?? "N/A")")
+                    print("Station: \(stationName ?? "N/A")")
+                    print("Last Updated: \(lastUpdated ?? "N/A")")
+                    print("Active Alerts: \(activeAlerts)")
+                    print("Forecast Days: \(forecastDays.count)")
+                    print("====================")
 
         } catch {
             if !hasData {

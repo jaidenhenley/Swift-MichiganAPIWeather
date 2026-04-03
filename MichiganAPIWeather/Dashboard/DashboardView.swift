@@ -34,11 +34,7 @@ struct DashboardView: View {
                             .padding(.horizontal, 8)
                         
                         //Beach of the Day
-                        Text("Beach of the Day")
-                            .font(.headline)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, 16)
-                        
+                        Headline(text: "Beach of the day")
                         NavigationLink {
                             BeachView(beach: .belleIsleBeach, beachID: 1)
                         } label: {
@@ -49,11 +45,7 @@ struct DashboardView: View {
                         }
                         
                         //Beaches near user
-                        Text("Beaches near you")
-                            .font(.headline)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, 16)
-                        
+                        Headline(text: "Beaches near you")
                         ScrollView(.horizontal) {
                             HStack {
                                 NearBeachRow(image: .smallImagePlaceholder, beach: .belleIsleBeach, beachID: 1)
@@ -68,10 +60,7 @@ struct DashboardView: View {
                         .scrollIndicators(.hidden)
                         
                         //Favorites
-                        Text("Favorites")
-                            .font(.headline)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, 16)
+                        Headline(text: "Favorites")
                         
                         ForEach(favorites, id: \.self) { beach in
                             FavoritesRow(beachName: beach.name)

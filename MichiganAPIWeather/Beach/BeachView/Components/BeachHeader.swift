@@ -9,36 +9,38 @@ import SwiftUI
 
 struct BeachHeader: View {
     var body: some View {
-        HStack(spacing: 10) {
+        HStack() {
             ZStack {
                 Text("image of beach")
-                RoundedRectangle(cornerRadius: 25)
-                    .frame(width: 230, height: 230).foregroundColor(.gray.opacity(0.2))
+                RoundedRectangle(cornerRadius: 20)
+                    .frame(width: 220, height: 220).foregroundColor(.gray.opacity(0.2))
             }
             
                 VStack(spacing: 5) {
                     ZStack {
-                        VStack{
+                        VStack (alignment: .leading) {
                             Text("AIR TEMP")
                                 .font(.caption)
+                                .foregroundColor(.secondary)
                             Text("70°").font(.largeTitle)
                                 .bold()
 
                         }
-                    RoundedRectangle(cornerRadius: 25)
-                        .frame(width: 110, height: 110)
+                    RoundedRectangle(cornerRadius: 20)
+                        .frame(width: 105, height: 105)
                         .foregroundColor(.gray.opacity(0.2))
                 }
                 ZStack {
-                    VStack {
+                    VStack (alignment: .leading) {
                         Text("WATER TEMP")
                             .font(.caption)
+                            .foregroundColor(.secondary)
                         Text("52°")
                             .font(.largeTitle)
                             .bold()
                     }
-                    RoundedRectangle(cornerRadius: 25)
-                        .frame(width: 110, height: 110)
+                    RoundedRectangle(cornerRadius: 20)
+                        .frame(width: 105, height: 105)
                         .foregroundColor(.gray.opacity(0.2))
                 }
             }

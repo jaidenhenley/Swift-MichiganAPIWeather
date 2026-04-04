@@ -8,24 +8,38 @@
 import SwiftUI
 
 struct DailyForecastView: View {
+    @Binding var isShowingSheet: Bool
+    let days = ["TOMORROW", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY", "MONDAY"]
     
-    let days = ["TOMMROW", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY", "MONDAY"]
     var body: some View {
-        
-        ForEach(days, id: \.self) { day in
-            VStack(alignment: .leading) {
-                Text(day)
-                    .font(.caption)
-                    .fontWeight(.bold)
-                    .foregroundColor(.secondary)
+        VStack(spacing: 0) {
+            ForEach(days, id: \.self) { day in
+                Button {
+                    isShowingSheet = true
+                } label: {
+                    VStack(alignment: .leading) {
+                        Text(day)
+                            .font(.caption)
+                            .fontWeight(.bold)
+                            .foregroundColor(.secondary)
+                    }
+                    .padding(15)
+                    .frame(maxWidth: .infinity, minHeight: 80, alignment: .topLeading)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color.gray.opacity(0.1))
+                    )
+                }
+                .buttonStyle(.plain)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 5)
             }
-            .listRowSeparator(.hidden)            .padding()
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(Color(.secondarySystemBackground))
-            )
-            .padding(.horizontal)
         }
+        .padding(.vertical, 10)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color.white.opacity(0.4))
+        )
+        .padding(.horizontal)
     }
 }

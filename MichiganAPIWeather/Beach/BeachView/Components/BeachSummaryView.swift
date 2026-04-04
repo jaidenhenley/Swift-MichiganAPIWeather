@@ -16,12 +16,14 @@ struct BeachSummaryView: View {
         VStack(alignment: .leading ){
             Text("OVERVIEW")
                 .font(.caption)
+                .foregroundColor(.secondary)
             
             Text(beachName)
                 .font(.callout)
                 .bold()
                 .padding(.vertical,5)
             Text(beachdescription)
+                .foregroundColor(.secondary)
         }
         .padding(25)
         .background(

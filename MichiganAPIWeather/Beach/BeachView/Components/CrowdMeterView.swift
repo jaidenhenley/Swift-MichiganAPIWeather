@@ -12,7 +12,13 @@ struct CrowdMeterView: View {
         VStack(spacing: 10) {
             HStack {
                 Image(systemName: "person.3.fill")
-                Text("CROWD METER").font(.headline)
+                    .font(.footnote)
+                    .bold()
+                    .foregroundColor(.secondary)
+                Text("CROWD METER")
+                    .font(.footnote)
+                    .bold()
+                    .foregroundColor(.secondary)
                     .padding(.vertical)
                 Spacer()
             }
@@ -20,10 +26,10 @@ struct CrowdMeterView: View {
             .padding(.horizontal, 40)
             
             HStack(alignment: .bottom, spacing: 8) {
-                ForEach(0..<7, id: \.self) { _ in
+                ForEach(0..<8, id: \.self) { _ in
                 Rectangle()
                         .fill(Color.blue)
-                        .frame(width: 30, height: CGFloat.random(in: 40 ... 100))
+                        .frame(width: 35, height: CGFloat.random(in: 40 ... 100))
                 }
             }
             

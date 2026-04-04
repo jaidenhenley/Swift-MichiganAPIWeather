@@ -20,16 +20,20 @@ struct HourColumn: View {
     let day: WeatherDay
     
     var body: some View {
-        VStack {
+        VStack(spacing: 6) {
             Text(day.time)
-                .bold()
-                .padding(4)
+                .font(.system(size: 10, weight: .semibold))
+                .foregroundColor(.primary)
+            
             Image(systemName: day.weatherImage)
-                .padding(4)
+                .symbolVariant(.fill)
+                .font(.system(size: 20))
+            
             Text("\(day.temperature)°")
+                .font(.system(size: 14, weight: .bold))
         }
+        .frame(maxWidth: .infinity)
     }
-    
 }
 
 

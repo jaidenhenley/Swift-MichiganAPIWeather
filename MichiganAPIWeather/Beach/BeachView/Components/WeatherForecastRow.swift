@@ -17,34 +17,37 @@ struct WeatherForecastRow: View {
         WeatherDay(time: "5PM", weatherImage: "sun.max.fill", temperature: 51)
     ]
     var body: some View {
-        VStack (alignment: .leading){
-            ScrollView (.horizontal){
-            HStack(spacing: 20) {
-                ForEach(forecast, id: \.self) {day in
-                    HourColumn(day: day)
+        VStack(alignment: .leading, spacing: 0) {
+                HStack(spacing: 25) {
+                    ForEach(forecast, id: \.self) { day in
+                        HourColumn(day: day)
+                    }
                 }
+                .padding(.horizontal)
                 .padding(.top)
-            }
-            }
-            .padding(.horizontal)
             
             NavigationLink {
                 WeatherDetailView()
-                
             } label: {
                 HStack {
                     Text("SEE MORE")
                         .font(.caption)
+                        .fontWeight(.bold)
+                        .foregroundColor(.secondary)
                     Spacer()
                     Image(systemName: "chevron.right")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
                 }
                 .padding()
             }
             .buttonStyle(.plain)
         }
-            .background(
-                RoundedRectangle(cornerRadius: 20)
-                    .fill(Color.gray).opacity(0.2))
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.gray.opacity(0.2))
+        )
+        .padding(.horizontal)
     }
 }
 

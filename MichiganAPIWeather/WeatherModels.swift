@@ -1,5 +1,5 @@
 //
-//  Weather.swift
+//  WeatherModels.swift
 //  MichiganAPIWeather
 //
 //  Created by Jaiden Henley on 3/19/26.
@@ -7,99 +7,62 @@
 
 import Foundation
 
-// MARK: - Top Level Response
-
+// MARK: - Top Level Response (backend only — no weather fields)
 
 struct BeachDetailResponse: Decodable {
-    let beach: String
-    let weather: WeatherConditions
-    let buoy: BuoyData?
-    let alerts: AlertCollection
-    let forecast: ForecastResponse
+    let beach: String?
+    let buoyData: BuoyData?
+    let alerts: [AlertFeature]
+    let traffic: [TrafficData]
+    let holiday: [Holiday]?
 
     enum CodingKeys: String, CodingKey {
-        case beach, weather, forecast, alerts
+        case beach, alerts, traffic, holiday
         case buoyData = "buoy_data"
     }
-
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        beach = try container.decode(String.self, forKey: .beach)
-        weather = try container.decode(WeatherConditions.self, forKey: .weather)
-        buoy = try container.decodeIfPresent(BuoyData.self, forKey: .buoyData)
-        alerts = try container.decode(AlertCollection.self, forKey: .alerts)
-        forecast = try container.decode(ForecastResponse.self, forKey: .forecast)
-    }
 }
 
-// MARK: - Weather
-struct ForecastResponse: Codable {
-    let properties: ForecastProperties
-}
+// MARK: - Buoy
 
-struct ForecastProperties: Codable {
-    let periods: [Forecast]
-}
+struct BuoyData: Decodable {
+    let source: String
+    let stationId: String?
+    let waterTempC: Double?
+    let waveHeightM: Double?
+    let wavePeriodSec: Double?
+    let windSpeedMph: Double?
+    let windDirection: String?
+    let timestamp: String?
 
-struct WeatherConditions: Codable {
-    let stationId: String
-    let textDescription: String
-    let temperatureC: String
-    let humidity: String
-    let windSpeedKm: Double
-    let windChillC: Double?
-    
     enum CodingKeys: String, CodingKey {
+        case source, timestamp
         case stationId = "station_id"
-        case textDescription = "text_description"
-        case temperatureC = "temperature_c"
-        case humidity
-        case windSpeedKm = "wind_speed_km"
-        case windChillC = "wind_chill_c"
+        case waterTempC = "water_temp_c"
+        case waveHeightM = "wave_height_m"
+        case wavePeriodSec = "wave_period_sec"
+        case windSpeedMph = "wind_speed_mph"
+        case windDirection = "wind_direction"
     }
 }
 
-struct WeatherProperties: Codable {
-    let stationName: String
-    let timestamp: String
-    let textDescription: String
-    let temperature: WeatherMeasurement
-    let dewpoint: WeatherMeasurement
-    let windDirection: WeatherMeasurement
-    let windSpeed: WeatherMeasurement
-    let windGust: WeatherMeasurement?
-    let windChill: WeatherMeasurement?
-    let heatIndex: WeatherMeasurement?
-    let barometricPressure: WeatherMeasurement?
-    let visibility: WeatherMeasurement
-    let relativeHumidity: WeatherMeasurement
-    let cloudLayers: [CloudLayer]?
-}
+// MARK: - Traffic
 
-struct WeatherMeasurement: Codable {
-    let unitCode: String
-    let value: Double?
-}
-
-struct CloudLayer: Codable {
-    let base: WeatherMeasurement
-    let amount: String
+struct TrafficData: Decodable {
+    let currentSpeed: Double?
+    let freeFlowSpeed: Double?
+    let currentTravelTime: Double?
+    let freeFlowTravelTime: Double?
+    let confidence: Double?
+    let roadClosures: Bool?
 }
 
 // MARK: - Alerts
 
-struct AlertCollection: Codable {
-    let features: [AlertFeature]
-    let title: String?
-}
+struct AlertFeature: Decodable {}
 
-struct AlertFeature: Codable {
-    // Add properties here if the API ever returns active alerts
-    // For now this just keeps the array decodable when empty
-}
+// MARK: - Holiday
 
-// MARK: - Buoy (nullable, not always available)
-
-struct BuoyData: Codable {
-    // Fill this in if/when the API starts returning buoy data
+struct Holiday: Decodable {
+    let name: String?
+    let date: String?
 }

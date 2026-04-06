@@ -9,6 +9,7 @@ import SwiftUI
 
 struct BeachView: View {
     @ObservedObject private var viewModel = BeachViewModel()
+    @State private var weatherService = BeachWeatherService()
     let beach: BeachViewModel.ViewBeach
     let beachID: Int
 
@@ -26,7 +27,7 @@ struct BeachView: View {
                         WeatherForecastRow().padding(.horizontal, 16)
                         CrowdMeterView()
                         
-                        BeachSummaryView(beachName: viewModel.beachName.isEmpty ? "" : viewModel.beachName, beachdescription: viewModel.beachDescription)
+                        BeachSummaryView(beachName: viewModel.beachName.isEmpty ? "" : viewModel.beachName, beachdescription: beach.beachDescription)
                             .padding(.horizontal, 16)
                     }
                 }
@@ -34,6 +35,7 @@ struct BeachView: View {
         }
         .task {
             await viewModel.selectBeach(beach, beachID: beachID)
+            await weatherService.fetchWeather(for: beach)
         }
     }
 }

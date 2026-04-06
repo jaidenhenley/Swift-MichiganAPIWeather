@@ -9,20 +9,12 @@ import Foundation
 
 struct Beach: Codable, Sendable, Identifiable {
     let id: Int
-    let location: String
-    let temp: Int
-    let conditions: String
-    let wind: String
-    let humidity: Int
-    let visibility: String
-    let barometricPressure: String
-    let windChill: String
-    let buoyData: String
-    let alerts: String
-
-    enum CodingKeys: String, CodingKey {
-        case id, location, temp, conditions, wind, humidity
-        case visibility = "visability"
-        case barometricPressure, windChill, buoyData, alerts
-    }
+    let name: String
+    let county: String
+    let latitude: Double
+    let longitude: Double
+    let lake: String
+    let buoyStation: String
+    let status: String
+    let countryCode: String
 }

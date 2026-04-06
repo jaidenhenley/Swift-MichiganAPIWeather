@@ -15,8 +15,7 @@ struct BeachView: View {
 
     var body: some View {
         NavigationStack {
-            
-            ZStack {
+            ZStack (alignment: .bottom) {
                 Color.gray
                     .opacity(0.1)
                     .ignoresSafeArea()
@@ -29,8 +28,12 @@ struct BeachView: View {
                         
                         BeachSummaryView(beachName: viewModel.beachName.isEmpty ? "" : viewModel.beachName, beachdescription: beach.beachDescription)
                             .padding(.horizontal, 16)
+                        Color.clear.frame(height: 100)
+
                     }
                 }
+                ContactWebsitePhone()
+                    .padding(.bottom, 10)
             }
         }
         .task {
@@ -39,3 +42,4 @@ struct BeachView: View {
         }
     }
 }
+

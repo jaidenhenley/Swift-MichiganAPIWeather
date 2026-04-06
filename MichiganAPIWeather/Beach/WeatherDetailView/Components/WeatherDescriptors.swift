@@ -14,27 +14,34 @@ struct WeatherStat: Identifiable {
     let value: String
     let unit: String
 }
-
 struct WeatherDescriptors: View {
-
     let stat: WeatherStat
 
     var body: some View {
-
-        VStack {
-            HStack {
+        VStack(spacing: 8) {
+            HStack(spacing: 4) {
                 Image(systemName: stat.icon)
                 Text(stat.name)
             }
-            .font(.caption)
-            .padding(.vertical, 20)
-            Text("\(stat.value)\(stat.unit)")
-                .background(
-                    RoundedRectangle(cornerRadius: 20)
-                        .frame(width: 78, height: 50)
-                        .foregroundColor(.gray.opacity(0.2))
-                )
+            .font(.system(size: 8, weight: .bold))
+            .foregroundColor(.primary)
+
+            HStack(alignment: stat.unit == "°" ? .top : .firstTextBaseline, spacing: 1) {
+                Text(stat.value)
+                    .font(.system(size: 16, weight: .bold))
+                
+                Text(stat.unit)
+                    .font(.system(size: 10, weight: .medium))
+                    .foregroundColor(.primary)
+                    .padding(.top, stat.unit == "°" ? 2 : 0)
             }
-        .frame(width: 90)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 10)
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(Color.gray.opacity(0.1))
+            )
         }
+        .frame(maxWidth: .infinity)
     }
+}

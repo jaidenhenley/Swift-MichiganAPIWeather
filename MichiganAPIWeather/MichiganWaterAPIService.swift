@@ -18,12 +18,40 @@ class MichiganWaterAPIService {
     func fetchBeachDetails(beachID: Int) async throws -> BeachDetailResponse {
         let data = try await get(path: "/beaches/\(beachID)/details")
         do {
-            return try JSONDecoder().decode(BeachDetailResponse.self, from: data)
+            let response = try JSONDecoder().decode(BeachDetailResponse.self, from: data)
+
+            print("[API] ✅ Beach: \(response.beach ?? "nil")")
+
+            if let buoy = response.buoyData {
+                print("[API]   Buoy: source=\(buoy.source)"
+                    + " water=\(buoy.waterTempC.map { "\($0)°C" } ?? "nil")"
+                    + " waves=\(buoy.waveHeightM.map { "\($0)m" } ?? "nil")"
+                    + " wind=\(buoy.windSpeedMph.map { "\($0) mph" } ?? "nil")")
+            } else {
+                print("[API]   Buoy: nil")
+            }
+
+            print("[API]   Alerts: \(response.alerts.count)")
+            print("[API]   Traffic: \(response.traffic.count) segment(s)")
+
+            for (i, t) in response.traffic.enumerated() {
+                print("[API]     [\(i)] speed=\(t.currentSpeed.map { "\($0)" } ?? "nil")"
+                    + " freeFlow=\(t.freeFlowSpeed.map { "\($0)" } ?? "nil")"
+                    + " closures=\(t.roadClosures.map { "\($0)" } ?? "nil")")
+            }
+
+            if let holidays = response.holiday {
+                print("[API]   Holidays: \(holidays.map { $0.name ?? "?" }.joined(separator: ", "))")
+            } else {
+                print("[API]   Holidays: nil")
+            }
+
+            return response
         } catch {
             if let raw = String(data: data, encoding: .utf8) {
-                print("Decode failed for beachID \(beachID). Raw JSON:\n\(raw)")
+                print("[API] ❌ Decode failed for beachID \(beachID). Raw JSON:\n\(raw)")
             } else {
-                print("Decode failed for beachID \(beachID). Raw data size: \(data.count) bytes")
+                print("[API] ❌ Decode failed for beachID \(beachID). \(data.count) bytes")
             }
             throw error
         }
@@ -41,6 +69,7 @@ class MichiganWaterAPIService {
             throw BeachError.badURL
         }
 
+
         var request = URLRequest(url: url)
         request.cachePolicy = .returnCacheDataElseLoad
 
@@ -49,6 +78,8 @@ class MichiganWaterAPIService {
         guard let http = response as? HTTPURLResponse else {
             throw BeachError.badResponse
         }
+
+        print("[API] \(http.statusCode) \(url.absoluteString) — \(data.count) bytes")
 
         switch http.statusCode {
         case 200...299:

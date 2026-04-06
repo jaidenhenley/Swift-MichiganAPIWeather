@@ -11,6 +11,6 @@ struct ForecastDay: Identifiable {
     let id = UUID()
     let name: String
     let temp: Int
-    let icon: URL
+    let icon: URL?
     let shortForecast: String
 }

@@ -24,8 +24,7 @@ struct ActionButton: View {
             }
             .padding(8)
             .frame(maxWidth: .infinity)
-            .aspectRatio(1, contentMode: .fit)
-            .background(Color.white.opacity(0.2))
+            .background(Color.white.opacity(0.4))
             .cornerRadius(15)
         }
         .buttonStyle(.plain)

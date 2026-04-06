@@ -25,19 +25,20 @@ struct BeachView: View {
                         WeatherForecastRow().padding(.horizontal, 16)
                         CrowdMeterView()
                         
-                        BeachSummaryView(beachName: viewModel.beachName.isEmpty ? "" : viewModel.beachName, beachdescription: viewModel.beachDescription)
+                        BeachSummaryView(beachName: viewModel.beachName.isEmpty ? "" : viewModel.beachName, beachdescription: beach.beachDescription)
                             .padding(.horizontal, 16)
-                        Color.clear.frame(height: 100)
-
+                        
+                        ContactWebsitePhone()
+                            .padding([.bottom,.horizontal], 16)
+                        
                     }
                 }
-                ContactWebsitePhone()
-                    .padding(.bottom, 10)
             }
         }
         .task {
             await viewModel.selectBeach(beach, beachID: beachID)
         }
+        .environmentObject(viewModel)
     }
 }
 

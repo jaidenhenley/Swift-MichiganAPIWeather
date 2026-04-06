@@ -6,6 +6,7 @@
 //
 
 import Combine
+import CoreLocation
 import Foundation
 
 @MainActor
@@ -14,28 +15,26 @@ class ForecastViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
 
-    private let service = MichiganWaterAPIService()
+    private let weatherKitService = WeatherKitService()
 
-    func loadForecast(beachID: Int) async {
+    func loadForecast(latitude: Double, longitude: Double) async {
         isLoading = true
         errorMessage = nil
 
-        do {
-            let response = try await service.fetchBeachDetails(beachID: beachID)
-            let periods = response.forecast.properties.periods
+        await weatherKitService.fetchWeather(latitude: latitude, longitude: longitude)
 
-            days = periods.compactMap { period in
-                guard let iconURL = URL(string: period.icon) else { return nil }
-                return ForecastDay(
-                    name: period.name,
-                    temp: period.temperature,
-                    icon: iconURL,
-                    shortForecast: period.shortForecast
-                )
-            }
-        } catch {
+        if let error = weatherKitService.error {
             errorMessage = "Failed to load forecast"
             print("Forecast fetch error: \(error)")
+        } else {
+            days = weatherKitService.dailyForecast.map { day in
+                ForecastDay(
+                    name: day.dayName,
+                    temp: day.highF,
+                    icon: nil,
+                    shortForecast: day.condition
+                )
+            }
         }
 
         isLoading = false

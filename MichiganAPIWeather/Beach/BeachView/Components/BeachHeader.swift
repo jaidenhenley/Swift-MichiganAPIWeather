@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct BeachHeader: View {
+    @EnvironmentObject var viewModel: BeachViewModel
+    
     var body: some View {
         HStack() {
             ZStack {
@@ -22,9 +24,9 @@ struct BeachHeader: View {
                             Text("AIR TEMP")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
-                            Text("70°").font(.largeTitle)
+                            Text("\(viewModel.temperatureDisplay)")
+                                .font(.largeTitle)
                                 .bold()
-
                         }
                     RoundedRectangle(cornerRadius: 20)
                         .frame(width: 105, height: 105)

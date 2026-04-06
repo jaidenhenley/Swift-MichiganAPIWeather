@@ -9,8 +9,9 @@ import SwiftUI
 
 
 
-struct HalfSheet: View {
-    let value: String
+struct ForecastSheet: View {
+    let day: ForecastDay
+    
     var body: some View {
         
         
@@ -21,13 +22,13 @@ struct HalfSheet: View {
                 .padding(.bottom, 10)
 
             WeatherRow(leftLabel: "SUNRISE", leftIcon: "sunrise.fill",
-                       rightLabel: "SUNSET", rightIcon: "sunset.fill", value: "6:42 AM")
+                       rightLabel: "SUNSET", rightIcon: "sunset.fill", rightValue: "6:42am", leftValue: "7:00pm")
             
             WeatherRow(leftLabel: "HUMIDITY", leftIcon: "humidity.fill",
-                       rightLabel: "WIND", rightIcon: "wind", value: "12%")
+                       rightLabel: "WIND", rightIcon: "wind", rightValue: "12mph", leftValue: "N/A")
             
             WeatherRow(leftLabel: "AIR TEMP", leftIcon: "thermometer.medium",
-                       rightLabel: "WATER TEMP", rightIcon: "water.waves", value: "72°")
+                       rightLabel: "WATER TEMP", rightIcon: "water.waves", rightValue: "N/A", leftValue: String(day.temp) )
             
             Spacer()
             

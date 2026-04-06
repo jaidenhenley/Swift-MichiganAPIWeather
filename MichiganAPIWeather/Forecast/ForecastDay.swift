@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ForecastDay: Identifiable {
+struct ForecastDay: Identifiable, Hashable {
     let id = UUID()
     let name: String
     let temp: Int

@@ -13,7 +13,9 @@ struct WeatherRow: View {
     let leftIcon: String
     let rightLabel: String
     let rightIcon: String
-    let value: String
+    let rightValue: String
+    let leftValue: String
+
     
     var body: some View {
         VStack(spacing: 8) {
@@ -24,7 +26,7 @@ struct WeatherRow: View {
                         Text(leftLabel)
                     }
                     .font(.caption).foregroundColor(.secondary)
-                    Text(value).font(.headline)
+                    Text(leftValue).font(.headline)
                 }
                 Spacer()
                 VStack(alignment: .trailing, spacing: 4) {
@@ -33,7 +35,7 @@ struct WeatherRow: View {
                         Image(systemName: rightIcon)
                     }
                     .font(.caption).foregroundColor(.secondary)
-                    Text(value).font(.headline)
+                    Text(rightValue).font(.headline)
                 }
             }
             .padding(.horizontal)

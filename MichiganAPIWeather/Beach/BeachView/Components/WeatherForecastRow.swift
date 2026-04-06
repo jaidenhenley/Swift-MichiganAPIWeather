@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct WeatherForecastRow: View {
+    @EnvironmentObject var viewModel: BeachViewModel
+    
     let forecast = [
         WeatherDay(time: "Now", weatherImage: "sun.max.fill", temperature: 52),
         WeatherDay(time: "1PM", weatherImage: "cloud.sun.fill", temperature: 54),
@@ -28,6 +30,7 @@ struct WeatherForecastRow: View {
             
             NavigationLink {
                 WeatherDetailView()
+                    .environmentObject(viewModel)
             } label: {
                 HStack {
                     Text("SEE MORE")
@@ -48,9 +51,8 @@ struct WeatherForecastRow: View {
                 .fill(Color.gray.opacity(0.2))
         )
         .padding(.horizontal)
+        .environmentObject(viewModel)
     }
 }
 
-#Preview {
-    WeatherForecastRow()
-}
+

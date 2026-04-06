@@ -60,7 +60,7 @@ class WeatherKitService {
                 uvIndex: c.uvIndex.value
             )
 
-            dailyForecast = Array(weather.dailyForecast.prefix(7)).map { day in
+            dailyForecast = Array(weather.dailyForecast.prefix(10)).map { day in
                 DailyForecastSnapshot(
                     date: day.date,
                     dayName: day.date.formatted(.dateTime.weekday(.wide)),

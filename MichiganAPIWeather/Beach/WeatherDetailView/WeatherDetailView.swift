@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct WeatherDetailView: View {
-    
-    @State private var showingSheet = false
+    @EnvironmentObject var viewModel: BeachViewModel
+
     var body: some View {
         ZStack {
             Color.gray.opacity(0.2)
@@ -17,22 +17,17 @@ struct WeatherDetailView: View {
             ScrollView {
                 VStack {
                     WeatherDashboard()
-                    DailyForecastView(isShowingSheet: $showingSheet)
+                    DailyForecastView()
                     
                     Spacer()
                 }
             }
-            .sheet(isPresented: $showingSheet) {
-                HalfSheet(value: "50°")
-                    .presentationDetents([.fraction(0.35), .medium])
-                    .presentationDragIndicator(.visible)
-            }
+           
         }
+        .environmentObject(viewModel)
     }
 }
 
 
 
-#Preview {
-    WeatherDetailView()
-}
+

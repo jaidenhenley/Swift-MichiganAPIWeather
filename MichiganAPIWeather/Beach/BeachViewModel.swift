@@ -113,31 +113,40 @@ class BeachViewModel: ObservableObject {
         let coords = beach.beachCoordinates
 
         // Fetch backend conditions and WeatherKit in parallel
-        async let backendResult = apiService.fetchBeachDetails(beachID: id)
-        async let _: Void = weatherKitService.fetchWeather(
+        async let backendResult: BeachDetailResponse? = {
+            do {
+                return try await apiService.fetchBeachDetails(beachID: id)
+            } catch {
+                print("Backend fetch error: \(error)")
+                return nil
+            }
+        }()
+        async let weatherDone: Void = weatherKitService.fetchWeather(
             latitude: coords.latitude,
             longitude: coords.longitude
         )
 
-        // Await backend
-        do {
-            let response = try await backendResult
+        // Await both
+        let response = await backendResult
+        await weatherDone
+
+        // Apply backend data
+        if let response {
             beachName = response.beach ?? ""
             buoyData = response.buoyData
             activeAlerts = response.alerts.count
             traffic = response.traffic
             holiday = response.holiday
-        } catch {
-            if !hasData {
-                errorMessage = "Couldn't load beach data"
-            }
-            print("Backend fetch error: \(error)")
+        } else if !hasData {
+            errorMessage = "Couldn't load beach data"
         }
 
         if let current = weatherKitService.current {
             condition = current.condition
             rawTempCelsius = current.temperature
-
+            
+            temperatureDisplay = celsiusToFarenheit(rawTempCelsius!)
+            
             windMPH = String(format: "%.1f mph", current.windSpeedMph)
             windDirection = ""
             humidity = "\(current.humidity)%"
@@ -149,6 +158,17 @@ class BeachViewModel: ObservableObject {
                 : "\(Int(dpF))°F"
 
             pressure = String(format: "%.1f hPa", current.pressure)
+
+            print("[WeatherKit] ✅ \(condition)")
+            print("[WeatherKit]   Temp: \(temperatureDisplay) (\(String(format: "%.1f", current.temperature))°C)")
+            print("[WeatherKit]   Wind: \(windMPH)")
+            print("[WeatherKit]   Humidity: \(humidity)")
+            print("[WeatherKit]   Visibility: \(visibility)")
+            print("[WeatherKit]   Dew Point: \(dewpoint ?? "nil")")
+            print("[WeatherKit]   Pressure: \(pressure ?? "nil")")
+            print("[WeatherKit]   UV Index: \(current.uvIndex)")
+        } else {
+            print("[WeatherKit] ❌ No current weather data")
         }
 
         forecastDays = weatherKitService.dailyForecast.map { day in
@@ -160,7 +180,25 @@ class BeachViewModel: ObservableObject {
             )
         }
 
+        if forecastDays.isEmpty {
+            print("[WeatherKit]   Forecast: empty")
+        } else {
+            print("[WeatherKit]   Forecast: \(forecastDays.count) day(s)")
+            for day in forecastDays {
+                print("[WeatherKit]     \(day.name): \(day.temp)°F — \(day.shortForecast)")
+            }
+        }
+
         isLoading = false
+    }
+    
+    func celsiusToFarenheit(_ celsius: Double) -> String {
+        
+        let fTemp = (celsius * 9/5) + 32
+        let fTempRounded = fTemp.rounded()
+        let formattedFTemp = fTempRounded.formatted(.number.precision(.fractionLength(0)))
+        
+        return String("\(formattedFTemp)°")
     }
 
     private func degreesToCompass(_ degrees: Double) -> String {

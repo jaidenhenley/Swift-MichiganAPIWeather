@@ -38,6 +38,7 @@ struct BeachView: View {
         .task {
             await viewModel.selectBeach(beach, beachID: beachID)
         }
+        .environmentObject(viewModel)
     }
 }
 

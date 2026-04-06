@@ -22,9 +22,11 @@ struct ContactWebsitePhone: View {
             }
         }
         .padding()
-        .background(.ultraThinMaterial)
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .foregroundStyle(.gray.opacity(0.2))
+        )
         .cornerRadius(25)
-        .padding(.horizontal)
         .padding(.bottom, 10)
     }
 }

@@ -71,7 +71,7 @@ class WeatherKitService {
             }
             
             
-            print("Forecast\(dailyForecast)")
+            print("[Forecast]\(dailyForecast)")
         } catch {
             self.error = error
             print("WeatherKit fetch error: \(error)")

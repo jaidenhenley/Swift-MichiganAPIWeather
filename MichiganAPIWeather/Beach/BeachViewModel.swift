@@ -14,7 +14,7 @@ import Foundation
 struct BeachDetail {
     let beachName: String
     let buoyData: BuoyData?
-    let alerts: [AlertFeature]
+    let alerts: [AlertFeature]?
     let traffic: [TrafficData]
     let holiday: [Holiday]?
     let currentWeather: CurrentWeatherSnapshot?

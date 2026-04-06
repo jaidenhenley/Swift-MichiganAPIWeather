@@ -27,12 +27,12 @@ struct BeachView: View {
                         
                         BeachSummaryView(beachName: viewModel.beachName.isEmpty ? "" : viewModel.beachName, beachdescription: beach.beachDescription)
                             .padding(.horizontal, 16)
-                        Color.clear.frame(height: 100)
-
+                        
+                        ContactWebsitePhone()
+                            .padding([.bottom,.horizontal], 16)
+                        
                     }
                 }
-                ContactWebsitePhone()
-                    .padding(.bottom, 10)
             }
         }
         .task {

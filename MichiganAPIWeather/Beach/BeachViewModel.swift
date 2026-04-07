@@ -8,11 +8,13 @@
 import Combine
 import CoreLocation
 import Foundation
+import SwiftUI
 
 // MARK: - Combined model the view consumes
 
 struct BeachDetail {
     let beachName: String
+    let beachImage: ImageResource
     let buoyData: BuoyData?
     let alerts: [AlertFeature]?
     let traffic: [TrafficData]
@@ -86,6 +88,21 @@ class BeachViewModel: ObservableObject {
                 return "Right in the heart of Detroit, Belle Isle Beach sits on the island park in the Detroit River and offers a unique urban waterfront experience with views of the city skyline and the Canadian shore."
             case .tawasPointStatePark:
                 return "Known as the Sleeping Bear of Lake Huron, Tawas Point State Park features a curved sandy spit, a historic lighthouse, and calm, shallow waters that make it one of Michigan's most family-friendly beaches."
+            }
+        }
+        
+        var beachImage: ImageResource {
+            switch self {
+            case .sleepingBear:
+                    .sleepingBear
+            case .grandHavenStatePark:
+                    .grandHaven
+            case .silverLakeBeach:
+                    .silverLake
+            case .belleIsleBeach:
+                    .belleIsle
+            case .tawasPointStatePark:
+                    .smallImagePlaceholder
             }
         }
     }

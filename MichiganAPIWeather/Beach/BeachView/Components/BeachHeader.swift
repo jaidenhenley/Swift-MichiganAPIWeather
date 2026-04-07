@@ -9,13 +9,16 @@ import SwiftUI
 
 struct BeachHeader: View {
     @EnvironmentObject var viewModel: BeachViewModel
+    let image: ImageResource
     
     var body: some View {
         HStack() {
             ZStack {
-                Text("image of beach")
-                RoundedRectangle(cornerRadius: 20)
-                    .frame(width: 220, height: 220).foregroundColor(.gray.opacity(0.2))
+                Image(image)
+                    .resizable()
+                    .scaledToFit()
+                    .cornerRadius(20)
+                    .frame(width: 220, height: 220)
             }
             
                 VStack(spacing: 5) {

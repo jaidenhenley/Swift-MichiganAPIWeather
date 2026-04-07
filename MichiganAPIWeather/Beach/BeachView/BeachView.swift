@@ -21,7 +21,7 @@ struct BeachView: View {
                 ScrollView {
                     VStack {
                         Spacer()
-                        BeachHeader()
+                        BeachHeader(image: beach.beachImage)
                         WeatherForecastRow().padding(.horizontal, 16)
                         CrowdMeterView()
                         

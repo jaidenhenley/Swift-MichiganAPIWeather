@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct BeachView: View {
-    @ObservedObject private var viewModel = BeachViewModel()
+    @StateObject private var viewModel = BeachViewModel()
     let beach: BeachViewModel.ViewBeach
     let beachID: Int
 

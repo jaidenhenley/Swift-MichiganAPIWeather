@@ -35,6 +35,7 @@ class BeachViewModel: ObservableObject {
     @Published var dewpoint: String?
     @Published var pressure: String?
     @Published var forecastDays: [ForecastDay] = []
+    @Published var hourForecast: [HourForecast] = []
     @Published var activeAlerts: Int = 0
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
@@ -176,8 +177,19 @@ class BeachViewModel: ObservableObject {
                 name: day.dayName,
                 temp: day.highF,
                 icon: nil,
-                shortForecast: day.condition
+                shortForecast: day.condition,
+                sunrise: dateToTime(day.sunrise),
+                sunset: dateToTime(day.sunset),
+                windSpeed: windSpeedToMPH(day.windSpeed),
+                windDirection: angleToDirection(day.windDirection)
             )
+        }
+        
+        hourForecast = weatherKitService.hourlyForecast.map { hour in
+            HourForecast(
+                time: dateToTime(hour.time),
+                icon: hour.icon,
+                temp: formatTemp(hour.temp))
         }
 
         if forecastDays.isEmpty {
@@ -200,7 +212,65 @@ class BeachViewModel: ObservableObject {
         
         return String("\(formattedFTemp)°")
     }
+ 
+    func dateToTime(_ time: Date!) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "h:mm a"
+        let formattedTime = formatter.string(from: time)
+        return formattedTime
+    }
+    
+    func formatTemp(_ temp: Measurement<UnitTemperature>) -> String {
+        let f = temp.converted(to: .fahrenheit)
+        
+        let formatter = MeasurementFormatter()
+        formatter.unitStyle = .short
+        formatter.numberFormatter.maximumFractionDigits = 0
+        formatter.unitOptions = .providedUnit
+        
+        let formattedString = formatter.string(from: f)
+        return formattedString
+    }
+    
+    
+    
+    func windSpeedToMPH(_ speed: Measurement<UnitSpeed>) -> String {
+        let windSpeed = speed
+        let formatter = MeasurementFormatter()
+        
+        formatter.unitOptions = .providedUnit
+        formatter.numberFormatter.maximumFractionDigits = 1
+        
+        let formattedSpeed = formatter.string(from: windSpeed)
+        return formattedSpeed
+    }
+    
+    func angleToDirection(_ angle: Measurement<UnitAngle>) -> CompassDirection {
+        let degrees = angle.converted(to: .degrees).value.truncatingRemainder(dividingBy: 360)
+          let normalized = degrees < 0 ? degrees + 360 : degrees
 
+          switch normalized {
+          case 348.75..<360, 0..<11.25:   return .north
+          case 11.25..<33.75:             return .northNortheast
+          case 33.75..<56.25:             return .northeast
+          case 56.25..<78.75:             return .eastNortheast
+          case 78.75..<101.25:            return .east
+          case 101.25..<123.75:           return .eastSoutheast
+          case 123.75..<146.25:           return .southeast
+          case 146.25..<168.75:           return .southSoutheast
+          case 168.75..<191.25:           return .south
+          case 191.25..<213.75:           return .southSouthwest
+          case 213.75..<236.25:           return .southwest
+          case 236.25..<258.75:           return .westSouthwest
+          case 258.75..<281.25:           return .west
+          case 281.25..<303.75:           return .westNorthwest
+          case 303.75..<326.25:           return .northwest
+          case 326.25..<348.75:           return .northNorthwest
+          default:                        return .north
+              
+          }
+    }
+    
     private func degreesToCompass(_ degrees: Double) -> String {
         let directions = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE",
                           "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"]

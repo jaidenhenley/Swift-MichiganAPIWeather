@@ -7,29 +7,22 @@
 
 import SwiftUI
 
-struct WeatherDay: Identifiable, Hashable {
-    
-    
-    let id = UUID()
-    let time: String
-    let weatherImage: String
-    let temperature: Int
-}
+
 
 struct HourColumn: View {
-    let day: WeatherDay
+    let hour: HourForecast
     
     var body: some View {
         VStack(spacing: 6) {
-            Text(day.time)
+            Text(hour.time)
                 .font(.system(size: 10, weight: .semibold))
                 .foregroundColor(.primary)
             
-            Image(systemName: day.weatherImage)
+            Image(systemName: hour.icon)
                 .symbolVariant(.fill)
                 .font(.system(size: 20))
             
-            Text("\(day.temperature)°")
+            Text(hour.temp)
                 .font(.system(size: 14, weight: .bold))
         }
         .frame(maxWidth: .infinity)

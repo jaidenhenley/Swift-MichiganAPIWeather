@@ -8,31 +8,17 @@
 import SwiftUI
 
 struct DailyForecastView: View {
-    @Binding var isShowingSheet: Bool
-    let days = ["TOMORROW", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY", "MONDAY"]
+    @State private var isShowingSheet = false
+    @State private var selectedDay: ForecastDay?
+    @EnvironmentObject var viewModel: BeachViewModel
     
     var body: some View {
         VStack(spacing: 0) {
-            ForEach(days, id: \.self) { day in
-                Button {
-                    isShowingSheet = true
-                } label: {
-                    VStack(alignment: .leading) {
-                        Text(day)
-                            .font(.caption)
-                            .fontWeight(.bold)
-                            .foregroundColor(.secondary)
-                    }
-                    .padding(15)
-                    .frame(maxWidth: .infinity, minHeight: 80, alignment: .topLeading)
-                    .background(
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(Color.gray.opacity(0.1))
-                    )
+            ForEach(viewModel.forecastDays) { day in
+                DailyForecastRow(day: day) { tappedDay in
+                    selectedDay = tappedDay
+                    
                 }
-                .buttonStyle(.plain)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 5)
             }
         }
         .padding(.vertical, 10)
@@ -41,5 +27,50 @@ struct DailyForecastView: View {
                 .fill(Color.white.opacity(0.4))
         )
         .padding(.horizontal)
+        .sheet(item: $selectedDay) { day in
+            ForecastSheet(day: day)
+                .presentationDetents([.fraction(0.35), .medium])
+                .presentationDragIndicator(.visible)
+        }
+
+        
+    }
+}
+
+struct DailyForecastRow: View {
+    
+    let day: ForecastDay
+    let onTap: (ForecastDay) -> Void
+
+    
+    var body: some View {
+        Button {
+            onTap(day)
+        } label: {
+            VStack(alignment: .leading) {
+                HStack {
+                    Text(day.name)
+                        .font(.caption)
+                        .fontWeight(.bold)
+                        .foregroundColor(.secondary)
+                    
+                    Text(String(day.temp))
+                        .font(.caption)
+                        .fontWeight(.bold)
+                        .foregroundColor(.secondary)
+                    
+                    Text(day.shortForecast)
+                }
+            }
+            .padding(15)
+            .frame(maxWidth: .infinity, minHeight: 80, alignment: .topLeading)
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(Color.gray.opacity(0.1))
+            )
+        }
+        .buttonStyle(.plain)
+        .padding(.horizontal, 12)
+        .padding(.vertical, 5)
     }
 }

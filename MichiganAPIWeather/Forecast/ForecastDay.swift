@@ -7,10 +7,15 @@
 
 import Foundation
 
-struct ForecastDay: Identifiable {
+struct ForecastDay: Identifiable, Hashable {
     let id = UUID()
     let name: String
     let temp: Int
     let icon: URL?
     let shortForecast: String
+    let sunrise: String
+    let sunset: String
+    let windSpeed: String
+    let windDirection: CompassDirection
+    
 }

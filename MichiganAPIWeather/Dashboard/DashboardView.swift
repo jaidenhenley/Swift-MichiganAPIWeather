@@ -44,11 +44,11 @@ struct DashboardView: View {
                         Headline(text: "Beaches near you")
                         ScrollView(.horizontal) {
                             HStack {
-                                NearBeachRow(image: .smallImagePlaceholder, beach: .belleIsleBeach, beachID: 1)
-                                NearBeachRow(image: .smallImagePlaceholder, beach: .grandHavenStatePark, beachID: 2)
-                                NearBeachRow(image: .smallImagePlaceholder, beach: .silverLakeBeach, beachID: 3)
-                                NearBeachRow(image: .smallImagePlaceholder, beach: .sleepingBear, beachID: 4)
-                                NearBeachRow(image: .smallImagePlaceholder, beach: .tawasPointStatePark, beachID: 5)
+                                NearBeachRow(image: .belleIsle, beach: .belleIsleBeach, beachName: "Belle Isle Beach", beachID: 1)
+                                NearBeachRow(image: .grandHaven, beach: .grandHavenStatePark, beachName: "Grand Haven State Park", beachID: 2)
+                                NearBeachRow(image: .silverLake, beach: .silverLakeBeach, beachName: "Silver Lake Beach", beachID: 3)
+                                NearBeachRow(image: .sleepingBear, beach: .sleepingBear, beachName: "Sleeping Bear Dunes", beachID: 4)
+                                NearBeachRow(image: .smallImagePlaceholder, beach: .tawasPointStatePark, beachName: "Tawaw Point State Park", beachID: 5)
                                 
                             }
                             .padding(.horizontal, 16)

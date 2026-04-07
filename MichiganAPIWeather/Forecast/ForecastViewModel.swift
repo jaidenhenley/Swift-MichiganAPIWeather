@@ -36,7 +36,8 @@ class ForecastViewModel: ObservableObject {
                     sunrise: dateToTime(day.sunrise),
                     sunset: dateToTime(day.sunset),
                     windSpeed: windSpeedToMPH(day.windSpeed),
-                    windDirection: angleToDirection(day.windDirection)
+                    windDirection: angleToDirection(day.windDirection),
+                    uvIndex: day.uvIndex
                 )
             }
         }

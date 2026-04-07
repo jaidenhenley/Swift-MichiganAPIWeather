@@ -12,5 +12,6 @@ struct HourForecast: Identifiable, Hashable {
     let time: String
     let icon: String
     let temp: String
+    let uvIndex: Int
     
 }

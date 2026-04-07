@@ -35,6 +35,7 @@ class BeachViewModel: ObservableObject {
     @Published var dewpoint: String?
     @Published var pressure: String?
     @Published var forecastDays: [ForecastDay] = []
+    @Published var hourForecast: [HourForecast] = []
     @Published var activeAlerts: Int = 0
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
@@ -183,6 +184,13 @@ class BeachViewModel: ObservableObject {
                 windDirection: angleToDirection(day.windDirection)
             )
         }
+        
+        hourForecast = weatherKitService.hourlyForecast.map { hour in
+            HourForecast(
+                time: dateToTime(hour.time),
+                icon: hour.icon,
+                temp: formatTemp(hour.temp))
+        }
 
         if forecastDays.isEmpty {
             print("[WeatherKit]   Forecast: empty")
@@ -204,12 +212,24 @@ class BeachViewModel: ObservableObject {
         
         return String("\(formattedFTemp)°")
     }
-    
+ 
     func dateToTime(_ time: Date!) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "h:mm a"
         let formattedTime = formatter.string(from: time)
         return formattedTime
+    }
+    
+    func formatTemp(_ temp: Measurement<UnitTemperature>) -> String {
+        let f = temp.converted(to: .fahrenheit)
+        
+        let formatter = MeasurementFormatter()
+        formatter.unitStyle = .short
+        formatter.numberFormatter.maximumFractionDigits = 0
+        formatter.unitOptions = .providedUnit
+        
+        let formattedString = formatter.string(from: f)
+        return formattedString
     }
     
     

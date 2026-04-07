@@ -74,10 +74,18 @@ struct DailyForecastSnapshot: Identifiable, Sendable {
     let windDirection: Measurement<UnitAngle>
 }
 
+struct HourForecastSnapshot: Identifiable, Sendable {
+    let id = UUID()
+    let time: Date
+    let icon: String
+    let temp: Measurement<UnitTemperature>
+}
+
 @Observable
 class WeatherKitService {
     var current: CurrentWeatherSnapshot?
     var dailyForecast: [DailyForecastSnapshot] = []
+    var hourlyForecast: [HourForecastSnapshot] = []
     var isLoading = false
     var error: Error?
 
@@ -116,6 +124,15 @@ class WeatherKitService {
                     sunset: day.sun.sunset,
                     windSpeed: day.wind.speed,
                     windDirection: day.wind.direction
+                )
+            }
+            let now = Date()
+            
+            hourlyForecast = Array(weather.hourlyForecast.filter { $0.date >= now }.prefix(12)).map { hour in
+                HourForecastSnapshot(
+                    time: hour.date,
+                    icon: hour.symbolName,
+                    temp: hour.temperature
                 )
             }
         } catch {

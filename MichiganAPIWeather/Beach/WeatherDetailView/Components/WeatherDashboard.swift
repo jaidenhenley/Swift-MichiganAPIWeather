@@ -14,7 +14,7 @@ struct WeatherDashboard: View {
         [
             WeatherStat(icon: "thermometer.variable", name: "AIR TEMP", value: "70", unit: "°"),
             WeatherStat(icon: "drop.fill", name: "WATER TEMP", value: "52", unit: "°"),
-            WeatherStat(icon: "wind", name: "WIND", value: "20", unit: "km/h"),
+            WeatherStat(icon: "wind", name: "WIND", value: viewModel.forecastDays.first?.windSpeed ?? "--", unit: viewModel.forecastDays.first.map { $0.windDirection.initials } ?? "--"),
             WeatherStat(icon: "humidity", name: "HUMIDITY", value: "64", unit: "%"),
             WeatherStat(icon: "sunrise.fill", name: "SUNRISE", value: viewModel.forecastDays.first?.sunrise ?? "--", unit: "AM"),
             WeatherStat(icon: "sunset.fill", name: "SUNSET", value: viewModel.forecastDays.first?.sunset ?? "--", unit: "PM")

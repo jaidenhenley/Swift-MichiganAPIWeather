@@ -12,6 +12,7 @@ import SwiftUI
 struct ForecastSheet: View {
     let day: ForecastDay
     
+    
     var body: some View {
         
         
@@ -22,10 +23,10 @@ struct ForecastSheet: View {
                 .padding(.bottom, 10)
 
             WeatherRow(leftLabel: "SUNRISE", leftIcon: "sunrise.fill",
-                       rightLabel: "SUNSET", rightIcon: "sunset.fill", rightValue: "6:42am", leftValue: "7:00pm")
+                       rightLabel: "SUNSET", rightIcon: "sunset.fill", rightValue: day.sunset , leftValue: day.sunrise)
             
             WeatherRow(leftLabel: "HUMIDITY", leftIcon: "humidity.fill",
-                       rightLabel: "WIND", rightIcon: "wind", rightValue: "12mph", leftValue: "N/A")
+                       rightLabel: "WIND", rightIcon: "wind", rightValue: day.windSpeed, leftValue: "N/A")
             
             WeatherRow(leftLabel: "AIR TEMP", leftIcon: "thermometer.medium",
                        rightLabel: "WATER TEMP", rightIcon: "water.waves", rightValue: "N/A", leftValue: String(day.temp) )

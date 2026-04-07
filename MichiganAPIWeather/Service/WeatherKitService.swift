@@ -20,6 +20,47 @@ struct CurrentWeatherSnapshot: Sendable {
     let uvIndex: Int
 }
 
+
+enum CompassDirection {
+    case east
+    case eastNortheast
+    case eastSoutheast
+    case north
+    case northNortheast
+    case northNorthwest
+    case northeast
+    case northwest
+    case south
+    case southSoutheast
+    case southSouthwest
+    case southeast
+    case southwest
+    case west
+    case westNorthwest
+    case westSouthwest
+    
+    var initials: String {
+        switch self {
+        case .north:          return "N"
+        case .northNortheast: return "NNE"
+        case .northeast:      return "NE"
+        case .eastNortheast:  return "ENE"
+        case .east:           return "E"
+        case .eastSoutheast:  return "ESE"
+        case .southeast:      return "SE"
+        case .southSoutheast: return "SSE"
+        case .south:          return "S"
+        case .southSouthwest: return "SSW"
+        case .southwest:      return "SW"
+        case .westSouthwest:  return "WSW"
+        case .west:           return "W"
+        case .westNorthwest:  return "WNW"
+        case .northwest:      return "NW"
+        case .northNorthwest: return "NNW"
+        }
+    }
+}
+
 struct DailyForecastSnapshot: Identifiable, Sendable {
     let id = UUID()
     let date: Date
@@ -29,6 +70,8 @@ struct DailyForecastSnapshot: Identifiable, Sendable {
     let condition: String
     let sunrise: Date?
     let sunset: Date?
+    let windSpeed: Measurement<UnitSpeed>
+    let windDirection: Measurement<UnitAngle>
 }
 
 @Observable
@@ -70,7 +113,9 @@ class WeatherKitService {
                     lowF: Int(day.lowTemperature.converted(to: .fahrenheit).value),
                     condition: day.condition.description,
                     sunrise: day.sun.sunrise,
-                    sunset: day.sun.sunset
+                    sunset: day.sun.sunset,
+                    windSpeed: day.wind.speed,
+                    windDirection: day.wind.direction
                 )
             }
         } catch {

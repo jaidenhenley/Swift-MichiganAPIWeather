@@ -40,7 +40,7 @@ struct BeachHeader: View {
                         Text("WATER TEMP")
                             .font(.caption)
                             .foregroundColor(.secondary)
-                        Text("52°")
+                        Text(viewModel.buoyData?.waterTempC.map { String(format: "%.1f°C", $0) } ?? "N/A")
                             .font(.largeTitle)
                             .bold()
                     }

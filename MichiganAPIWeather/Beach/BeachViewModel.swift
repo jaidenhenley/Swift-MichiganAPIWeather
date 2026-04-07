@@ -41,6 +41,7 @@ class BeachViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var useCelsius: Bool = false
     @Published var selectedBeach: ViewBeach?
+    @Published var uvIndex: Int = 0
 
     // Backend-only data
     @Published var buoyData: BuoyData?
@@ -159,6 +160,7 @@ class BeachViewModel: ObservableObject {
                 : "\(Int(dpF))°F"
 
             pressure = String(format: "%.1f hPa", current.pressure)
+            uvIndex = (current.uvIndex)
 
             print("[WeatherKit] ✅ \(condition)")
             print("[WeatherKit]   Temp: \(temperatureDisplay) (\(String(format: "%.1f", current.temperature))°C)")
@@ -181,7 +183,8 @@ class BeachViewModel: ObservableObject {
                 sunrise: dateToTime(day.sunrise),
                 sunset: dateToTime(day.sunset),
                 windSpeed: windSpeedToMPH(day.windSpeed),
-                windDirection: angleToDirection(day.windDirection)
+                windDirection: angleToDirection(day.windDirection),
+                uvIndex: day.uvIndex
             )
         }
         
@@ -189,7 +192,8 @@ class BeachViewModel: ObservableObject {
             HourForecast(
                 time: dateToTime(hour.time),
                 icon: hour.icon,
-                temp: formatTemp(hour.temp))
+                temp: formatTemp(hour.temp),
+                uvIndex: hour.uvIndex)
         }
 
         if forecastDays.isEmpty {

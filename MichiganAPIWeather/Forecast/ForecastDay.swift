@@ -17,5 +17,5 @@ struct ForecastDay: Identifiable, Hashable {
     let sunset: String
     let windSpeed: String
     let windDirection: CompassDirection
-    
+    let uvIndex: Int
 }

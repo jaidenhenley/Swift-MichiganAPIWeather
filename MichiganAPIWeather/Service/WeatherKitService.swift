@@ -72,6 +72,7 @@ struct DailyForecastSnapshot: Identifiable, Sendable {
     let sunset: Date?
     let windSpeed: Measurement<UnitSpeed>
     let windDirection: Measurement<UnitAngle>
+    let uvIndex: Int
 }
 
 struct HourForecastSnapshot: Identifiable, Sendable {
@@ -79,6 +80,7 @@ struct HourForecastSnapshot: Identifiable, Sendable {
     let time: Date
     let icon: String
     let temp: Measurement<UnitTemperature>
+    let uvIndex: Int
 }
 
 @Observable
@@ -111,6 +113,8 @@ class WeatherKitService {
                 dewPoint: c.dewPoint.converted(to: .celsius).value,
                 pressure: c.pressure.converted(to: .hectopascals).value,
                 uvIndex: c.uvIndex.value,
+                
+                
             )
 
             dailyForecast = Array(weather.dailyForecast.prefix(10)).map { day in
@@ -123,7 +127,8 @@ class WeatherKitService {
                     sunrise: day.sun.sunrise,
                     sunset: day.sun.sunset,
                     windSpeed: day.wind.speed,
-                    windDirection: day.wind.direction
+                    windDirection: day.wind.direction,
+                    uvIndex: day.uvIndex.value
                 )
             }
             let now = Date()
@@ -132,7 +137,8 @@ class WeatherKitService {
                 HourForecastSnapshot(
                     time: hour.date,
                     icon: hour.symbolName,
-                    temp: hour.temperature
+                    temp: hour.temperature,
+                    uvIndex: hour.uvIndex.value
                 )
             }
         } catch {

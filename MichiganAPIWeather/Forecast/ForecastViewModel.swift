@@ -32,11 +32,21 @@ class ForecastViewModel: ObservableObject {
                     name: day.dayName,
                     temp: day.highF,
                     icon: nil,
-                    shortForecast: day.condition
+                    shortForecast: day.condition,
+                    sunrise: dateToTime(day.sunrise),
+                    sunset: dateToTime(day.sunset)
                 )
             }
         }
 
         isLoading = false
+    }
+
+    private func dateToTime(_ time: Date?) -> String {
+        guard let time else { return "--" }
+
+        let formatter = DateFormatter()
+        formatter.dateFormat = "h:mm a"
+        return formatter.string(from: time)
     }
 }

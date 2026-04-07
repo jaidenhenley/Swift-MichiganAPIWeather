@@ -176,7 +176,9 @@ class BeachViewModel: ObservableObject {
                 name: day.dayName,
                 temp: day.highF,
                 icon: nil,
-                shortForecast: day.condition
+                shortForecast: day.condition,
+                sunrise: dateToTime(day.sunrise),
+                sunset: dateToTime(day.sunset)
             )
         }
 
@@ -199,6 +201,13 @@ class BeachViewModel: ObservableObject {
         let formattedFTemp = fTempRounded.formatted(.number.precision(.fractionLength(0)))
         
         return String("\(formattedFTemp)°")
+    }
+    
+    func dateToTime(_ time: Date!) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "h:mm a"
+        let formattedTime = formatter.string(from: time)
+        return formattedTime
     }
 
     private func degreesToCompass(_ degrees: Double) -> String {

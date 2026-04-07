@@ -13,4 +13,6 @@ struct ForecastDay: Identifiable, Hashable {
     let temp: Int
     let icon: URL?
     let shortForecast: String
+    let sunrise: String
+    let sunset: String
 }

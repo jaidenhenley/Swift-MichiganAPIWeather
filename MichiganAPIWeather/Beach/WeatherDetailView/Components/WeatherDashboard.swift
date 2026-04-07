@@ -8,14 +8,18 @@
 import SwiftUI
 
 struct WeatherDashboard: View {
-    
-    let dayStats = [
-        WeatherStat(icon: "thermometer.variable", name: "AIR TEMP", value: "70", unit: "°"),
-        WeatherStat(icon: "drop.fill", name: "WATER TEMP", value: "52", unit: "°"),
-        WeatherStat(icon: "wind", name:"WIND", value: "20", unit: "km/h"),
-        WeatherStat(icon: "humidity", name: "HUMIDITY", value: "64", unit: "%"),
-        WeatherStat(icon: "sunset.fill", name: "SUNSET", value: "6:02", unit: "PM"),
-    ]
+    @EnvironmentObject var viewModel: BeachViewModel
+
+    private var dayStats: [WeatherStat] {
+        [
+            WeatherStat(icon: "thermometer.variable", name: "AIR TEMP", value: "70", unit: "°"),
+            WeatherStat(icon: "drop.fill", name: "WATER TEMP", value: "52", unit: "°"),
+            WeatherStat(icon: "wind", name: "WIND", value: "20", unit: "km/h"),
+            WeatherStat(icon: "humidity", name: "HUMIDITY", value: "64", unit: "%"),
+            WeatherStat(icon: "sunrise.fill", name: "SUNRISE", value: viewModel.forecastDays.first?.sunrise ?? "--", unit: "AM"),
+            WeatherStat(icon: "sunset.fill", name: "SUNSET", value: viewModel.forecastDays.first?.sunset ?? "--", unit: "PM")
+        ]
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {

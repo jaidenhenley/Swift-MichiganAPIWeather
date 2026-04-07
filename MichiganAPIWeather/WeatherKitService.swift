@@ -27,6 +27,8 @@ struct DailyForecastSnapshot: Identifiable, Sendable {
     let highF: Int
     let lowF: Int
     let condition: String
+    let sunrise: Date?
+    let sunset: Date?
 }
 
 @Observable
@@ -57,7 +59,7 @@ class WeatherKitService {
                 visibility: c.visibility.converted(to: .miles).value,
                 dewPoint: c.dewPoint.converted(to: .celsius).value,
                 pressure: c.pressure.converted(to: .hectopascals).value,
-                uvIndex: c.uvIndex.value
+                uvIndex: c.uvIndex.value,
             )
 
             dailyForecast = Array(weather.dailyForecast.prefix(10)).map { day in
@@ -66,7 +68,9 @@ class WeatherKitService {
                     dayName: day.date.formatted(.dateTime.weekday(.wide)),
                     highF: Int(day.highTemperature.converted(to: .fahrenheit).value),
                     lowF: Int(day.lowTemperature.converted(to: .fahrenheit).value),
-                    condition: day.condition.description
+                    condition: day.condition.description,
+                    sunrise: day.sun.sunrise,
+                    sunset: day.sun.sunset
                 )
             }
         } catch {

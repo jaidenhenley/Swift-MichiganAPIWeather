@@ -13,5 +13,5 @@ struct HourForecast: Identifiable, Hashable {
     let icon: String
     let temp: String
     let uvIndex: Int
-    
+    let chanceOfPrecipitation: Double
 }

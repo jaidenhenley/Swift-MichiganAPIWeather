@@ -29,7 +29,8 @@ struct ForecastSheet: View {
                        rightLabel: "WIND", rightIcon: "wind", rightValue: day.windSpeed, leftValue: String(day.uvIndex))
             
             WeatherRow(leftLabel: "AIR TEMP", leftIcon: "thermometer.medium",
-                       rightLabel: "WATER TEMP", rightIcon: "water.waves", rightValue: "N/A", leftValue: String(day.temp) )
+                       rightLabel: "CHANCE OF RAIN", rightIcon: "cloud.rain", rightValue: String(format: "%.1f%%", day.chanceOfPrecipitation * 100), leftValue: String(day.temp))
+            
             
             Spacer()
             

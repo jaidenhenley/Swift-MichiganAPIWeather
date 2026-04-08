@@ -18,4 +18,5 @@ struct ForecastDay: Identifiable, Hashable {
     let windSpeed: String
     let windDirection: CompassDirection
     let uvIndex: Int
+    let chanceOfPrecipitation: Double
 }

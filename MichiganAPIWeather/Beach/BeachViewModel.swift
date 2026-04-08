@@ -44,6 +44,7 @@ class BeachViewModel: ObservableObject {
     @Published var useCelsius: Bool = false
     @Published var selectedBeach: ViewBeach?
     @Published var uvIndex: Int = 0
+    @Published var chanceOfPrecipitation: Double = 0
 
     // Backend-only data
     @Published var buoyData: BuoyData?
@@ -178,6 +179,7 @@ class BeachViewModel: ObservableObject {
 
             pressure = String(format: "%.1f hPa", current.pressure)
             uvIndex = (current.uvIndex)
+            chanceOfPrecipitation = (current.chanceOfPrecipitation)
 
             print("[WeatherKit] ✅ \(condition)")
             print("[WeatherKit]   Temp: \(temperatureDisplay) (\(String(format: "%.1f", current.temperature))°C)")
@@ -201,7 +203,8 @@ class BeachViewModel: ObservableObject {
                 sunset: dateToTime(day.sunset),
                 windSpeed: windSpeedToMPH(day.windSpeed),
                 windDirection: angleToDirection(day.windDirection),
-                uvIndex: day.uvIndex
+                uvIndex: day.uvIndex,
+                chanceOfPrecipitation: day.chanceOfPrecipitation
             )
         }
         
@@ -210,7 +213,9 @@ class BeachViewModel: ObservableObject {
                 time: dateToTime(hour.time),
                 icon: hour.icon,
                 temp: formatTemp(hour.temp),
-                uvIndex: hour.uvIndex)
+                uvIndex: hour.uvIndex,
+                chanceOfPrecipitation: hour.chanceOfPrecipitation,
+            )
         }
 
         if forecastDays.isEmpty {
@@ -253,7 +258,10 @@ class BeachViewModel: ObservableObject {
         return formattedString
     }
     
-    
+    func chanceOfPrecipToPercent(chance: Double) -> String {
+        String(format: "%.1f%%", chance * 100)
+    }
+
     
     func windSpeedToMPH(_ speed: Measurement<UnitSpeed>) -> String {
         let windSpeed = speed

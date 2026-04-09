@@ -13,12 +13,6 @@ struct BeachHeader: View {
     
     var body: some View {
         HStack {
-                Image(image)
-                    .resizable()
-                    .scaledToFit()
-                    .cornerRadius(20)
-                    .frame(width: 220, height: 220)
-            
                 VStack(spacing: 16) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 20)
@@ -57,6 +51,9 @@ struct BeachHeader: View {
                     
                 }
             }
+            UVView()
+                .frame(width: 230, height: 200)
         }
+        .environmentObject(viewModel)
     }
 }

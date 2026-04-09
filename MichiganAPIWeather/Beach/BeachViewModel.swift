@@ -18,7 +18,7 @@ struct BeachDetail {
     let buoyData: BuoyData?
     let alerts: [AlertFeature]?
     let traffic: [TrafficData]
-    let holiday: [Holiday]?
+    let holiday: Bool = false
     let currentWeather: CurrentWeatherSnapshot?
     let dailyForecast: [DailyForecastSnapshot]
 }
@@ -45,11 +45,18 @@ class BeachViewModel: ObservableObject {
     @Published var selectedBeach: ViewBeach?
     @Published var uvIndex: Int = 0
     @Published var chanceOfPrecipitation: Double = 0
-
+    
+    // Crowd Meter Data
+    @Published var todayCrowd: CrowdLevel?
+    @Published var forecastCrowd: [CrowdLevel] = []
+    
+    let crowdPredictor = CrowdPredictor()
+    
     // Backend-only data
     @Published var buoyData: BuoyData?
     @Published var traffic: [TrafficData] = []
-    @Published var holiday: [Holiday]?
+    @Published var holiday: Bool = false
+    
 
     enum ViewBeach: CaseIterable {
         case sleepingBear
@@ -227,8 +234,47 @@ class BeachViewModel: ObservableObject {
             }
         }
 
+        print(forecastCrowd)
+        if let response { loadCrowdPredictions(response: response) }
         isLoading = false
     }
+    
+    func loadCrowdPredictions(response: BeachDetailResponse) {
+        print("Load crowd Predictions loaded")
+        let waterTemp = buoyData?.waterTempC.map { $0 * 9/5 + 32 }
+        
+        //Today
+        guard let today = weatherKitService.dailyForecast.first else { return }
+        print("[Crowd] dailyForecast count: \(weatherKitService.dailyForecast.count)")
+        todayCrowd = crowdPredictor.predict(
+            for: .now,
+            tempMax: Double(today.highF),
+            tempMin: Double(today.lowF),
+            precipitation: today.chanceOfPrecipitation,
+            windMax: today.windSpeed.converted(to: .milesPerHour).value,
+            waterTemp: waterTemp,
+            isHoliday: response.holiday
+        )
+        
+        //Forecast
+        forecastCrowd = weatherKitService.dailyForecast.map { day in
+            crowdPredictor.predict(
+                for: day.date,
+                tempMax: Double(day.highF),
+                tempMin: Double(day.lowF),
+                precipitation: day.chanceOfPrecipitation,
+                windMax: day.windSpeed.converted(to: .milesPerHour).value,
+                waterTemp: waterTemp,
+                isHoliday: response.holiday
+            )
+        }
+        
+        for (i, level) in forecastCrowd.enumerated() {
+            let dayName = weatherKitService.dailyForecast[safe: i]?.dayName ?? "Day \(i)"
+            print("[Crowd] \(dayName): \(level.label)")
+        }
+    }
+    
     
     func celsiusToFarenheit(_ celsius: Double) -> String {
         

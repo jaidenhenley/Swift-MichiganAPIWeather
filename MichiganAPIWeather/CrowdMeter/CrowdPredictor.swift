@@ -12,7 +12,7 @@ class CrowdPredictor {
     private let model = try? BeachCrowdClassifier(configuration: MLModelConfiguration())
         
     
-    func predict(for date: Date, tempMax: Double, tempMin: Double, precipitation: Double, windMax: Double, waterTemp: Double?) -> CrowdLevel {
+    func predict(for date: Date, tempMax: Double, tempMin: Double, precipitation: Double, windMax: Double, waterTemp: Double?, isHoliday: Bool) -> CrowdLevel {
         let cal = Calendar.current
         let month = cal.component(.month, from: date)
         let dow = cal.component(.weekday, from: date) - 1
@@ -29,14 +29,14 @@ class CrowdPredictor {
             "month_cos":      monthCos,
             "day_of_week":    Double(dow),
             "is_weekend":     Double(isWeekend ? 1 : 0),
-            "is_holiday":     0.0,
             "temp_max":       tempMax,
             "temp_min":       tempMin,
             "temp_range":     tempRange,
             "precipitation":  precipitation,
             "wind_max":       windMax,
             "water_temp_f":   resolvedWaterTemp,
-            "is_peak_summer": isPeakSummer
+            "is_peak_summer": isPeakSummer,
+            "is_holiday": isHoliday ? 1.0 : 0.0
         ]
 
         guard let provider = try? MLDictionaryFeatureProvider(dictionary: featureDict),
@@ -78,8 +78,8 @@ enum CrowdLevel: Int {
     var color: Color {
         switch self {
         case .low:      return .green
-        case .medium:   return .yellow
-        case .high:     return .orange
+        case .medium:   return .orange
+        case .high:     return .red
         }
     }
 }
@@ -267,7 +267,7 @@ func testCrowdModel() {
     let predictor = CrowdPredictor()
     for (name, testDate, tMax, tMin, precip, wind, water, expected) in tests {
         let result = predictor.predict(for: testDate, tempMax: tMax, tempMin: tMin,
-                            precipitation: precip, windMax: wind, waterTemp: water)
+                                       precipitation: precip, windMax: wind, waterTemp: water, isHoliday: false)
         let status = result.rawValue == expected ? "✅" : "❌"
         if result.rawValue == expected { passed += 1 }
         print("\(status) \(name): got \(labels[result.rawValue]), expected \(labels[expected])")

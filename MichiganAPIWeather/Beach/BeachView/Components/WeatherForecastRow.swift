@@ -43,7 +43,7 @@ struct WeatherForecastRow: View {
             }
             .background(
                 RoundedRectangle(cornerRadius: 20)
-                    .fill(Color.hourForecastBackground)
+                    .fill(Color.lightBlue)
             )
             .padding(.horizontal)
             .environmentObject(viewModel)

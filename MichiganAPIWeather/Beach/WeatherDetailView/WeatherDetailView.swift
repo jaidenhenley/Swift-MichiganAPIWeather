@@ -9,22 +9,22 @@ import SwiftUI
 
 struct WeatherDetailView: View {
     @EnvironmentObject var viewModel: BeachViewModel
-
+    
     var body: some View {
-        ZStack(alignment: .top) {
-            Image(.forecastBackground)
-                .resizable()
+        ScrollView {
+            VStack(spacing: 16) {
+                Spacer()
+                WeatherDashboard()
+                DailyForecastView()
                 
-                .ignoresSafeArea()
-            ScrollView {
-                VStack(spacing: 16) {
-                    WeatherDashboard()
-                    DailyForecastView()
-                    
-                }
             }
-           
+            .background(
+                Image(.forecastBackground)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+            )
         }
+        
         .environmentObject(viewModel)
     }
 }

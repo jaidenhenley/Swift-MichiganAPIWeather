@@ -78,8 +78,8 @@ enum CrowdLevel: Int {
     var color: Color {
         switch self {
         case .low:      return .green
-        case .medium:   return .yellow
-        case .high:     return .orange
+        case .medium:   return .orange
+        case .high:     return .red
         }
     }
 }

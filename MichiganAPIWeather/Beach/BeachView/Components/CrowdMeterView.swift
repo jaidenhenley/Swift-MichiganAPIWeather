@@ -9,6 +9,15 @@ struct CrowdMeterView: View {
     var body: some View {
         VStack(spacing: 10) {
             HStack {
+                Text("Current Crowd Prediction")
+                
+                Circle()
+                    .frame(width: 40)
+                    .foregroundStyle(forecastCrowd.first?.color ?? .blue)
+                Text(forecastCrowd.first?.label ?? "N/A")
+            }
+            
+            HStack {
                 Image(systemName: "person.3.fill")
                     .font(.footnote)
                     .bold()
@@ -39,10 +48,10 @@ struct CrowdMeterView: View {
                     .foregroundColor(.green)
                 Spacer()
                 Text("Moderate")
-                    .foregroundColor(.yellow)
+                    .foregroundColor(.orange)
                 Spacer()
                 Text("Busy")
-                    .foregroundColor(.orange)
+                    .foregroundColor(.red)
             }
             .font(.caption)
             .padding(.horizontal, 40)

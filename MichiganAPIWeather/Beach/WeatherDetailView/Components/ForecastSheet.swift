@@ -25,7 +25,7 @@ struct ForecastSheet: View {
             WeatherRow(leftLabel: "SUNRISE", leftIcon: "sunrise.fill",
                        rightLabel: "SUNSET", rightIcon: "sunset.fill", rightValue: day.sunset , leftValue: day.sunrise)
             
-            WeatherRow(leftLabel: "UV INDEX", leftIcon: "Sun.max.fill",
+            WeatherRow(leftLabel: "UV INDEX", leftIcon: "sun.max.fill",
                        rightLabel: "WIND", rightIcon: "wind", rightValue: day.windSpeed, leftValue: String(day.uvIndex))
             
             WeatherRow(leftLabel: "AIR TEMP", leftIcon: "thermometer.medium",

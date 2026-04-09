@@ -32,6 +32,7 @@ struct DashboardView: View {
                 
                 ScrollView {
                     VStack(spacing: 0) {
+                                                
                         ZStack(alignment: .topLeading) {
                             Image(.grandHaven)
                                 .resizable()
@@ -42,9 +43,7 @@ struct DashboardView: View {
                             
                             
                             VStack(alignment: .leading, spacing: 12) {
-                                CustomSearchBar(text: $searchText)
-                                    .padding(.top, 90)
-                                    .padding(.horizontal, 16)
+                               
                                 
                                 Spacer()
                                 
@@ -111,9 +110,11 @@ struct DashboardView: View {
                         }
                     }
                 }
-                
                 .ignoresSafeArea(edges: .top)
-                .toolbarVisibility(.hidden, for: .navigationBar)
+                VStack {
+                    CustomSearchBar(searchText: $searchText)
+                    Spacer()
+                }
             }
         }
     }

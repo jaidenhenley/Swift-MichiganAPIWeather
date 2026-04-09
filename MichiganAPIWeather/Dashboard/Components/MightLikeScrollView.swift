@@ -22,7 +22,7 @@ struct MightLikeScrollView: View {
                                     .scaledToFill()
                                     .frame(width: 332, height: 253 * 0.7)
                                     .clipped()
-                                HeartViewUnselected()
+                                HeartView()
                                     .padding()
                             }
                             

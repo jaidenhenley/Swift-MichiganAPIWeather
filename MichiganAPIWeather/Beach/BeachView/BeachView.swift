@@ -19,6 +19,7 @@ struct BeachView: View {
                     Spacer()
                     BeachHeader(image: beach.beachImage)
                     WeatherForecastRow().padding(.horizontal, 16)
+                    Divider().foregroundStyle(.beachViewText).frame(height: 2)
                     CrowdMeterView(forecastCrowd: viewModel.forecastCrowd, forecastDays: viewModel.forecastDays)
                     BeachSummaryView(beachName: viewModel.beachName.isEmpty ? "" : viewModel.beachName, beachdescription: beach.beachDescription)
                         .padding(.horizontal, 16)

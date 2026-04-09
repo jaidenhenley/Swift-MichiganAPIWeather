@@ -19,11 +19,18 @@ struct NearBeachRow: View {
             NavigationLink {
                 BeachView(beach: beach, beachID: beachID)
             } label: {
-                Image(image)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 130, height: 101)
-                    .cornerRadius(12)
+                ZStack(alignment: .topTrailing) {
+                    Image(image)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 95, height: 132)
+                        .clipped()
+                        .cornerRadius(12)
+                    
+                    HeartViewUnselected()
+                        .padding(.top,5)
+                        .padding(.trailing,5)
+                }
             }
             Text(beachName)
                 .font(.caption )
@@ -31,3 +38,4 @@ struct NearBeachRow: View {
         }
     }
 }
+

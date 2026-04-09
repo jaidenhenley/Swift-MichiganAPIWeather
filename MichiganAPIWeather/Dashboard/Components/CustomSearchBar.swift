@@ -18,6 +18,8 @@ struct CustomSearchBar: View {
                 Image(systemName: "magnifyingglass")
                     .foregroundStyle(.secondary)
                     .imageScale(.small)
+               
+
                 
                 TextField("Search...", text: $text)
                     .focused($isFocused)
@@ -37,6 +39,7 @@ struct CustomSearchBar: View {
                     }
                     .transition(.opacity.combined(with: .scale))
                 }
+                Image(systemName: "microphone")
             }
             .padding(.horizontal, 12)
             .padding(.vertical, 8)

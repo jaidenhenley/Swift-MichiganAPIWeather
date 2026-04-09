@@ -64,26 +64,77 @@ class BeachViewModel: ObservableObject {
         case silverLakeBeach
         case belleIsleBeach
         case tawasPointStatePark
+        case hollandStatePark
+        case ludingtonStatePark
+        case pJHoffmasterStatePark
+        case warrenDunesStatePark
+        case petoskeyStatePark
+        case picturedRocksNationalLakeShore
+        case presqueIslePark
+        case harrisvilleStatePark
+        case sterlingStatePark
+        case muskegonStatePark
+        case saugatuckDunesStatePark
+        case southHavenSouthBeach
+        case portCrescentStatePark
+        case albertESleeperStatePark
+        case mclainStatePark
+        case porcupineMountainsWildernessStatePark
+
 
         var beachID: Int {
             switch self {
-            case .sleepingBear:         return 1
-            case .grandHavenStatePark:  return 2
-            case .silverLakeBeach:      return 3
-            case .belleIsleBeach:       return 4
-            case .tawasPointStatePark:  return 5
+            case .sleepingBear:                          return 1
+            case .grandHavenStatePark:                   return 2
+            case .silverLakeBeach:                       return 3
+            case .belleIsleBeach:                        return 4
+            case .tawasPointStatePark:                   return 5
+            case .hollandStatePark:                      return 6
+            case .ludingtonStatePark:                    return 7
+            case .pJHoffmasterStatePark:                 return 8
+            case .warrenDunesStatePark:                  return 9
+            case .petoskeyStatePark:                     return 10
+            case .picturedRocksNationalLakeShore:        return 11
+            case .presqueIslePark:                       return 12
+            case .harrisvilleStatePark:                  return 13
+            case .sterlingStatePark:                     return 14
+            case .muskegonStatePark:                     return 15
+            case .saugatuckDunesStatePark:               return 16
+            case .southHavenSouthBeach:                  return 17
+            case .portCrescentStatePark:                 return 18
+            case .albertESleeperStatePark:               return 19
+            case .mclainStatePark:                       return 20
+            case .porcupineMountainsWildernessStatePark: return 21
             }
         }
 
+
         var beachCoordinates: CLLocationCoordinate2D {
             switch self {
-            case .belleIsleBeach:        return .init(latitude: 42.3416, longitude: -82.9625)
-            case .grandHavenStatePark:   return .init(latitude: 43.0564, longitude: -86.2545)
-            case .silverLakeBeach:       return .init(latitude: 43.6753, longitude: -86.5214)
-            case .sleepingBear:          return .init(latitude: 44.8779, longitude: -86.0590)
-            case .tawasPointStatePark:   return .init(latitude: 44.2572, longitude: -83.4467)
+            case .belleIsleBeach:                        return .init(latitude: 42.3416, longitude: -82.9625)
+            case .grandHavenStatePark:                   return .init(latitude: 43.0564, longitude: -86.2545)
+            case .silverLakeBeach:                       return .init(latitude: 43.6753, longitude: -86.5214)
+            case .sleepingBear:                          return .init(latitude: 44.8779, longitude: -86.0590)
+            case .tawasPointStatePark:                   return .init(latitude: 44.2572, longitude: -83.4467)
+            case .hollandStatePark:                      return .init(latitude: 42.7789, longitude: -86.2048)
+            case .ludingtonStatePark:                    return .init(latitude: 44.0349, longitude: -86.5018)
+            case .pJHoffmasterStatePark:                 return .init(latitude: 43.1329, longitude: -86.2654)
+            case .warrenDunesStatePark:                  return .init(latitude: 41.9153, longitude: -86.5934)
+            case .petoskeyStatePark:                     return .init(latitude: 45.4068, longitude: -84.9086)
+            case .picturedRocksNationalLakeShore:        return .init(latitude: 46.5643, longitude: -86.3163)
+            case .presqueIslePark:                       return .init(latitude: 46.5880, longitude: -87.3818)
+            case .harrisvilleStatePark:                  return .init(latitude: 44.6475, longitude: -83.2976)
+            case .sterlingStatePark:                     return .init(latitude: 41.9200, longitude: -83.3415)
+            case .muskegonStatePark:                     return .init(latitude: 43.2485, longitude: -86.3339)
+            case .saugatuckDunesStatePark:               return .init(latitude: 42.6968, longitude: -86.1903)
+            case .southHavenSouthBeach:                  return .init(latitude: 42.4031, longitude: -86.2736)
+            case .portCrescentStatePark:                 return .init(latitude: 44.0103, longitude: -83.0508)
+            case .albertESleeperStatePark:               return .init(latitude: 43.9726, longitude: -83.2055)
+            case .mclainStatePark:                       return .init(latitude: 47.2371, longitude: -88.6088)
+            case .porcupineMountainsWildernessStatePark: return .init(latitude: 46.7811, longitude: -89.6807)
             }
         }
+
 
         var beachDescription: String {
             switch self {
@@ -97,9 +148,41 @@ class BeachViewModel: ObservableObject {
                 return "Right in the heart of Detroit, Belle Isle Beach sits on the island park in the Detroit River and offers a unique urban waterfront experience with views of the city skyline and the Canadian shore."
             case .tawasPointStatePark:
                 return "Known as the Sleeping Bear of Lake Huron, Tawas Point State Park features a curved sandy spit, a historic lighthouse, and calm, shallow waters that make it one of Michigan's most family-friendly beaches."
+            case .hollandStatePark:
+                return "At the mouth of Lake Macatawa where it meets Lake Michigan, Holland State Park is home to one of Michigan's most photographed lighthouses and a wide sandy beach that draws visitors from across the Midwest."
+            case .ludingtonStatePark:
+                return "Nestled between Hamlin Lake and Lake Michigan, Ludington State Park offers miles of undeveloped shoreline, towering dunes, and some of the clearest freshwater beaches in the state — a true escape from the everyday."
+            case .pJHoffmasterStatePark:
+                return "Stretching three miles along Lake Michigan's eastern shore, P.J. Hoffmaster State Park is a quiet gem in Muskegon County featuring forested dunes, pristine beaches, and an interpretive center dedicated to the Great Lakes dune ecosystem."
+            case .warrenDunesStatePark:
+                return "Just 90 minutes from Chicago, Warren Dunes State Park packs dramatic 260-foot dunes, wide sandy beaches, and steady Lake Michigan winds into one of Southwest Michigan's most visited natural areas."
+            case .petoskeyStatePark:
+                return "Tucked along the shores of Little Traverse Bay, Petoskey State Park is as well known for its petoskey stone hunting along the shoreline as it is for its sweeping views of one of northern Lake Michigan's most beautiful bays."
+            case .picturedRocksNationalLakeShore:
+                return "Spanning 42 miles of Lake Superior's southern shoreline, Pictured Rocks National Lakeshore is defined by its towering multicolored sandstone cliffs, sea caves, and remote beaches that feel as wild as any coastline in North America."
+            case .presqueIslePark:
+                return "A 323-acre peninsula jutting into Lake Superior at the edge of Marquette, Presque Isle Park offers rocky shoreline trails, crashing Superior waves, and stunning views of the largest of the Great Lakes in every direction."
+            case .harrisvilleStatePark:
+                return "One of Michigan's smaller but most charming state parks, Harrisville sits right on the shores of Lake Huron in the heart of the Sunrise Coast — offering a quiet beach, a picturesque harbor, and easy access to the M-23 Heritage Route."
+            case .sterlingStatePark:
+                return "The only Michigan state park on Lake Erie, Sterling State Park in Monroe offers sandy beaches, calm waters, and some of the best freshwater fishing and birdwatching in the region, just minutes from the Ohio border."
+            case .muskegonStatePark:
+                return "Sitting between Lake Michigan and Muskegon Lake, Muskegon State Park offers two miles of open Lake Michigan shoreline alongside a mile of calmer lake frontage — giving swimmers, paddlers, and beachcombers plenty of options in one park."
+            case .saugatuckDunesStatePark:
+                return "A quieter alternative to the busier West Michigan beach towns, Saugatuck Dunes State Park stretches 2.5 miles along Lake Michigan with pristine sand, forested dunes, and 13 miles of trails winding through one of the last undeveloped stretches of the lakeshore."
+            case .southHavenSouthBeach:
+                return "Framed by South Haven's iconic red lighthouse at the mouth of the Black River, South Beach is one of West Michigan's most beloved summer destinations — offering golden sand, calm swimming waters, and a charming harbor town just steps away."
+            case .portCrescentStatePark:
+                return "Curving along three miles of sandy Lake Huron shoreline at the tip of Michigan's Thumb, Port Crescent State Park is one of the darkest sky locations in the Lower Peninsula, making it as popular after sunset as it is during the day."
+            case .albertESleeperStatePark:
+                return "Set among rare dune forest on the shores of Saginaw Bay, Albert E. Sleeper State Park offers a wide sandy beach, four miles of wooded trails, and a peaceful alternative to the busier resort towns of Michigan's Thumb."
+            case .mclainStatePark:
+                return "Perched on the northern tip of the Keweenaw Peninsula where it meets Lake Superior, McLain State Park offers two miles of remote sandy beach, dramatic Superior sunsets, and a front-row seat to one of the wildest stretches of shoreline in the Great Lakes."
+            case .porcupineMountainsWildernessStatePark:
+                return "Michigan's largest state park, the Porcupine Mountains stretch along Lake Superior's shore in the remote western Upper Peninsula — offering a rugged Union Bay beach, ancient old-growth forest, and a true wilderness experience unlike anywhere else in the Midwest."
             }
         }
-        
+
         var beachImage: ImageResource {
             switch self {
             case .sleepingBear:
@@ -111,6 +194,38 @@ class BeachViewModel: ObservableObject {
             case .belleIsleBeach:
                     .belleIsle
             case .tawasPointStatePark:
+                    .smallImagePlaceholder
+            case .hollandStatePark:
+                    .smallImagePlaceholder
+            case .ludingtonStatePark:
+                    .smallImagePlaceholder
+            case .pJHoffmasterStatePark:
+                    .smallImagePlaceholder
+            case .warrenDunesStatePark:
+                    .smallImagePlaceholder
+            case .petoskeyStatePark:
+                    .smallImagePlaceholder
+            case .picturedRocksNationalLakeShore:
+                    .smallImagePlaceholder
+            case .presqueIslePark:
+                    .smallImagePlaceholder
+            case .harrisvilleStatePark:
+                    .smallImagePlaceholder
+            case .sterlingStatePark:
+                    .smallImagePlaceholder
+            case .muskegonStatePark:
+                    .smallImagePlaceholder
+            case .saugatuckDunesStatePark:
+                    .smallImagePlaceholder
+            case .southHavenSouthBeach:
+                    .smallImagePlaceholder
+            case .portCrescentStatePark:
+                    .smallImagePlaceholder
+            case .albertESleeperStatePark:
+                    .smallImagePlaceholder
+            case .mclainStatePark:
+                    .smallImagePlaceholder
+            case .porcupineMountainsWildernessStatePark:
                     .smallImagePlaceholder
             }
         }

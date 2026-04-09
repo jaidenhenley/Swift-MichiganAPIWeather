@@ -15,15 +15,16 @@ struct BeachRow: View {
             Image(beach.beachImage)
                 .resizable()
                 .scaledToFill()
-                .frame(width: 56, height: 56)
+                .frame(width: 110, height: 90)
                 .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
             
             VStack(alignment: .leading, spacing: 4) {
                 Text(beach.beachName)
-                    .font(.headline)
-                Text(beach.beachDescription)
                     .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    .bold()
+                Text(beach.shortDescription)
+                    .font(.subheadline)
+                    .foregroundStyle(.beachViewText)
             }
             
             Spacer()
@@ -32,7 +33,20 @@ struct BeachRow: View {
                 .foregroundStyle(.tertiary)
                 .font(.footnote)
         }
+        .frame(width: 360, height: 118)
         .padding(.horizontal)
         .padding(.vertical, 8)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .foregroundStyle(.white)
+        )
+        
     }
+}
+
+#Preview {
+    BeachRow(beach: .belleIsleBeach)
+        .background(
+            Color.black
+        )
 }

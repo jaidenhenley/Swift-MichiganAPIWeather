@@ -37,6 +37,7 @@ struct DashboardView: View {
                                 }
                             }
                             .transition(.move(edge: .trailing).combined(with: .opacity))
+                            .buttonStyle(.plain)
                         }
                     }
                     .padding(.horizontal, 12)

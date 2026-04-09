@@ -31,7 +31,7 @@ struct WeatherForecastRow: View {
                         Text("SEE MORE")
                             .font(.caption)
                             .fontWeight(.bold)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(.beachViewText)
                         Spacer()
                         Image(systemName: "chevron.right")
                             .font(.caption)
@@ -43,7 +43,7 @@ struct WeatherForecastRow: View {
             }
             .background(
                 RoundedRectangle(cornerRadius: 20)
-                    .fill(Color.gray.opacity(0.2))
+                    .fill(Color.hourForecastBackground)
             )
             .padding(.horizontal)
             .environmentObject(viewModel)

@@ -26,7 +26,13 @@ struct DashboardIcons: View {
                     .frame(width: 62, height: 62)
                 
                 if icon == "familyIcon" {
-                    Image(icon) 
+                    Image(icon)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 35, height: 35)
+                        .foregroundStyle(.blueGreen)
+                } else if icon == "familyIconWhite" {
+                    Image(icon)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 35, height: 35)

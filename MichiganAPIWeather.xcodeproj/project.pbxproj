@@ -6,19 +6,55 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		63493FA42F86E9BA00C8EB4A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 63CEE3E62F6C86C4001EA186 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 63CEE3ED2F6C86C4001EA186;
+			remoteInfo = MichiganAPIWeather;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		63493FA02F86E9BA00C8EB4A /* MichiganAPIWeatherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MichiganAPIWeatherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		63CEE3EE2F6C86C4001EA186 /* MichiganAPIWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MichiganAPIWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		63493FAC2F86EA0100C8EB4A /* Exceptions for "MichiganAPIWeather" folder in "MichiganAPIWeatherTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				CrowdMeter/BeachCrowdClassifier.mlpackage,
+			);
+			target = 63493F9F2F86E9BA00C8EB4A /* MichiganAPIWeatherTests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		63493FA12F86E9BA00C8EB4A /* MichiganAPIWeatherTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = MichiganAPIWeatherTests;
+			sourceTree = "<group>";
+		};
 		63CEE3F02F6C86C4001EA186 /* MichiganAPIWeather */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				63493FAC2F86EA0100C8EB4A /* Exceptions for "MichiganAPIWeather" folder in "MichiganAPIWeatherTests" target */,
+			);
 			path = MichiganAPIWeather;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		63493F9D2F86E9BA00C8EB4A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		63CEE3EB2F6C86C4001EA186 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -33,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				63CEE3F02F6C86C4001EA186 /* MichiganAPIWeather */,
+				63493FA12F86E9BA00C8EB4A /* MichiganAPIWeatherTests */,
 				63CEE3EF2F6C86C4001EA186 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				63CEE3EE2F6C86C4001EA186 /* MichiganAPIWeather.app */,
+				63493FA02F86E9BA00C8EB4A /* MichiganAPIWeatherTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,6 +86,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		63493F9F2F86E9BA00C8EB4A /* MichiganAPIWeatherTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 63493FA62F86E9BA00C8EB4A /* Build configuration list for PBXNativeTarget "MichiganAPIWeatherTests" */;
+			buildPhases = (
+				63493F9C2F86E9BA00C8EB4A /* Sources */,
+				63493F9D2F86E9BA00C8EB4A /* Frameworks */,
+				63493F9E2F86E9BA00C8EB4A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				63493FA52F86E9BA00C8EB4A /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				63493FA12F86E9BA00C8EB4A /* MichiganAPIWeatherTests */,
+			);
+			name = MichiganAPIWeatherTests;
+			packageProductDependencies = (
+			);
+			productName = MichiganAPIWeatherTests;
+			productReference = 63493FA02F86E9BA00C8EB4A /* MichiganAPIWeatherTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		63CEE3ED2F6C86C4001EA186 /* MichiganAPIWeather */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 63CEE3F92F6C86C6001EA186 /* Build configuration list for PBXNativeTarget "MichiganAPIWeather" */;
@@ -80,6 +141,10 @@
 				LastSwiftUpdateCheck = 2630;
 				LastUpgradeCheck = 2630;
 				TargetAttributes = {
+					63493F9F2F86E9BA00C8EB4A = {
+						CreatedOnToolsVersion = 26.3;
+						TestTargetID = 63CEE3ED2F6C86C4001EA186;
+					};
 					63CEE3ED2F6C86C4001EA186 = {
 						CreatedOnToolsVersion = 26.3;
 					};
@@ -100,11 +165,19 @@
 			projectRoot = "";
 			targets = (
 				63CEE3ED2F6C86C4001EA186 /* MichiganAPIWeather */,
+				63493F9F2F86E9BA00C8EB4A /* MichiganAPIWeatherTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		63493F9E2F86E9BA00C8EB4A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		63CEE3EC2F6C86C4001EA186 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -115,6 +188,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		63493F9C2F86E9BA00C8EB4A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		63CEE3EA2F6C86C4001EA186 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -124,7 +204,57 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		63493FA52F86E9BA00C8EB4A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 63CEE3ED2F6C86C4001EA186 /* MichiganAPIWeather */;
+			targetProxy = 63493FA42F86E9BA00C8EB4A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		63493FA72F86E9BA00C8EB4A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HCJNSG5PP5;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.henley.jaiden.MichiganAPIWeatherTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MichiganAPIWeather.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MichiganAPIWeather";
+			};
+			name = Debug;
+		};
+		63493FA82F86E9BA00C8EB4A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HCJNSG5PP5;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.henley.jaiden.MichiganAPIWeatherTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MichiganAPIWeather.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MichiganAPIWeather";
+			};
+			name = Release;
+		};
 		63CEE3F72F6C86C6001EA186 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -329,6 +459,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		63493FA62F86E9BA00C8EB4A /* Build configuration list for PBXNativeTarget "MichiganAPIWeatherTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				63493FA72F86E9BA00C8EB4A /* Debug */,
+				63493FA82F86E9BA00C8EB4A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		63CEE3E92F6C86C4001EA186 /* Build configuration list for PBXProject "MichiganAPIWeather" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

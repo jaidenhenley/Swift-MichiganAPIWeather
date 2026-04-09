@@ -12,9 +12,13 @@ struct Headline: View {
     
     var body: some View {
         Text(text)
+            .foregroundStyle(.blueGreen)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .font(.headline)
+            .font(.title2)
             .padding(.horizontal, 16)
-            .bold()
     }
+}
+
+#Preview {
+    Headline(text: "Beach")
 }

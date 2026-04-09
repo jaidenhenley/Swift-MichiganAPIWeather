@@ -8,12 +8,16 @@
 import SwiftUI
 
 struct IconStripView: View {
-    let dashboardCategories = [
-        DashboardCategory(icon: "sun.max", title: "Hot Weather"),
-        DashboardCategory(icon: "fish", title: "Fishing"),
-        DashboardCategory(icon: "familyIcon", title: "Family"),
-        DashboardCategory(icon: "tree", title: "State Park")
-    ]
+    @Environment(\.colorScheme) var colorScheme
+
+    var dashboardCategories: [DashboardCategory] {
+        [
+            DashboardCategory(icon: "figure.hiking", title: "Trails"),
+            DashboardCategory(icon: "fish", title: "Fishing"),
+            DashboardCategory(icon: colorScheme == .dark ? "familyIconWhite" : "familyIcon", title: "Family"),
+            DashboardCategory(icon: "tree", title: "State Park")
+        ]
+    }
     var body: some View {
         
             HStack(spacing: 30) {

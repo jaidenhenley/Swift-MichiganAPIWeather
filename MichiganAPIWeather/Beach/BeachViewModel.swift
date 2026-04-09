@@ -99,7 +99,22 @@ class BeachViewModel: ObservableObject {
                 return "Known as the Sleeping Bear of Lake Huron, Tawas Point State Park features a curved sandy spit, a historic lighthouse, and calm, shallow waters that make it one of Michigan's most family-friendly beaches."
             }
         }
-        
+//        
+//        var searchTags: [String] {
+//            switch self {
+//            case .sleepingBear:
+//                [""]
+//            case .grandHavenStatePark:
+//                <#code#>
+//            case .silverLakeBeach:
+//                <#code#>
+//            case .belleIsleBeach:
+//                <#code#>
+//            case .tawasPointStatePark:
+//                <#code#>
+//            }
+//        }
+//        
         var beachImage: ImageResource {
             switch self {
             case .sleepingBear:

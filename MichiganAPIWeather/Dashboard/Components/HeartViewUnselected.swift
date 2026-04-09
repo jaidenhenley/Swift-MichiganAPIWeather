@@ -8,16 +8,18 @@
 import SwiftUI
 
 struct HeartViewUnselected: View {
+    @State private var isSelected = false
+    
     var body: some View {
 
         Button {
-            
+            isSelected.toggle()
         } label: {
             ZStack {
-                Image(systemName: "heart")
+                Image(systemName: isSelected ? "heart.fill" : "heart")
                     .font(.title)
                     .bold()
-                    .foregroundStyle(.white)
+                    .foregroundStyle(isSelected ? .red : .white)
             }
             .frame(width: 44, height: 44)
             .background(.ultraThinMaterial, in: Circle())

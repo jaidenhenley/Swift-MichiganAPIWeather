@@ -23,7 +23,7 @@ struct BeachView: View {
                         Spacer()
                         BeachHeader(image: beach.beachImage)
                         WeatherForecastRow().padding(.horizontal, 16)
-                        CrowdMeterView()
+                        CrowdMeterView(forecastCrowd: viewModel.forecastCrowd, forecastDays: viewModel.forecastDays)
                         
                         BeachSummaryView(beachName: viewModel.beachName.isEmpty ? "" : viewModel.beachName, beachdescription: beach.beachDescription)
                             .padding(.horizontal, 16)

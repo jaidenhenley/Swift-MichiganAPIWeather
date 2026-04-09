@@ -1,13 +1,11 @@
-//
-//  CrowdMeterView.swift
-//  MichiganAPIWeather
-//
-//  Created by George Clinkscales on 4/2/26.
-//
+
 
 import SwiftUI
 
 struct CrowdMeterView: View {
+    let forecastCrowd: [CrowdLevel]
+    let forecastDays: [ForecastDay]
+
     var body: some View {
         VStack(spacing: 10) {
             HStack {
@@ -15,39 +13,53 @@ struct CrowdMeterView: View {
                     .font(.footnote)
                     .bold()
                     .foregroundColor(.secondary)
-                Text("CROWD METER")
+                Text("CROWD FORECAST")
                     .font(.footnote)
                     .bold()
                     .foregroundColor(.secondary)
-                    .padding(.vertical)
                 Spacer()
             }
-            
             .padding(.horizontal, 40)
-            
+
             HStack(alignment: .bottom, spacing: 8) {
-                ForEach(0..<8, id: \.self) { _ in
-                Rectangle()
-                        .fill(Color.blue)
-                        .frame(width: 35, height: CGFloat.random(in: 40 ... 100))
+                ForEach(Array(forecastCrowd.prefix(7).enumerated()), id: \.offset) { i, level in
+                    VStack(spacing: 4) {
+                        Rectangle()
+                            .fill(level.color)
+                            .frame(width: 35, height: barHeight(for: level))
+                        Text(forecastDays[safe: i]?.name.prefix(3).uppercased() ?? "")
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                    }
                 }
             }
-            
-            
+
             HStack {
-                Text("8am")
+                Text("Low")
+                    .foregroundColor(.green)
                 Spacer()
-                Text("12pm")
+                Text("Moderate")
+                    .foregroundColor(.yellow)
                 Spacer()
-                Text("8pm")
+                Text("Busy")
+                    .foregroundColor(.orange)
             }
             .font(.caption)
-            .foregroundColor(.secondary)
             .padding(.horizontal, 40)
+        }
+    }
+
+    private func barHeight(for level: CrowdLevel) -> CGFloat {
+        switch level {
+        case .low:    return 40
+        case .medium: return 70
+        case .high:   return 100
         }
     }
 }
 
-#Preview {
-    CrowdMeterView()
+extension Collection {
+    subscript(safe index: Index) -> Element? {
+        indices.contains(index) ? self[index] : nil
+    }
 }

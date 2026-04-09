@@ -234,16 +234,18 @@ class BeachViewModel: ObservableObject {
             }
         }
 
-        
+        print(forecastCrowd)
         if let response { loadCrowdPredictions(response: response) }
         isLoading = false
     }
     
     func loadCrowdPredictions(response: BeachDetailResponse) {
+        print("Load crowd Predictions loaded")
         let waterTemp = buoyData?.waterTempC.map { $0 * 9/5 + 32 }
         
         //Today
         guard let today = weatherKitService.dailyForecast.first else { return }
+        print("[Crowd] dailyForecast count: \(weatherKitService.dailyForecast.count)")
         todayCrowd = crowdPredictor.predict(
             for: .now,
             tempMax: Double(today.highF),
@@ -265,6 +267,11 @@ class BeachViewModel: ObservableObject {
                 waterTemp: waterTemp,
                 isHoliday: response.holiday
             )
+        }
+        
+        for (i, level) in forecastCrowd.enumerated() {
+            let dayName = weatherKitService.dailyForecast[safe: i]?.dayName ?? "Day \(i)"
+            print("[Crowd] \(dayName): \(level.label)")
         }
     }
     

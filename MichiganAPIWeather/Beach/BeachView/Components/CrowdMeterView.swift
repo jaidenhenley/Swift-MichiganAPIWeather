@@ -21,11 +21,11 @@ struct CrowdMeterView: View {
                 Image(systemName: "person.3.fill")
                     .font(.footnote)
                     .bold()
-                    .foregroundColor(.secondary)
-                Text("CROWD FORECAST")
+                    .foregroundColor(.beachViewText)
+                Text("CROWD METER")
                     .font(.footnote)
                     .bold()
-                    .foregroundColor(.secondary)
+                    .foregroundColor(.beachViewText)
                 Spacer()
             }
             .padding(.horizontal, 40)
@@ -45,13 +45,13 @@ struct CrowdMeterView: View {
 
             HStack {
                 Text("Low")
-                    .foregroundColor(.green)
+                    .foregroundColor(.crowdMeterBar.opacity(0.4))
                 Spacer()
                 Text("Moderate")
-                    .foregroundColor(.orange)
+                    .foregroundColor(.crowdMeterBar.opacity(0.6))
                 Spacer()
                 Text("Busy")
-                    .foregroundColor(.red)
+                    .foregroundColor(.crowdMeterBar)
             }
             .font(.caption)
             .padding(.horizontal, 40)

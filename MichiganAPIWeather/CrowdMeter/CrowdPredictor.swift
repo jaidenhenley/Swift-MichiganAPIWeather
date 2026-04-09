@@ -87,9 +87,9 @@ enum CrowdLevel: Int {
 
     var color: Color {
         switch self {
-        case .low:      return .green
-        case .medium:   return .orange
-        case .high:     return .red
+        case .low:      return .crowdMeterBar.opacity(0.4)
+        case .medium:   return .crowdMeterBar.opacity(0.7)
+        case .high:     return .crowdMeterBar
         }
     }
 }

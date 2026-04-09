@@ -12,41 +12,49 @@ struct BeachHeader: View {
     let image: ImageResource
     
     var body: some View {
-        HStack() {
-            ZStack {
+        HStack {
                 Image(image)
                     .resizable()
                     .scaledToFit()
                     .cornerRadius(20)
                     .frame(width: 220, height: 220)
-            }
             
-                VStack(spacing: 5) {
+                VStack(spacing: 16) {
                     ZStack {
-                        VStack (alignment: .leading) {
+                        RoundedRectangle(cornerRadius: 20)
+                            .frame(width: 105, height: 105)
+                            .foregroundColor(.beachHeaderBox)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(Color.beachViewText, lineWidth: 1)
+                            )
+                        
+                        VStack {
                             Text("AIR TEMP")
                                 .font(.caption)
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.beachViewText)
                             Text("\(viewModel.temperatureDisplay)")
                                 .font(.largeTitle)
-                                .bold()
                         }
+                    
+                    }
+                ZStack {
                     RoundedRectangle(cornerRadius: 20)
                         .frame(width: 105, height: 105)
-                        .foregroundColor(.gray.opacity(0.2))
-                }
-                ZStack {
-                    VStack (alignment: .leading) {
+                        .foregroundColor(.beachHeaderBox)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(Color.beachViewText, lineWidth: 1)
+                        )
+                    
+                    VStack {
                         Text("WATER TEMP")
                             .font(.caption)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(.beachViewText)
                         Text(viewModel.buoyData?.waterTempC.map { String(format: "%.1f°C", $0) } ?? "N/A")
                             .font(.largeTitle)
-                            .bold()
                     }
-                    RoundedRectangle(cornerRadius: 20)
-                        .frame(width: 105, height: 105)
-                        .foregroundColor(.gray.opacity(0.2))
+                    
                 }
             }
         }

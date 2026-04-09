@@ -14,20 +14,18 @@ struct ActionButton: View {
     
     var body: some View {
         
-        Button(action: action) {
-            VStack(spacing: 8) {
+        VStack {
+            Button(action: action) {
                 Image(systemName: icon)
-                    .font(.title3)
-                Text(title)
-                    .font(.caption2)
-                    .fontWeight(.bold)
+                    .font(.title)
+                    .foregroundStyle(.beachViewText)
+                    .padding(20)
             }
-            .padding(8)
-            .frame(maxWidth: .infinity)
-            .background(Color.white.opacity(0.4))
-            .cornerRadius(15)
+            .buttonStyle(.glass)
+            
+            Text(title)
+                .foregroundStyle(.beachViewText)
         }
-        .buttonStyle(.plain)
     }
 }
 

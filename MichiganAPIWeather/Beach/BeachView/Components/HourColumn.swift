@@ -11,10 +11,11 @@ import SwiftUI
 
 struct HourColumn: View {
     let hour: HourForecast
+    let label: String
     
     var body: some View {
         VStack(spacing: 6) {
-            Text(hour.time)
+            Text(label)
                 .font(.system(size: 10, weight: .semibold))
                 .foregroundColor(.primary)
             

@@ -15,8 +15,8 @@ struct WeatherForecastRow: View {
         VStack(alignment: .leading, spacing: 0) {
             ScrollView(.horizontal) {
                 HStack(spacing: 25) {
-                    ForEach(viewModel.hourForecast) { hour in
-                        HourColumn(hour: hour)
+                    ForEach(viewModel.hourForecast.enumerated(), id: \.offset) {index, hour in
+                        HourColumn(hour: hour, label: index == 0 ? "Now" : hour.time)
                     }
                 }
                 .padding(.horizontal)
@@ -31,10 +31,10 @@ struct WeatherForecastRow: View {
                         Text("SEE MORE")
                             .font(.caption)
                             .fontWeight(.bold)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(.beachViewText)
                         Spacer()
                         Image(systemName: "chevron.right")
-                            .font(.caption)
+                            .font(.title2)
                             .foregroundColor(.secondary)
                     }
                     .padding()
@@ -43,7 +43,7 @@ struct WeatherForecastRow: View {
             }
             .background(
                 RoundedRectangle(cornerRadius: 20)
-                    .fill(Color.gray.opacity(0.2))
+                    .fill(Color.hourForecastBackground)
             )
             .padding(.horizontal)
             .environmentObject(viewModel)

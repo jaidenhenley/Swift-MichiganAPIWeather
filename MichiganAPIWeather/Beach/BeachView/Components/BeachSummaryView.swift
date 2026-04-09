@@ -13,22 +13,25 @@ struct BeachSummaryView: View {
     let beachdescription: String
     
     var body: some View {
-        VStack(alignment: .leading ){
+        VStack(alignment: .leading, spacing: 6){
             Text("OVERVIEW")
                 .font(.caption)
-                .foregroundColor(.secondary)
+                .bold()
+                .foregroundColor(.beachViewText)
             
             Text(beachName)
-                .font(.callout)
+                .font(.title2)
                 .bold()
-                .padding(.vertical,5)
+                .foregroundColor(.beachViewText)
+            
             Text(beachdescription)
-                .foregroundColor(.secondary)
+                .foregroundColor(.beachViewText)
         }
         .padding(25)
         .background(
             RoundedRectangle(cornerRadius: 20)
-                .fill(Color.gray.opacity(0.2)))
+                .fill(Color.beachDescriptionBackground)
+        )
     }
 }
 

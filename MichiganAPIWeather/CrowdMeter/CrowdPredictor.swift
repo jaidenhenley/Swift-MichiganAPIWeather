@@ -9,8 +9,17 @@ import CoreML
 import SwiftUI
 
 class CrowdPredictor {
-    private let model = try? BeachCrowdClassifier(configuration: MLModelConfiguration())
+    private let model: BeachCrowdClassifier?
         
+    init() {
+        if let m = try? BeachCrowdClassifier(configuration: MLModelConfiguration()) {
+            model = m
+            print("[Crowd Predictior] Model Loaded")
+        } else {
+            model = nil
+            print("[CrowdPredictor] Model failed to load")
+        }
+    }
     
     func predict(for date: Date, tempMax: Double, tempMin: Double, precipitation: Double, windMax: Double, waterTemp: Double?, isHoliday: Bool) -> CrowdLevel {
         let cal = Calendar.current
@@ -42,6 +51,7 @@ class CrowdPredictor {
         guard let provider = try? MLDictionaryFeatureProvider(dictionary: featureDict),
               let result = try? model?.model.prediction(from: provider),
               let level = result.featureValue(for: "crowdLevel")?.int64Value else { return .medium }
+        
 
         return CrowdLevel(rawValue: Int(level)) ?? .medium
     }
@@ -77,9 +87,9 @@ enum CrowdLevel: Int {
 
     var color: Color {
         switch self {
-        case .low:      return .green
-        case .medium:   return .orange
-        case .high:     return .red
+        case .low:      return .crowdMeterBar.opacity(0.4)
+        case .medium:   return .crowdMeterBar.opacity(0.7)
+        case .high:     return .crowdMeterBar
         }
     }
 }

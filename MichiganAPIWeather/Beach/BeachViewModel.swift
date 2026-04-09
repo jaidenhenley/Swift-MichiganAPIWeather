@@ -290,7 +290,7 @@ class BeachViewModel: ObservableObject {
  
     func dateToTime(_ time: Date!) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "h:mm a"
+        formatter.dateFormat = "ha"
         let formattedTime = formatter.string(from: time)
         return formattedTime
     }

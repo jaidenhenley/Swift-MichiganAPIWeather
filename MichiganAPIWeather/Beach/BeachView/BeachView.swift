@@ -11,28 +11,27 @@ struct BeachView: View {
     @StateObject private var viewModel = BeachViewModel()
     let beach: BeachViewModel.ViewBeach
     let beachID: Int
-
+    
     var body: some View {
         NavigationStack {
-            ZStack (alignment: .bottom) {
-                Color.gray
-                    .opacity(0.1)
-                    .ignoresSafeArea()
-                ScrollView {
-                    VStack {
-                        Spacer()
-                        BeachHeader(image: beach.beachImage)
-                        WeatherForecastRow().padding(.horizontal, 16)
-                        CrowdMeterView(forecastCrowd: viewModel.forecastCrowd, forecastDays: viewModel.forecastDays)
-                        
-                        BeachSummaryView(beachName: viewModel.beachName.isEmpty ? "" : viewModel.beachName, beachdescription: beach.beachDescription)
-                            .padding(.horizontal, 16)
-                        
-                        ContactWebsitePhone()
-                            .padding([.bottom,.horizontal], 16)
-                        
-                    }
+            ScrollView {
+                VStack {
+                    Spacer()
+                    BeachHeader(image: beach.beachImage)
+                    WeatherForecastRow().padding(.horizontal, 16)
+                    Divider().foregroundStyle(.beachViewText).frame(height: 2)
+                    CrowdMeterView(forecastCrowd: viewModel.forecastCrowd, forecastDays: viewModel.forecastDays)
+                    BeachSummaryView(beachName: viewModel.beachName.isEmpty ? "" : viewModel.beachName, beachdescription: beach.beachDescription)
+                        .padding(.horizontal, 16)
+                    ContactWebsitePhone()
+                        .padding([.bottom,.horizontal], 16)
+                    
                 }
+                .background(
+                    Image(.beachViewBackground)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                )
             }
         }
         .task {

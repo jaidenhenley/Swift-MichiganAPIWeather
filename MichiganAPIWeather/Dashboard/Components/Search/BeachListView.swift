@@ -23,7 +23,12 @@ struct BeachListView: View {
         ScrollView {
             LazyVStack(alignment: .leading) {
                 ForEach(filteredBeaches, id: \.beachID) { beach in
-                    BeachRow(beach: beach)
+                    NavigationLink {
+                        BeachView(beach: beach, beachID: beach.beachID)
+                    } label: {
+                        BeachRow(beach: beach)
+                    }
+                    .buttonStyle(.plain)
                 }
             }
         }

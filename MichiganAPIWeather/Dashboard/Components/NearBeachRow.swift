@@ -23,7 +23,7 @@ struct NearBeachRow: View {
                     Image(image)
                         .resizable()
                         .scaledToFill()
-                        .frame(width: 95, height: 132)
+                        .frame(width: 120, height: 150)
                         .clipped()
                         .cornerRadius(12)
                     

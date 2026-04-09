@@ -10,15 +10,18 @@ import SwiftUI
 struct HeartViewUnselected: View {
     var body: some View {
 
-        ZStack {
-            Circle()
-                .frame(width: 25, height: 25)
-                .foregroundStyle(.thinMaterial)
-            Image(systemName: "heart")
-                .bold()
-                .foregroundStyle(.white)
+        Button {
+            
+        } label: {
+            ZStack {
+                Image(systemName: "heart")
+                    .font(.title)
+                    .bold()
+                    .foregroundStyle(.white)
+            }
+            .frame(width: 44, height: 44)
+            .background(.ultraThinMaterial, in: Circle())
         }
-
     }
 }
 

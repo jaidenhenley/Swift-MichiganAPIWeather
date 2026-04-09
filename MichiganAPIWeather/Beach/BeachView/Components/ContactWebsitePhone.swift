@@ -5,29 +5,31 @@
 //  Created by George Clinkscales on 4/4/26.
 //
 
+import CoreLocation
+import MapKit
 import SwiftUI
 
 struct ContactWebsitePhone: View {
-    var body: some View {
+    @EnvironmentObject private var viewModel: BeachViewModel
 
-        HStack (spacing: 15) {
+    var body: some View {
+        HStack(spacing: 24) {
             ActionButton(icon: "globe", title: "Website") {
                 // URL
             }
             ActionButton(icon: "map", title: "Location") {
-                // Open Maps action
+                guard let beach = viewModel.selectedBeach else { return }
+                let coords = beach.beachCoordinates
+                let placemark = MKPlacemark(coordinate: coords)
+                let mapItem = MKMapItem(placemark: placemark)
+                mapItem.name = viewModel.beachName
+                mapItem.openInMaps()
             }
             ActionButton(icon: "phone.fill", title: "Call") {
                 // Phone call
             }
         }
         .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 16)
-                .foregroundStyle(.gray.opacity(0.2))
-        )
-        .cornerRadius(25)
-        .padding(.bottom, 10)
     }
 }
 

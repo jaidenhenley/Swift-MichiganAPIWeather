@@ -11,15 +11,16 @@ struct WeatherDetailView: View {
     @EnvironmentObject var viewModel: BeachViewModel
 
     var body: some View {
-        ZStack {
-            Color.gray.opacity(0.2)
+        ZStack(alignment: .top) {
+            Image(.forecastBackground)
+                .resizable()
+                
                 .ignoresSafeArea()
             ScrollView {
-                VStack {
+                VStack(spacing: 16) {
                     WeatherDashboard()
                     DailyForecastView()
                     
-                    Spacer()
                 }
             }
            
@@ -27,7 +28,6 @@ struct WeatherDetailView: View {
         .environmentObject(viewModel)
     }
 }
-
 
 
 

@@ -69,6 +69,7 @@ struct DailyForecastSnapshot: Identifiable, Sendable {
     let highF: Int
     let lowF: Int
     let condition: String
+    let symbolName: String
     let sunrise: Date?
     let sunset: Date?
     let windSpeed: Measurement<UnitSpeed>
@@ -126,6 +127,7 @@ class WeatherKitService {
                     highF: Int(day.highTemperature.converted(to: .fahrenheit).value),
                     lowF: Int(day.lowTemperature.converted(to: .fahrenheit).value),
                     condition: day.condition.description,
+                    symbolName: day.symbolName,
                     sunrise: day.sun.sunrise,
                     sunset: day.sun.sunset,
                     windSpeed: day.wind.speed,

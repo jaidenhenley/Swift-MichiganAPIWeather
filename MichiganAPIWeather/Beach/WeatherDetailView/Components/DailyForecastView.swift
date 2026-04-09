@@ -49,17 +49,34 @@ struct DailyForecastRow: View {
         } label: {
             VStack(alignment: .leading) {
                 HStack {
-                    Text(day.name)
-                        .font(.caption)
-                        .fontWeight(.bold)
-                        .foregroundColor(.secondary)
-                    
-                    Text(String(day.temp))
-                        .font(.caption)
-                        .fontWeight(.bold)
-                        .foregroundColor(.secondary)
-                    
-                    Text(day.shortForecast)
+                    VStack{
+                        Text(day.name)
+                            .font(.caption)
+                            .fontWeight(.bold)
+                            .foregroundColor(.blueGreen)
+                        Text(day.dateText.uppercased())
+                    }
+                    HStack {
+                        
+                        
+                        Image(systemName: day.icon)
+                            .font(.title)
+                        
+                        Spacer()
+                        
+                        Text(day.shortForecast)
+                            .font(.title)
+                            .foregroundStyle(.secondary)
+                        
+                        Spacer()
+
+                        Text("\(day.temp)°")
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                            .foregroundColor(.primary)
+                        Spacer()
+
+                    }
                 }
             }
             .padding(15)
@@ -74,3 +91,4 @@ struct DailyForecastRow: View {
         .padding(.vertical, 5)
     }
 }
+

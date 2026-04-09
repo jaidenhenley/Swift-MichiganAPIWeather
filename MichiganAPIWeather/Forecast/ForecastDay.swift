@@ -11,7 +11,7 @@ struct ForecastDay: Identifiable, Hashable {
     let id = UUID()
     let name: String
     let temp: Int
-    let icon: URL?
+    let icon: String
     let shortForecast: String
     let sunrise: String
     let sunset: String
@@ -19,4 +19,5 @@ struct ForecastDay: Identifiable, Hashable {
     let windDirection: CompassDirection
     let uvIndex: Int
     let chanceOfPrecipitation: Double
+    let dateText: String
 }

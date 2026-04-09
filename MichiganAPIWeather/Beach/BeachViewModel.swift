@@ -204,14 +204,17 @@ class BeachViewModel: ObservableObject {
             ForecastDay(
                 name: day.dayName,
                 temp: day.highF,
-                icon: nil,
+                icon: day.symbolName,
                 shortForecast: day.condition,
                 sunrise: dateToTime(day.sunrise),
                 sunset: dateToTime(day.sunset),
                 windSpeed: windSpeedToMPH(day.windSpeed),
                 windDirection: angleToDirection(day.windDirection),
                 uvIndex: day.uvIndex,
-                chanceOfPrecipitation: day.chanceOfPrecipitation
+                chanceOfPrecipitation: day.chanceOfPrecipitation,
+                dateText: day.date.formatted(.dateTime.month(.abbreviated).day())
+
+                
             )
         }
         

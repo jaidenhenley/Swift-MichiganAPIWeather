@@ -264,6 +264,52 @@ class BeachViewModel: ObservableObject {
                 return "Michigan's largest state park, the Porcupine Mountains stretch along Lake Superior's shore in the remote western Upper Peninsula — offering a rugged Union Bay beach, ancient old-growth forest, and a true wilderness experience unlike anywhere else in the Midwest."
             }
         }
+        var shortDescription: String {
+            switch self {
+            case .sleepingBear:
+                return "35 miles of towering dunes and crystal-clear Lake Michigan shoreline in northwest Michigan."
+            case .grandHavenStatePark:
+                return "Iconic lighthouse, long sandy beach, and legendary sunsets at the mouth of the Grand River."
+            case .silverLakeBeach:
+                return "West Michigan dune beach popular for off-road riding and wide-open Lake Michigan views."
+            case .belleIsleBeach:
+                return "Urban waterfront beach on the Detroit River with views of the city skyline."
+            case .tawasPointStatePark:
+                return "Calm, shallow Lake Huron waters and a historic lighthouse on a curved sandy spit."
+            case .hollandStatePark:
+                return "One of Michigan's most photographed lighthouses anchors this wide Lake Michigan beach."
+            case .ludingtonStatePark:
+                return "Miles of undeveloped Lake Michigan shoreline tucked between towering dunes and Hamlin Lake."
+            case .pJHoffmasterStatePark:
+                return "Three miles of pristine Lake Michigan beach in a quiet, forested dune setting."
+            case .warrenDunesStatePark:
+                return "Dramatic 260-foot dunes and wide sandy beach just 90 minutes from Chicago."
+            case .petoskeyStatePark:
+                return "Little Traverse Bay beach known for petoskey stone hunting and sweeping northern Michigan views."
+            case .picturedRocksNationalLakeShore:
+                return "42 miles of multicolored sandstone cliffs, sea caves, and remote Lake Superior beaches."
+            case .presqueIslePark:
+                return "Rocky Lake Superior peninsula with crashing waves and panoramic views at the edge of Marquette."
+            case .harrisvilleStatePark:
+                return "Quiet Lake Huron beach on the Sunrise Coast with a picturesque harbor nearby."
+            case .sterlingStatePark:
+                return "Michigan's only Lake Erie state park, with sandy beaches and excellent fishing near the Ohio border."
+            case .muskegonStatePark:
+                return "Two miles of open Lake Michigan shoreline with calmer Muskegon Lake frontage on the other side."
+            case .saugatuckDunesStatePark:
+                return "2.5 miles of undeveloped Lake Michigan shoreline with forested dunes and 13 miles of trails."
+            case .southHavenSouthBeach:
+                return "Golden sand and calm water framed by South Haven's iconic red lighthouse."
+            case .portCrescentStatePark:
+                return "Three miles of Lake Huron shoreline on Michigan's Thumb, one of the Lower Peninsula's best dark sky sites."
+            case .albertESleeperStatePark:
+                return "Wide sandy Saginaw Bay beach set among rare dune forest on Michigan's Thumb."
+            case .mclainStatePark:
+                return "Remote Lake Superior beach on the Keweenaw Peninsula with dramatic Superior sunsets."
+            case .porcupineMountainsWildernessStatePark:
+                return "Michigan's largest state park, with a rugged Lake Superior beach and ancient old-growth forest."
+            }
+        }
 
         var beachImage: ImageResource {
             switch self {

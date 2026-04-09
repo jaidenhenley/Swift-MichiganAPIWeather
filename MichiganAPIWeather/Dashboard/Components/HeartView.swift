@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct HeartViewUnselected: View {
+struct HeartView: View {
     @State private var isSelected = false
     
     var body: some View {
@@ -25,8 +25,4 @@ struct HeartViewUnselected: View {
             .background(.ultraThinMaterial, in: Circle())
         }
     }
-}
-
-#Preview {
-    HeartViewUnselected()
 }

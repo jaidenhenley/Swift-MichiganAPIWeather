@@ -27,7 +27,7 @@ struct NearBeachRow: View {
                         .clipped()
                         .cornerRadius(12)
                     
-                    HeartViewUnselected()
+                    HeartView()
                         .padding(.top,5)
                         .padding(.trailing,5)
                 }

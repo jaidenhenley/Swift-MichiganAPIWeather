@@ -190,6 +190,32 @@ class BeachViewModel: ObservableObject {
             case .porcupineMountainsWildernessStatePark: return .init(latitude: 46.7811, longitude: -89.6807)
             }
         }
+        
+        var beachName: String {
+            switch self {
+            case .sleepingBear:                          return "Sleeping Bear Dunes"
+            case .grandHavenStatePark:                   return "Grand Haven State Park"
+            case .silverLakeBeach:                       return "Silver Lake Beach"
+            case .belleIsleBeach:                        return "Belle Isle Beach"
+            case .tawasPointStatePark:                   return "Tawas Point State Park"
+            case .hollandStatePark:                      return "Holland State Park"
+            case .ludingtonStatePark:                    return "Ludington State Park"
+            case .pJHoffmasterStatePark:                 return "P.J. Hoffmaster State Park"
+            case .warrenDunesStatePark:                  return "Warren Dunes State Park"
+            case .petoskeyStatePark:                     return "Petoskey State Park"
+            case .picturedRocksNationalLakeShore:        return "Pictured Rocks National Lakeshore"
+            case .presqueIslePark:                       return "Presque Isle Park"
+            case .harrisvilleStatePark:                  return "Harrisville State Park"
+            case .sterlingStatePark:                     return "Sterling State Park"
+            case .muskegonStatePark:                     return "Muskegon State Park"
+            case .saugatuckDunesStatePark:               return "Saugatuck Dunes State Park"
+            case .southHavenSouthBeach:                  return "South Haven South Beach"
+            case .portCrescentStatePark:                 return "Port Crescent State Park"
+            case .albertESleeperStatePark:               return "Albert E. Sleeper State Park"
+            case .mclainStatePark:                       return "McLain State Park"
+            case .porcupineMountainsWildernessStatePark: return "Porcupine Mountains Wilderness State Park"
+            }
+        }
 
 
         var beachDescription: String {

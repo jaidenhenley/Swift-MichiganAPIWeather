@@ -81,6 +81,62 @@ class BeachViewModel: ObservableObject {
         case mclainStatePark
         case porcupineMountainsWildernessStatePark
 
+        var keywords: [String] {
+            switch self {
+            case .sleepingBear:
+                return ["lake michigan", "northwest michigan", "lighthouse", "hiking", "biking",
+                        "hunting", "cross country skiing", "snowshoeing", "history programs",
+                        "family", "playground", "picnic", "pet friendly", "water access",
+                        "concessions", "ev charging", "scenic", "national park", "adventure"]
+            case .grandHavenStatePark:
+                return ["lake michigan", "west michigan", "lighthouse", "swimming", "fishing",
+                        "family", "playground", "picnic", "beach house", "metal detecting",
+                        "water access", "alcohol restrictions", "track chair", "scenic"]
+            case .silverLakeBeach:
+                return ["lake michigan", "west michigan", "dunes", "orv", "off road", "swimming", "adventure", "family", "scenic"]
+            case .belleIsleBeach:
+                return ["detroit river", "southeast michigan", "urban", "skyline", "swimming", "family", "park", "scenic"]
+            case .tawasPointStatePark:
+                return ["lake huron", "sunrise coast", "lower peninsula", "lighthouse",
+                        "swimming", "fishing", "hiking", "biking", "paddling", "kayaking",
+                        "bird watching", "camping", "family", "playground", "picnic",
+                        "nature programs", "history", "cross country skiing", "snowshoeing",
+                        "metal detecting", "pet friendly", "concessions", "beach house"]
+            case .hollandStatePark:
+                return ["lake michigan", "west michigan", "lighthouse", "swimming", "fishing", "camping", "family", "scenic", "harbor"]
+            case .ludingtonStatePark:
+                return ["lake michigan", "west michigan", "dunes", "swimming", "hiking", "camping", "fishing", "family", "scenic", "undeveloped"]
+            case .pJHoffmasterStatePark:
+                return ["lake michigan", "west michigan", "dunes", "swimming", "hiking", "camping", "family", "quiet", "nature", "scenic"]
+            case .warrenDunesStatePark:
+                return ["lake michigan", "southwest michigan", "dunes", "swimming", "hiking", "camping", "family", "adventure", "scenic"]
+            case .petoskeyStatePark:
+                return ["lake michigan", "northwest michigan", "petoskey stones", "rock hunting", "swimming", "hiking", "camping", "family", "scenic", "quiet"]
+            case .picturedRocksNationalLakeShore:
+                return ["lake superior", "upper peninsula", "cliffs", "sea caves", "kayaking", "hiking", "camping", "scenic", "remote", "adventure"]
+            case .presqueIslePark:
+                return ["lake superior", "upper peninsula", "marquette", "rocky", "hiking", "swimming", "scenic", "remote", "adventure", "waves"]
+            case .harrisvilleStatePark:
+                return ["lake huron", "sunrise coast", "lower peninsula", "swimming", "fishing", "camping", "family", "quiet", "harbor", "scenic"]
+            case .sterlingStatePark:
+                return ["lake erie", "southeast michigan", "swimming", "fishing", "bird watching", "camping", "family", "quiet", "scenic"]
+            case .muskegonStatePark:
+                return ["lake michigan", "west michigan", "swimming", "hiking", "camping", "kayaking", "fishing", "family", "scenic", "dunes"]
+            case .saugatuckDunesStatePark:
+                return ["lake michigan", "west michigan", "dunes", "swimming", "hiking", "quiet", "scenic", "undeveloped", "nature", "family"]
+            case .southHavenSouthBeach:
+                return ["lake michigan", "west michigan", "lighthouse", "swimming", "fishing", "family", "harbor", "scenic", "charming", "quiet"]
+            case .portCrescentStatePark:
+                return ["lake huron", "thumb", "lower peninsula", "swimming", "hiking", "camping", "fishing", "family", "dark sky", "stargazing", "scenic"]
+            case .albertESleeperStatePark:
+                return ["lake huron", "thumb", "lower peninsula", "swimming", "hiking", "camping", "fishing", "family", "quiet", "scenic", "dune forest"]
+            case .mclainStatePark:
+                return ["lake superior", "upper peninsula", "keweenaw", "swimming", "hiking", "camping", "fishing", "scenic", "remote", "sunset"]
+            case .porcupineMountainsWildernessStatePark:
+                return ["lake superior", "upper peninsula", "wilderness", "hiking", "camping", "fishing", "scenic", "remote", "adventure", "old growth", "rugged"]
+            }
+        }
+        
 
         var beachID: Int {
             switch self {

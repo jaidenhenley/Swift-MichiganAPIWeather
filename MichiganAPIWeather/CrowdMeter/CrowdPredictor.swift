@@ -12,7 +12,7 @@ class CrowdPredictor {
     private let model = try? BeachCrowdClassifier(configuration: MLModelConfiguration())
         
     
-    func predict(for date: Date, tempMax: Double, tempMin: Double, precipitation: Double, windMax: Double, waterTemp: Double?, isHoliday: Bool = false) -> CrowdLevel {
+    func predict(for date: Date, tempMax: Double, tempMin: Double, precipitation: Double, windMax: Double, waterTemp: Double?, isHoliday: Bool) -> CrowdLevel {
         let cal = Calendar.current
         let month = cal.component(.month, from: date)
         let dow = cal.component(.weekday, from: date) - 1
@@ -267,7 +267,7 @@ func testCrowdModel() {
     let predictor = CrowdPredictor()
     for (name, testDate, tMax, tMin, precip, wind, water, expected) in tests {
         let result = predictor.predict(for: testDate, tempMax: tMax, tempMin: tMin,
-                            precipitation: precip, windMax: wind, waterTemp: water)
+                                       precipitation: precip, windMax: wind, waterTemp: water, isHoliday: false)
         let status = result.rawValue == expected ? "✅" : "❌"
         if result.rawValue == expected { passed += 1 }
         print("\(status) \(name): got \(labels[result.rawValue]), expected \(labels[expected])")

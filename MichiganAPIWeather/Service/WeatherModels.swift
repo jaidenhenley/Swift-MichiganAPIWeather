@@ -14,7 +14,7 @@ struct BeachDetailResponse: Decodable {
     let buoyData: BuoyData?
     let alerts: [AlertFeature]
     let traffic: [TrafficData]
-    let holiday: [Holiday]?
+    let holiday: Bool
 
     enum CodingKeys: String, CodingKey {
         case beach, alerts, traffic, holiday

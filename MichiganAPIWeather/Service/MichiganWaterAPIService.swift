@@ -40,11 +40,7 @@ class MichiganWaterAPIService {
                     + " closures=\(t.roadClosures.map { "\($0)" } ?? "nil")")
             }
 
-            if let holidays = response.holiday {
-                print("[API]   Holidays: \(holidays.map { $0.name ?? "?" }.joined(separator: ", "))")
-            } else {
-                print("[API]   Holidays: nil")
-            }
+            print("[API]   Holiday: \(response.holiday)")
 
             return response
         } catch {

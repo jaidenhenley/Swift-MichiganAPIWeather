@@ -17,7 +17,7 @@ struct ContactWebsitePhone: View {
             ActionButton(icon: "globe", title: "Website") {
                 // URL
             }
-            ActionButton(icon: "map", title: "Location") {
+            ActionButton(icon: "map.fill", title: "Location") {
                 guard let beach = viewModel.selectedBeach else { return }
                 let coords = beach.beachCoordinates
                 let placemark = MKPlacemark(coordinate: coords)

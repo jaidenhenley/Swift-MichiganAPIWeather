@@ -17,12 +17,14 @@ struct ActionButton: View {
         VStack {
             Button(action: action) {
                 Image(systemName: icon)
-                    .font(.title)
+                    .font(.system(size: 36))
                     .foregroundStyle(.beachViewText)
-                    .padding(20)
+                    .frame(width: 100, height: 100)
+                    .overlay(
+                        Circle()
+                            .stroke(.beachViewText)
+                    )
             }
-            .buttonStyle(.glass)
-            
             Text(title)
                 .foregroundStyle(.beachViewText)
         }

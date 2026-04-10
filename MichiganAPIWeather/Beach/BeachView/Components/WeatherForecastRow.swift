@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct WeatherForecastRow: View {
-    @EnvironmentObject var viewModel: BeachViewModel
-    
+    @Environment(BeachViewModel.self) var viewModel
+
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -25,7 +25,7 @@ struct WeatherForecastRow: View {
             .scrollIndicators(.hidden)
                 NavigationLink {
                     WeatherDetailView()
-                        .environmentObject(viewModel)
+                        .environment(viewModel)
                 } label: {
                     HStack {
                         Text("SEE MORE")
@@ -46,7 +46,7 @@ struct WeatherForecastRow: View {
                     .fill(Color.lightBlue)
             )
             .padding(.horizontal)
-            .environmentObject(viewModel)
+            .environment(viewModel)
         
     }
 }

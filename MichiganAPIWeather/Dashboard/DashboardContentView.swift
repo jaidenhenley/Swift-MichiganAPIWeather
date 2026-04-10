@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct DashboardContentView: View {
-    @StateObject private var viewModel = BeachViewModel()
-    @Binding var searchText: String
-    
+    @Environment(BeachViewModel.self) var viewModel    
     
     var favorites: [Beach] = Beach.allBeaches.filter { [4, 2, 3, 1, 5].contains($0.id) }
     

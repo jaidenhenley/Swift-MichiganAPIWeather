@@ -10,8 +10,8 @@ import SwiftUI
 struct DailyForecastView: View {
     @State private var isShowingSheet = false
     @State private var selectedDay: ForecastDay?
-    @EnvironmentObject var viewModel: BeachViewModel
-    
+    @Environment(BeachViewModel.self) var viewModel
+
     var body: some View {
         VStack(spacing: 0) {
             ForEach(viewModel.forecastDays) { day in

@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct WeatherDetailView: View {
-    @EnvironmentObject var viewModel: BeachViewModel
-    
+    @Environment(BeachViewModel.self) var viewModel
+
     var body: some View {
         ScrollView {
             VStack(spacing: 16) {
@@ -25,7 +25,7 @@ struct WeatherDetailView: View {
             )
         }
         
-        .environmentObject(viewModel)
+        .environment(viewModel)
     }
 }
 

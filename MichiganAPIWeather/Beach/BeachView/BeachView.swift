@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct BeachView: View {
-    @StateObject private var viewModel = BeachViewModel()
+    @Environment(BeachViewModel.self) var viewModel
     let beach: Beach
     let beachID: Int
     
@@ -44,7 +44,7 @@ struct BeachView: View {
         .task {
             await viewModel.selectBeach(beach, beachID: beachID)
         }
-        .environmentObject(viewModel)
+        .environment(viewModel)
     }
 }
 

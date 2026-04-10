@@ -8,31 +8,33 @@
 import SwiftUI
 
 struct DashboardView: View {
-    @State private var isSearching = false
-    @State private var searchText = ""
+    @Environment(BeachViewModel.self) var viewModel
+    
+    
     var body: some View {
+        @Bindable var viewModel = viewModel
         NavigationStack {
             ZStack {
                 // Your main dashboard content
-                DashboardContentView(searchText: $searchText)
-                    .blur(radius: isSearching ? 10 : 0)
-                    .animation(.easeInOut, value: isSearching)
+                DashboardContentView()
+                    .blur(radius: viewModel.isSearching ? 10 : 0)
+                    .animation(.easeInOut, value: viewModel.isSearching)
                 
                 VStack {
                     HStack {
                         Image(systemName: "magnifyingglass")
                             .foregroundStyle(.secondary)
-                        TextField("Search", text: $searchText, onEditingChanged: { editing in
+                        TextField("Search", text: $viewModel.searchText, onEditingChanged: { editing in
                             withAnimation(.easeInOut) {
-                                isSearching = editing
+                                viewModel.isSearching = editing
                             }
                         })
                         
-                        if isSearching {
+                        if viewModel.isSearching {
                             Button("Cancel") {
                                 withAnimation(.easeInOut) {
-                                    isSearching = false
-                                    searchText = ""
+                                    viewModel.isSearching = false
+                                    viewModel.searchText = ""
                                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                 }
                             }
@@ -45,8 +47,8 @@ struct DashboardView: View {
                     .glassEffect()
                     .padding(.horizontal)
                     
-                    if isSearching {
-                        BeachListView(query: $searchText)
+                    if viewModel.isSearching {
+                        BeachListView()
                             .transition(.opacity)
                     }
                     

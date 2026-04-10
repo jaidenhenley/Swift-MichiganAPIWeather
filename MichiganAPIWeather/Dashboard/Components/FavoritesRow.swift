@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FavoritesRow: View {
-    @StateObject private var viewModel = BeachViewModel()
+    @Environment(BeachViewModel.self) var viewModel
     let image: ImageResource
     let beach: Beach
     let beachID: Int

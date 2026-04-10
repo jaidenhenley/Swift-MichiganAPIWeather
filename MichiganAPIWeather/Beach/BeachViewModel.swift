@@ -599,3 +599,8 @@ class BeachViewModel: ObservableObject {
         return directions[index]
     }
 }
+
+
+extension BeachViewModel.ViewBeach: Identifiable {
+    var id: Int { beachID }
+}

@@ -9,27 +9,25 @@ import SwiftUI
 import MapKit
 
 struct MapView: View {
-    @StateObject private var mapVM = MapViewModel()
+    @State private var mapVM = MapViewModel()
     @State private var selectedBeach: Beach? = nil
     @State private var showDetail = false
-
-    var visibleBeaches: [Beach] {
-        mapVM.beaches.filter { beach in
-            mapVM.region.contains(coordinate: beach.coordinates)
-        }
-    }
+    @State private var position: MapCameraPosition = .region(
+        MKCoordinateRegion(
+            center: CLLocationCoordinate2D(latitude: 44.0, longitude: -85.5),
+            span: MKCoordinateSpan(latitudeDelta: 5.0, longitudeDelta: 5.0)
+        )
+    )
 
     var body: some View {
         ZStack(alignment: .bottom) {
-            Map(coordinateRegion: $mapVM.region,
-                annotationItems: mapVM.beaches) { beach in
-
-                MapAnnotation(coordinate: beach.coordinates) {
-                    Button {
-                        selectedBeach = beach
-                        showDetail = true
-                    } label: {
-                        VStack(spacing: 4) {
+            Map(position: $position) {
+                ForEach(mapVM.beaches) { beach in
+                    Annotation(beach.beachName, coordinate: beach.coordinates) {
+                        Button {
+                            selectedBeach = beach
+                            showDetail = true
+                        } label: {
                             ZStack {
                                 Circle()
                                     .fill(selectedBeach?.id == beach.id ? .orange : .blue)
@@ -39,37 +37,26 @@ struct MapView: View {
                                     .foregroundStyle(.white)
                             }
                             .shadow(radius: 4)
-
-                            Text(beach.beachName)
-                                .font(.caption2)
-                                .fontWeight(.medium)
-                                .multilineTextAlignment(.center)
-                                .frame(maxWidth: 80)
-                                .padding(.horizontal, 4)
-                                .padding(.vertical, 2)
-                                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 4))
                         }
                     }
                 }
             }
             .ignoresSafeArea()
 
-            if !visibleBeaches.isEmpty {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 12) {
-                        ForEach(visibleBeaches) { beach in
-                            BeachPreviewCard(beach: beach, isSelected: selectedBeach?.id == beach.id)
-                                .onTapGesture {
-                                    selectedBeach = beach
-                                    showDetail = true
-                                }
-                        }
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 12) {
+                    ForEach(mapVM.beaches) { beach in
+                        BeachPreviewCard(beach: beach, isSelected: selectedBeach?.id == beach.id)
+                            .onTapGesture {
+                                selectedBeach = beach
+                                showDetail = true
+                            }
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 12)
                 }
-                .background(.ultraThinMaterial)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 12)
             }
+            .background(.ultraThinMaterial)
         }
         .sheet(isPresented: $showDetail) {
             if let beach = selectedBeach {
@@ -78,16 +65,6 @@ struct MapView: View {
         }
     }
 }
-
-
-extension MKCoordinateRegion {
-    func contains(coordinate: CLLocationCoordinate2D) -> Bool {
-        let latOK = abs(coordinate.latitude - center.latitude) <= span.latitudeDelta / 2
-        let lonOK = abs(coordinate.longitude - center.longitude) <= span.longitudeDelta / 2
-        return latOK && lonOK
-    }
-}
-
 
 
 #Preview {

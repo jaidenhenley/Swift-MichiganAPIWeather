@@ -27,7 +27,7 @@ struct BeachSummaryView: View {
             Text(beachdescription)
                 .foregroundColor(.beachViewText)
         }
-        .padding(25)
+        .padding(16)
         .background(
             RoundedRectangle(cornerRadius: 20)
                 .fill(Color.beachDescriptionBackground)

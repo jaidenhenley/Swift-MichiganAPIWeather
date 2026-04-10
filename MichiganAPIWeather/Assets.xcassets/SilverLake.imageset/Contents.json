@@ -1,11 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "SilverLake.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "SilverLake.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

@@ -12,7 +12,7 @@ struct BeachListView: View {
     
     var body: some View {
         ScrollView {
-            LazyVStack(alignment: .leading) {
+            LazyVStack() {
                 ForEach(viewModel.filteredBeaches) { beach in
                     NavigationLink {
                         BeachView(beach: beach, beachID: beach.id)
@@ -22,6 +22,7 @@ struct BeachListView: View {
                     .buttonStyle(.plain)
                 }
             }
+            .padding(.horizontal, 16)
         }
     }
 }

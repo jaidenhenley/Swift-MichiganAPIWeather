@@ -10,52 +10,54 @@ import CoreLocation
 import Foundation
 import SwiftUI
 
-// MARK: - Combined model the view consumes
-
-struct BeachDetail {
-    let beachName: String
-    let beachImage: ImageResource
-    let buoyData: BuoyData?
-    let alerts: [AlertFeature]?
-    let traffic: [TrafficData]
-    let holiday: Bool = false
-    let currentWeather: CurrentWeatherSnapshot?
-    let dailyForecast: [DailyForecastSnapshot]
-}
-
 // MARK: - View Model
 
+@Observable
 @MainActor
-class BeachViewModel: ObservableObject {
-    @Published var beachName: String = ""
-    @Published var condition: String = ""
-    @Published var temperatureDisplay: String = ""
-    @Published var windMPH: String = ""
-    @Published var windDirection: String = ""
-    @Published var humidity: String = ""
-    @Published var visibility: String = ""
-    @Published var dewpoint: String?
-    @Published var pressure: String?
-    @Published var forecastDays: [ForecastDay] = []
-    @Published var hourForecast: [HourForecast] = []
-    @Published var activeAlerts: Int = 0
-    @Published var isLoading: Bool = false
-    @Published var errorMessage: String?
-    @Published var useCelsius: Bool = false
-    @Published var selectedBeach: Beach?
-    @Published var uvIndex: Int = 0
-    @Published var chanceOfPrecipitation: Double = 0
+class BeachViewModel {
+    var beachName: String = ""
+    var condition: String = ""
+    var temperatureDisplay: String = ""
+    var windMPH: String = ""
+    var windDirection: String = ""
+    var humidity: String = ""
+    var visibility: String = ""
+    var dewpoint: String?
+    var pressure: String?
+    var forecastDays: [ForecastDay] = []
+    var hourForecast: [HourForecast] = []
+    var activeAlerts: Int = 0
+    var isLoading: Bool = false
+    var errorMessage: String?
+    var useCelsius: Bool = false
+    var selectedBeach: Beach?
+    var uvIndex: Int = 0
+    var chanceOfPrecipitation: Double = 0
     
     // Crowd Meter Data
-    @Published var todayCrowd: CrowdLevel?
-    @Published var forecastCrowd: [CrowdLevel] = []
+    var todayCrowd: CrowdLevel?
+    var forecastCrowd: [CrowdLevel] = []
     
     let crowdPredictor = CrowdPredictor()
     
     // Backend-only data
-    @Published var buoyData: BuoyData?
-    @Published var traffic: [TrafficData] = []
-    @Published var holiday: Bool = false
+    var buoyData: BuoyData?
+    var traffic: [TrafficData] = []
+    var holiday: Bool = false
+    
+    // Search Filtering
+    var searchText: String = ""
+    
+    var isSearching: Bool { !searchText.isEmpty }
+    
+    var filteredBeaches: [Beach] {
+        let trimmed = searchText.trimmingCharacters(in: .whitespaces).lowercased()
+        guard !trimmed.isEmpty else { return Beach.allBeaches }
+        return Beach.allBeaches.filter { beach in
+            beach.beachName.lowercased().contains(trimmed) ||
+            beach.keywords.contains { $0.lowercased().contains(trimmed) }
+        }
+    }
     
 
     /// Whether we have successfully loaded data at least once

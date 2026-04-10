@@ -10,8 +10,8 @@ import MapKit
 import SwiftUI
 
 struct ContactWebsitePhone: View {
-    @EnvironmentObject private var viewModel: BeachViewModel
-
+    @Environment(BeachViewModel.self) var viewModel
+    
     var body: some View {
         HStack(spacing: 24) {
             ActionButton(icon: "globe", title: "Website") {

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct WeatherDashboard: View {
-    @EnvironmentObject var viewModel: BeachViewModel
+    @Environment(BeachViewModel.self) var viewModel
 
     private var dayStats: [WeatherStat] {
         [

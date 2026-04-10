@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct UVView: View {
-    @EnvironmentObject var viewModel: BeachViewModel
-    
+    @Environment(BeachViewModel.self) var viewModel
+
     var uvValue: Int { viewModel.uvIndex }
     
     var uvCategory: String {

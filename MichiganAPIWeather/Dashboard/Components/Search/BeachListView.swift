@@ -8,21 +8,12 @@
 import SwiftUI
 
 struct BeachListView: View {
-    @Binding var query: String
-    
-    var filteredBeaches: [Beach] {
-        if query.isEmpty {
-            return Beach.allBeaches
-        }
-        return Beach.allBeaches.filter {
-            $0.beachName.localizedCaseInsensitiveContains(query)
-        }
-    }
+    @Environment(BeachViewModel.self) var viewModel
     
     var body: some View {
         ScrollView {
             LazyVStack(alignment: .leading) {
-                ForEach(filteredBeaches) { beach in
+                ForEach(viewModel.filteredBeaches) { beach in
                     NavigationLink {
                         BeachView(beach: beach, beachID: beach.id)
                     } label: {

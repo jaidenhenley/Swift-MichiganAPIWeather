@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct BeachHeader: View {
-    @EnvironmentObject var viewModel: BeachViewModel
+    @Environment(BeachViewModel.self) var viewModel
     let image: ImageResource
     
     var body: some View {
@@ -54,6 +54,6 @@ struct BeachHeader: View {
             UVView()
                 .frame(width: 230, height: 230)
         }
-        .environmentObject(viewModel)
+        .environment(viewModel)
     }
 }

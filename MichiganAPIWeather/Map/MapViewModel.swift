@@ -7,16 +7,15 @@
 
 import MapKit
 import SwiftUI
-import Combine
 
-class MapViewModel: ObservableObject {
-    @Published var region = MKCoordinateRegion(
+@Observable
+class MapViewModel {
+    var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 44.0, longitude: -85.5),
         span: MKCoordinateSpan(latitudeDelta: 5.0, longitudeDelta: 5.0)
-        
     )
-    
-        var beaches: [Beach] {
-            Beach.allBeaches
-        }
+
+    var beaches: [Beach] {
+        Beach.allBeaches
+    }
 }

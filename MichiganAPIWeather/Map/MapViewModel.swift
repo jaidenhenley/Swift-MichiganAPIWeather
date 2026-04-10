@@ -16,7 +16,7 @@ class MapViewModel: ObservableObject {
         
     )
     
-        var beaches: [BeachViewModel.ViewBeach] {
-            BeachViewModel.ViewBeach.allCases
+        var beaches: [Beach] {
+            Beach.allBeaches
         }
 }

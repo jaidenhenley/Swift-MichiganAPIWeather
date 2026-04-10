@@ -10,12 +10,12 @@ import SwiftUI
 struct FavoritesRow: View {
     @StateObject private var viewModel = BeachViewModel()
     let image: ImageResource
-    let beach: BeachViewModel.ViewBeach
+    let beach: Beach
     let beachID: Int
     
     var body: some View {
         NavigationLink {
-            BeachView(beach: beach, beachID: beachID)
+            BeachView(beach: beach, beachID: beach.id)
         } label: {
             
         }

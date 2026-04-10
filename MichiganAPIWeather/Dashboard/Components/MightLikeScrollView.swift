@@ -13,7 +13,7 @@ struct MightLikeScrollView: View {
             HStack(spacing: 16) {
                 ForEach(0..<3) { _ in
                     NavigationLink {
-                        BeachView(beach: .grandHavenStatePark, beachID: 2) // destination
+                        BeachView(beach: Beach.allBeaches[1], beachID: 2) // destination
                     } label: {
                         VStack(spacing: 0) {
                             ZStack(alignment: .topTrailing) {

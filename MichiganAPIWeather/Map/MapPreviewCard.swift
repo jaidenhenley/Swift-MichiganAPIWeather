@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct BeachPreviewCard: View {
-    let beach: BeachViewModel.ViewBeach
+    let beach: Beach
     let isSelected: Bool
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Image(beach.beachImage)
+            Image(beach.image)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 160, height: 90)

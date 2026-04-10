@@ -5,13 +5,16 @@
 //  Created by George Clinkscales on 4/10/26.
 //
 
+import SwiftData
 import SwiftUI
 
 struct FavoritesView: View {
-    @EnvironmentObject var favorites: FavoritesManager
-
+    
+    @Query private var favorites: [FavoriteBeach]
+    
     private var favoriteBeaches: [Beach] {
-        Beach.allBeaches.filter { favorites.isFavorite($0.id) }
+        let favoriteIDs = Set(favorites.map(\.beachId))
+        return Beach.allBeaches.filter { favoriteIDs.contains($0.id) }
     }
 
     var body: some View {
@@ -55,5 +58,4 @@ struct FavoritesView: View {
 
 #Preview {
     FavoritesView()
-        .environmentObject(FavoritesManager())
 }

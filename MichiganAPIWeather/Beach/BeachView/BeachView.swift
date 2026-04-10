@@ -18,7 +18,9 @@ struct BeachView: View {
                 VStack {
                     Image(beach.beachImage)
                         .resizable()
-                        .scaledToFit()
+                        .scaledToFill()
+                        .frame(height: 250, alignment: .top)
+                        .clipped()
                     
                     Spacer()
                     BeachHeader(image: beach.beachImage)
@@ -37,7 +39,7 @@ struct BeachView: View {
                         .aspectRatio(contentMode: .fill)
                 )
             }
-            .ignoresSafeArea(edges: .top)
+            .ignoresSafeArea(edges: [.top, .bottom])
         }
         .task {
             await viewModel.selectBeach(beach, beachID: beachID)

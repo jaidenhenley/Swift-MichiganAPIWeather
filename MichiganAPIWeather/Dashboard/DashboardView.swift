@@ -24,11 +24,16 @@ struct DashboardView: View {
                     HStack {
                         Image(systemName: "magnifyingglass")
                             .foregroundStyle(.secondary)
-                        TextField("Search", text: $viewModel.searchText)
+                        TextField("Search", text: $viewModel.searchText, onEditingChanged: { editing in
+                            withAnimation(.easeInOut) {
+                                viewModel.isSearching = editing
+                            }
+                        })
                         
                         if viewModel.isSearching {
                             Button("Cancel") {
                                 withAnimation(.easeInOut) {
+                                    viewModel.isSearching = false
                                     viewModel.searchText = ""
                                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                 }

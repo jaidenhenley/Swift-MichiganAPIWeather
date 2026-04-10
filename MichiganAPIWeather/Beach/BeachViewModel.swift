@@ -48,7 +48,7 @@ class BeachViewModel {
     // Search Filtering
     var searchText: String = ""
     
-    var isSearching: Bool { !searchText.isEmpty }
+    var isSearching: Bool = false
     
     var filteredBeaches: [Beach] {
         let trimmed = searchText.trimmingCharacters(in: .whitespaces).lowercased()

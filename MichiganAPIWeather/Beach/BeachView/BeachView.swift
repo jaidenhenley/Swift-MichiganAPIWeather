@@ -16,6 +16,10 @@ struct BeachView: View {
         NavigationStack {
             ScrollView {
                 VStack {
+                    Image(beach.beachImage)
+                        .resizable()
+                        .scaledToFit()
+                    
                     Spacer()
                     BeachHeader(image: beach.beachImage)
                     WeatherForecastRow().padding(.horizontal, 16)
@@ -33,6 +37,7 @@ struct BeachView: View {
                         .aspectRatio(contentMode: .fill)
                 )
             }
+            .ignoresSafeArea(edges: .top)
         }
         .task {
             await viewModel.selectBeach(beach, beachID: beachID)

@@ -32,63 +32,6 @@ struct UVView: View {
         }
     }
     
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            // Header
-            Label("UV INDEX", systemImage: "sun.max.fill")
-                .font(.caption)
-                .fontWeight(.semibold)
-                .foregroundStyle(.secondary)
-            
-            // Index number and category
-            Text("\(uvValue)")
-                .font(.system(size: 36, weight: .medium))
-            
-            Text(uvCategory)
-                .font(.title3)
-                .fontWeight(.medium)
-            
-            Spacer()
-            
-            // Gradient bar
-            GeometryReader { geo in
-                ZStack(alignment: .leading) {
-                    LinearGradient(
-                        colors: [.green, .yellow, .orange, .red, .purple],
-                        startPoint: .leading,
-                        endPoint: .trailing
-                    )
-                    .clipShape(Capsule())
-                    .frame(height: 6)
-                    
-                    // Indicator dot
-                    Circle()
-                        .fill(.white)
-                        .frame(width: 14, height: 14)
-                        .offset(x: dotOffset(in: geo.size.width))
-                        .offset(y: -4)
-                }
-            }
-            .frame(height: 14)
-            
-            Text(uvAdvice)
-                .font(.footnote)
-                .foregroundStyle(.secondary)
-                .fixedSize(horizontal: false, vertical: true)
-        }
-        .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 16)
-                .fill(.lightBlue)
-        )
-        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-    }
-    
-    func dotOffset(in width: CGFloat) -> CGFloat {
-        let clamped = min(max(Double(uvValue), 0), 11)
-        return (clamped / 11) * (width - 14)
-    }
-    
     var uvAdvice: String {
         switch uvValue {
         case 0...2: return "No protection needed."
@@ -98,6 +41,68 @@ struct UVView: View {
         default: return "Extreme risk. Avoid sun exposure."
         }
     }
+    
+    var body: some View {
+        ZStack {
+            Color.beachHeaderBox.cornerRadius(16)
+            
+            VStack(alignment: .leading, spacing: 8) {
+                // Header
+                Label("UV INDEX", systemImage: "sun.max.fill")
+                    .font(.caption)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.secondary)
+                
+                // Index number and category
+                Text("\(uvValue)")
+                    .font(.system(size: 36, weight: .medium))
+                
+                Text(uvCategory)
+                    .font(.title3)
+                    .fontWeight(.medium)
+                
+                Spacer()
+                
+                // Gradient bar
+                GeometryReader { geo in
+                    ZStack(alignment: .leading) {
+                        LinearGradient(
+                            colors: [.green, .yellow, .orange, .red, .purple],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                        .clipShape(Capsule())
+                        .frame(height: 6)
+                        
+                        // Indicator dot
+                        Circle()
+                            .fill(.white)
+                            .frame(width: 14, height: 14)
+                            .offset(x: dotOffset(in: geo.size.width))
+                            .offset(y: -4)
+                    }
+                }
+                .frame(height: 14)
+                
+                Text(uvAdvice)
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .padding()
+            .overlay(
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(Color.beachViewText, lineWidth: 0.5)
+            )
+            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+        }
+    }
+    
+    func dotOffset(in width: CGFloat) -> CGFloat {
+        let clamped = min(max(Double(uvValue), 0), 11)
+        return (clamped / 11) * (width - 14)
+    }
+    
 }
 #Preview {
     UVView()

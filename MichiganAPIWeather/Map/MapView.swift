@@ -10,12 +10,12 @@ import MapKit
 
 struct MapView: View {
     @StateObject private var mapVM = MapViewModel()
-    @State private var selectedBeach: BeachViewModel.ViewBeach? = nil
+    @State private var selectedBeach: Beach? = nil
     @State private var showDetail = false
 
-    var visibleBeaches: [BeachViewModel.ViewBeach] {
+    var visibleBeaches: [Beach] {
         mapVM.beaches.filter { beach in
-            mapVM.region.contains(coordinate: beach.beachCoordinates)
+            mapVM.region.contains(coordinate: beach.coordinates)
         }
     }
 
@@ -24,7 +24,7 @@ struct MapView: View {
             Map(coordinateRegion: $mapVM.region,
                 annotationItems: mapVM.beaches) { beach in
 
-                MapAnnotation(coordinate: beach.beachCoordinates) {
+                MapAnnotation(coordinate: beach.coordinates) {
                     Button {
                         selectedBeach = beach
                         showDetail = true
@@ -73,7 +73,7 @@ struct MapView: View {
         }
         .sheet(isPresented: $showDetail) {
             if let beach = selectedBeach {
-                BeachView(beach: beach, beachID: beach.beachID)
+                BeachView(beach: beach, beachID: beach.id)
             }
         }
     }

@@ -10,14 +10,14 @@ import SwiftUI
 struct NearBeachRow: View {
     @StateObject private var viewModel = BeachViewModel()
     let image: ImageResource
-    let beach: BeachViewModel.ViewBeach
+    let beach: Beach
     let beachName: String
     let beachID: Int
     
     var body: some View {
         VStack {
             NavigationLink {
-                BeachView(beach: beach, beachID: beachID)
+                BeachView(beach: beach, beachID: beach.id)
             } label: {
                 ZStack(alignment: .topTrailing) {
                     Image(image)

@@ -9,25 +9,25 @@ import SwiftUI
 
 struct BeachView: View {
     @StateObject private var viewModel = BeachViewModel()
-    let beach: BeachViewModel.ViewBeach
+    let beach: Beach
     let beachID: Int
     
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack {
-                    Image(beach.beachImage)
+                    Image(beach.image)
                         .resizable()
                         .scaledToFill()
                         .frame(height: 250, alignment: .top)
                         .clipped()
                     
                     Spacer()
-                    BeachHeader(image: beach.beachImage)
+                    BeachHeader(image: beach.image)
                     WeatherForecastRow().padding(.horizontal, 16)
                     Divider().foregroundStyle(.beachViewText).frame(height: 2)
                     CrowdMeterView(forecastCrowd: viewModel.forecastCrowd, forecastDays: viewModel.forecastDays)
-                    BeachSummaryView(beachName: viewModel.beachName.isEmpty ? "" : viewModel.beachName, beachdescription: beach.beachDescription)
+                    BeachSummaryView(beachName: viewModel.beachName.isEmpty ? "" : viewModel.beachName, beachdescription: beach.description)
                         .padding(.horizontal, 16)
                     ContactWebsitePhone()
                         .padding([.bottom,.horizontal], 16)

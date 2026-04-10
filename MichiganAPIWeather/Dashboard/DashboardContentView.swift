@@ -12,9 +12,7 @@ struct DashboardContentView: View {
     @Binding var searchText: String
     
     
-    var favorites: [BeachViewModel.ViewBeach] = [
-        .belleIsleBeach, .grandHavenStatePark, .silverLakeBeach, .sleepingBear, .tawasPointStatePark
-    ]
+    var favorites: [Beach] = Beach.allBeaches.filter { [4, 2, 3, 1, 5].contains($0.id) }
     
     var body: some View {
             ZStack {
@@ -92,11 +90,9 @@ struct DashboardContentView: View {
                                 .padding(.vertical)
                             ScrollView(.horizontal) {
                                 HStack {
-                                    NearBeachRow(image: .belleIsle, beach: .belleIsleBeach, beachName: "Belle Isle Beach", beachID: 1)
-                                    NearBeachRow(image: .grandHaven, beach: .grandHavenStatePark, beachName: "Grand Haven State Park", beachID: 2)
-                                    NearBeachRow(image: .silverLake, beach: .silverLakeBeach, beachName: "Silver Lake Beach", beachID: 3)
-                                    NearBeachRow(image: .sleepingBear, beach: .sleepingBear, beachName: "Sleeping Bear Dunes", beachID: 4)
-                                    NearBeachRow(image: .smallImagePlaceholder, beach: .tawasPointStatePark, beachName: "Tawaw Point State Park", beachID: 5)
+                                    ForEach(favorites) { beach in
+                                        NearBeachRow(image: beach.image, beach: beach, beachName: beach.beachName, beachID: beach.id)
+                                    }
                                 }
                                 .padding(.horizontal, 16)
                             }

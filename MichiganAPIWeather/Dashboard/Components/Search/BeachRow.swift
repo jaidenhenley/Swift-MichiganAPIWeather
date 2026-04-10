@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct BeachRow: View {
-    let beach: BeachViewModel.ViewBeach
+    let beach: Beach
     
     var body: some View {
         HStack(spacing: 12) {
-            Image(beach.beachImage)
+            Image(beach.image)
                 .resizable()
                 .scaledToFill()
                 .frame(width: 110, height: 90)
@@ -45,7 +45,7 @@ struct BeachRow: View {
 }
 
 #Preview {
-    BeachRow(beach: .belleIsleBeach)
+    BeachRow(beach: Beach.allBeaches[3])
         .background(
             Color.black
         )

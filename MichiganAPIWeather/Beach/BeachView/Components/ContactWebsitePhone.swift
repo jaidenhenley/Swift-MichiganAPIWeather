@@ -19,7 +19,7 @@ struct ContactWebsitePhone: View {
             }
             ActionButton(icon: "map.fill", title: "Location") {
                 guard let beach = viewModel.selectedBeach else { return }
-                let coords = beach.beachCoordinates
+                let coords = beach.coordinates
                 let placemark = MKPlacemark(coordinate: coords)
                 let mapItem = MKMapItem(placemark: placemark)
                 mapItem.name = viewModel.beachName

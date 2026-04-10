@@ -10,11 +10,11 @@ import SwiftUI
 struct BeachListView: View {
     @Binding var query: String
     
-    var filteredBeaches: [BeachViewModel.ViewBeach] {
+    var filteredBeaches: [Beach] {
         if query.isEmpty {
-            return BeachViewModel.ViewBeach.allCases
+            return Beach.allBeaches
         }
-        return BeachViewModel.ViewBeach.allCases.filter {
+        return Beach.allBeaches.filter {
             $0.beachName.localizedCaseInsensitiveContains(query)
         }
     }
@@ -22,9 +22,9 @@ struct BeachListView: View {
     var body: some View {
         ScrollView {
             LazyVStack(alignment: .leading) {
-                ForEach(filteredBeaches, id: \.beachID) { beach in
+                ForEach(filteredBeaches) { beach in
                     NavigationLink {
-                        BeachView(beach: beach, beachID: beach.beachID)
+                        BeachView(beach: beach, beachID: beach.id)
                     } label: {
                         BeachRow(beach: beach)
                     }

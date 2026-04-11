@@ -9,6 +9,7 @@ import SwiftUI
 
 struct BeachRow: View {
     let beach: Beach
+    let isFavorited: Bool
     
     var body: some View {
         HStack(spacing: 12) {
@@ -19,9 +20,18 @@ struct BeachRow: View {
                 .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
             
             VStack(alignment: .leading, spacing: 4) {
-                Text(beach.beachName)
-                    .font(.subheadline)
-                    .bold()
+                HStack {
+                    Text(beach.beachName)
+                        .font(.subheadline)
+                        .bold()
+                    
+                    Spacer()
+                    
+                    if isFavorited {
+                        Image(systemName: "heart.fill")
+                            .foregroundStyle(.red)
+                    }
+                }
                 Text(beach.shortDescription)
                     .font(.caption)
                     .foregroundStyle(.beachViewText)
@@ -33,12 +43,8 @@ struct BeachRow: View {
                 }            }
             
             Spacer()
-            
-            Image(systemName: "chevron.right")
-                .foregroundStyle(.tertiary)
-                .font(.footnote)
         }
-        .frame(width: 360, height: 130)
+        .frame(maxWidth: .infinity, minHeight: 130)
         .padding(.horizontal)
         .padding(.vertical, 8)
         .background(
@@ -50,7 +56,7 @@ struct BeachRow: View {
 }
 
 #Preview {
-    BeachRow(beach: Beach.allBeaches[3])
+    BeachRow(beach: Beach.allBeaches[3], isFavorited: true)
         .background(
             Color.black
         )

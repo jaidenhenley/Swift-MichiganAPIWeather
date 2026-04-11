@@ -28,6 +28,10 @@ struct NearBeachRow: View {
                         .cornerRadius(12)
                 }
             }
+            .overlay(alignment: .topTrailing) {
+                FavoriteButtonView(beach: beach)
+                    .padding(.top, 4)
+            }
             Text(beachName)
                 .font(.caption )
             

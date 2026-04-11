@@ -14,7 +14,6 @@ struct DashboardCategory: Identifiable, Hashable {
 }
 
 struct DashboardIcons: View {
-    
     var icon: String
     var title: String
     

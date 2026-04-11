@@ -38,7 +38,3 @@ struct IconStripView: View {
             .padding()
     }
 }
-
-#Preview {
-    IconStripView()
-}

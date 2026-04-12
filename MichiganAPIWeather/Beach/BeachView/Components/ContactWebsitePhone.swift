@@ -15,7 +15,9 @@ struct ContactWebsitePhone: View {
     var body: some View {
         HStack(spacing: 24) {
             ActionButton(icon: "globe", title: "Website") {
-                // URL
+                if let url = viewModel.selectedBeach?.websiteURL {
+                    UIApplication.shared.open(url)
+                }
             }
             ActionButton(icon: "map.fill", title: "Location") {
                 guard let beach = viewModel.selectedBeach else { return }
@@ -26,7 +28,13 @@ struct ContactWebsitePhone: View {
                 mapItem.openInMaps()
             }
             ActionButton(icon: "phone.fill", title: "Call") {
-                // Phone call
+                guard let beach = viewModel.selectedBeach else { return }
+                
+                let cleanedPhone = beach.phoneNumber.filter { "0123456789".contains($0) }
+                
+                if let url = URL(string: "tel://\(cleanedPhone)") {
+                    UIApplication.shared.open(url)
+                }
             }
         }
         .padding()

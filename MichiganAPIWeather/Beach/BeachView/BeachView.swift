@@ -9,21 +9,29 @@ import SwiftUI
 
 struct BeachView: View {
     @Environment(BeachViewModel.self) var viewModel
+    @State private var selectedImageIndex = 0
     let beach: Beach
     let beachID: Int
-    
+
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack {
-                    Image(beach.image)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(height: 250, alignment: .top)
-                        .clipped()
-                    
+                    TabView(selection: $selectedImageIndex) {
+                        ForEach(beach.images.indices, id: \.self) { index in
+                            Image(beach.images[index])
+                                .resizable()
+                                .scaledToFill()
+                                .frame(height: 250, alignment: .top)
+                                .clipped()
+                                .tag(index)
+                        }
+                    }
+                    .frame(height: 250)
+                    .tabViewStyle(.page(indexDisplayMode: .always))
+
                     Spacer()
-                    BeachHeader(image: beach.image)
+                    BeachHeader(image: beach.images[0])
                     WeatherForecastRow().padding(.horizontal, 16)
                     Divider().foregroundStyle(.beachViewText).frame(height: 2)
                     CrowdMeterView(forecastCrowd: viewModel.forecastCrowd, forecastDays: viewModel.forecastDays)

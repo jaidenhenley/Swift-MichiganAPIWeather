@@ -13,7 +13,7 @@ struct BeachPreviewCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Image(beach.image)
+            Image(beach.images[0])
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 160, height: 90)

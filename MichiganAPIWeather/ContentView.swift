@@ -14,14 +14,30 @@ struct BeachEntry: Identifiable, Hashable {
     let iconName: String
 }
 
-struct ContentView: View {
-    @State private var searchText = ""
-    @StateObject private var favorites = FavoritesManager()
+// ContentView.swift
 
-    @State private var viewModel = BeachViewModel()
-    
+struct ContentView: View {
+    @StateObject private var favorites = FavoritesManager()
+    @State private var beachViewModel = BeachViewModel()
+
     var body: some View {
-        DashboardView()
-            .environment(viewModel)
+        TabView {
+            DashboardView()
+                .tabItem {
+                    Label("Home", systemImage: "house.fill")
+                }
+
+            MapView()
+                .tabItem {
+                    Label("Map", systemImage: "map.fill")
+                }
+
+            FavoritesView()
+                .tabItem {
+                    Label("Favorites", systemImage: "heart.fill")
+                }
+        }
+        .environment(beachViewModel)
+        .environmentObject(favorites)
     }
 }

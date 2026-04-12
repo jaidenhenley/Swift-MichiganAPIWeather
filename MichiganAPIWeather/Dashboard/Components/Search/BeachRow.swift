@@ -12,10 +12,10 @@ struct BeachRow: View {
     
     var body: some View {
         HStack(spacing: 12) {
-            Image(beach.image)
+            Image(beach.images[0])
                 .resizable()
                 .scaledToFill()
-                .frame(width: 110, height: 90)
+                .frame(width: 110, height: 100)
                 .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
             
             VStack(alignment: .leading, spacing: 4) {
@@ -23,9 +23,14 @@ struct BeachRow: View {
                     .font(.subheadline)
                     .bold()
                 Text(beach.shortDescription)
-                    .font(.subheadline)
+                    .font(.caption)
                     .foregroundStyle(.beachViewText)
-            }
+                    .bold()
+                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], alignment: .leading, spacing: 8) {
+                    ForEach(beach.displayKeywords.prefix(4), id: \.self) { word in
+                        ListTag(tagName: word)
+                    }
+                }            }
             
             Spacer()
             
@@ -33,7 +38,7 @@ struct BeachRow: View {
                 .foregroundStyle(.tertiary)
                 .font(.footnote)
         }
-        .frame(width: 360, height: 118)
+        .frame(width: 360, height: 130)
         .padding(.horizontal)
         .padding(.vertical, 8)
         .background(

@@ -14,7 +14,7 @@ struct DailyForecastView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            ForEach(viewModel.forecastDays) { day in
+            ForEach(viewModel.forecastDays.dropFirst()) { day in
                 DailyForecastRow(day: day) { tappedDay in
                     selectedDay = tappedDay
                     

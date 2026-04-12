@@ -31,7 +31,9 @@ struct BeachView: View {
                     .tabViewStyle(.page(indexDisplayMode: .always))
 
                     Spacer()
+                    
                     BeachHeader(image: beach.images[0])
+                        .padding()
                     WeatherForecastRow().padding(.horizontal, 16)
                     Divider().foregroundStyle(.beachViewText).frame(height: 2)
                     CrowdMeterView(forecastCrowd: viewModel.forecastCrowd, forecastDays: viewModel.forecastDays)

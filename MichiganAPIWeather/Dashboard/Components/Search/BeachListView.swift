@@ -19,7 +19,8 @@ struct BeachListView: View {
         List(viewModel.filteredBeaches) { beach in
             ZStack {
                 NavigationLink {
-                    BeachView(beach: beach, beachID: beach.id)
+//                    BeachView(beach: beach, beachID: beach.id)
+                    SuggestedBeachTest()
                 } label: {
                     EmptyView()
                 }

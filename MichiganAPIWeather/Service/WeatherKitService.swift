@@ -171,4 +171,14 @@ class WeatherKitService {
             "condition_code": Double(w.condition.rawValue.hashValue)
         ]
     }
+    
+    func fetchConditions(latitude: Double, longitude: Double) async -> BeachConditions? {
+        let location = CLLocation(latitude: latitude, longitude: longitude)
+        guard let weather = try? await service.weather(for: location) else { return nil }
+        
+        let c = weather.currentWeather
+        let today = weather.dailyForecast.first
+        
+        return BeachConditions(tempF: c.temperature.converted(to: .fahrenheit).value, windSpeedMPH: c.wind.speed.converted(to: .milesPerHour).value, precipChance: today?.precipitationChance ?? 0, uvIndex: c.uvIndex.value, isWeekend: Calendar.current.isDateInWeekend(Date()))
+    }
 }

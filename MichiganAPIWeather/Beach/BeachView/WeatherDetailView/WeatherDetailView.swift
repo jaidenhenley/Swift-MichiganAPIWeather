@@ -19,7 +19,7 @@ struct WeatherDetailView: View {
                 
             }
             .background(
-                Image(.forecastBackground)
+                Image(.forecastbackground)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
             )

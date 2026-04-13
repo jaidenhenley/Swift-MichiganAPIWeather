@@ -10,29 +10,67 @@ import SwiftUI
 
 @Observable
 class MapViewModel {
-    // This is your master list
-    private var allBeaches: [Beach] = Beach.allBeaches
     
-    // This is what the View actually displays
+    // MARK: - Data
+    private var allBeaches: [Beach] = Beach.allBeaches
     var filteredBeaches: [Beach] = Beach.allBeaches
-
-    var region = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 44.0, longitude: -85.5),
-        span: MKCoordinateSpan(latitudeDelta: 5.0, longitudeDelta: 5.0)
-    )
-
+    
+    // MARK: - Map State
+    var lastRegion: MKCoordinateRegion?
+    var isZoomedOut: Bool = true
+    
+    // MARK: - Update from Map
     func updateVisibleBeaches(in region: MKCoordinateRegion) {
-        // Calculate the boundaries of the current map view
+        self.lastRegion = region
+        
+        // Simple zoom threshold (you can tune this)
+        self.isZoomedOut = region.span.latitudeDelta > 1.5
+        
         let latDelta = region.span.latitudeDelta / 2.0
         let lonDelta = region.span.longitudeDelta / 2.0
         
         let latRange = (region.center.latitude - latDelta)...(region.center.latitude + latDelta)
         let lonRange = (region.center.longitude - lonDelta)...(region.center.longitude + lonDelta)
         
-        // Update the list shown in the ScrollView
         self.filteredBeaches = allBeaches.filter { beach in
             latRange.contains(beach.coordinates.latitude) &&
             lonRange.contains(beach.coordinates.longitude)
         }
     }
+    
+    // MARK: - Clusters (CLEAN BASE VERSION)
+    func makeClusters() -> [BeachCluster] {
+        guard let region = lastRegion else { return [] }
+        
+        var buckets: [String: [Beach]] = [:]
+        
+        // Stable grid size (important)
+        let gridSize = max(region.span.latitudeDelta / 6.0, 0.2)
+        
+        for beach in filteredBeaches {
+            
+            let latKey = Int(beach.coordinates.latitude / gridSize)
+            let lonKey = Int(beach.coordinates.longitude / gridSize)
+            
+            let key = "\(latKey)-\(lonKey)"
+            buckets[key, default: []].append(beach)
+        }
+        
+        return buckets.values.map { beaches in
+            
+            let avgLat = beaches.map { $0.coordinates.latitude }.reduce(0, +) / Double(beaches.count)
+            let avgLon = beaches.map { $0.coordinates.longitude }.reduce(0, +) / Double(beaches.count)
+            
+            return BeachCluster(
+                coordinate: CLLocationCoordinate2D(latitude: avgLat, longitude: avgLon),
+                beaches: beaches
+            )
+        }
+    }
+}
+
+struct BeachCluster: Identifiable {
+    let id = UUID()
+    let coordinate: CLLocationCoordinate2D
+    let beaches: [Beach]
 }

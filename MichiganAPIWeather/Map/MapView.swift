@@ -8,28 +8,46 @@
 import SwiftUI
 import MapKit
 
-
 struct MapView: View {
     @State private var mapVM = MapViewModel()
     @State private var selectedBeach: Beach? = nil
     @State private var showDetail = false
-    @State private var position: MapCameraPosition = .automatic
+    
+    @State private var position: MapCameraPosition = .region(
+        MKCoordinateRegion(
+            center: CLLocationCoordinate2D(latitude: 44.0, longitude: -85.5),
+            span: MKCoordinateSpan(latitudeDelta: 5.0, longitudeDelta: 5.0)
+        )
+    )
 
     var body: some View {
         ZStack(alignment: .bottom) {
+            
+            // 🗺️ MAP
             Map(position: $position) {
-                ForEach(mapVM.filteredBeaches) { beach in
-                    Annotation(beach.beachName, coordinate: beach.coordinates) {
-                        beachAnnotation(beach)
+                if mapVM.isZoomedOut {
+                    let clusters = mapVM.makeClusters()
+                    
+                    ForEach(clusters) { cluster in
+                        Annotation("", coordinate: cluster.coordinate) {
+                            clusterView(cluster)
+                        }
+                    }
+                    
+                } else {
+                    ForEach(mapVM.filteredBeaches) { beach in
+                        Annotation(beach.beachName, coordinate: beach.coordinates) {
+                            beachAnnotation(beach)
+                        }
                     }
                 }
             }
-            .onMapCameraChange { context in
-                // This triggers the filtering as you zoom in/out
+            .onMapCameraChange(frequency: .continuous) { context in
                 mapVM.updateVisibleBeaches(in: context.region)
             }
             .ignoresSafeArea()
 
+            // 📍 BOTTOM SCROLL
             beachListOverlay
         }
         .sheet(isPresented: $showDetail) {
@@ -39,7 +57,32 @@ struct MapView: View {
         }
     }
 
-    // Helper to keep the Map builder clean
+    // MARK: - Cluster View
+    private func clusterView(_ cluster: BeachCluster) -> some View {
+        Button {
+            withAnimation(.easeInOut) {
+                position = .region(
+                    MKCoordinateRegion(
+                        center: cluster.coordinate,
+                        span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
+                    )
+                )
+            }
+        } label: {
+            ZStack {
+                Circle()
+                    .fill(.orange)
+                    .frame(width: 44, height: 44)
+                
+                Text("\(cluster.beaches.count)")
+                    .foregroundStyle(.white)
+                    .font(.headline)
+            }
+            .shadow(radius: 5)
+        }
+    }
+
+    // MARK: - Beach Pin
     private func beachAnnotation(_ beach: Beach) -> some View {
         Button {
             selectedBeach = beach
@@ -49,6 +92,7 @@ struct MapView: View {
                 Circle()
                     .fill(selectedBeach?.id == beach.id ? .orange : .blue)
                     .frame(width: 36, height: 36)
+                
                 Image(systemName: "mappin.circle.fill")
                     .font(.system(size: 16))
                     .foregroundStyle(.white)
@@ -57,16 +101,19 @@ struct MapView: View {
         }
     }
 
-    // Helper to keep the ZStack clean
+    // MARK: - Bottom Scroll
     private var beachListOverlay: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 12) {
                 ForEach(mapVM.filteredBeaches) { beach in
-                    BeachPreviewCard(beach: beach, isSelected: selectedBeach?.id == beach.id)
-                        .onTapGesture {
-                            selectedBeach = beach
-                            showDetail = true
-                        }
+                    BeachPreviewCard(
+                        beach: beach,
+                        isSelected: selectedBeach?.id == beach.id
+                    )
+                    .onTapGesture {
+                        selectedBeach = beach
+                        showDetail = true
+                    }
                 }
             }
             .padding(.horizontal, 16)

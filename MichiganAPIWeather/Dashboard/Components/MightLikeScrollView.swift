@@ -17,7 +17,7 @@ struct MightLikeScrollView: View {
                     } label: {
                         VStack(spacing: 0) {
                             ZStack(alignment: .topTrailing) {
-                                Image(.grandHaven)
+                                Image(.grandHaven1)
                                     .resizable()
                                     .scaledToFill()
                                     .frame(width: 332, height: 253 * 0.7)

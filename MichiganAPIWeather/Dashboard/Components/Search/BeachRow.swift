@@ -13,7 +13,7 @@ struct BeachRow: View {
     
     var body: some View {
         HStack(spacing: 12) {
-            Image(beach.image)
+            Image(beach.images[0])
                 .resizable()
                 .scaledToFill()
                 .frame(width: 110, height: 100)
@@ -44,7 +44,7 @@ struct BeachRow: View {
             
             Spacer()
         }
-        .frame(maxWidth: .infinity, minHeight: 130)
+        .frame(width: 360, height: 130)
         .padding(.horizontal)
         .padding(.vertical, 8)
         .background(

@@ -17,6 +17,7 @@ struct BeachEntry: Identifiable, Hashable {
 // ContentView.swift
 
 struct ContentView: View {
+    @StateObject private var favorites = FavoritesManager()
     @State private var beachViewModel = BeachViewModel()
 
     var body: some View {
@@ -37,5 +38,6 @@ struct ContentView: View {
                 }
         }
         .environment(beachViewModel)
+        .environmentObject(favorites)
     }
 }

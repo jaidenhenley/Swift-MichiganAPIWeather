@@ -16,7 +16,9 @@ struct Beach: Identifiable {
     let coordinates: CLLocationCoordinate2D
     let keywords: [String]
     let displayKeywords: [String]
-    let image: ImageResource
+    let images: [ImageResource]
+    let phoneNumber: String
+    let websiteURL: URL?
     
     static let allBeaches: [Beach] = [
         Beach(
@@ -30,7 +32,9 @@ struct Beach: Identifiable {
                               "family", "playground", "picnic", "pet friendly", "water access",
                               "concessions", "ev charging", "scenic", "national park", "adventure"],
                    displayKeywords: ["Lake Michigan", "National Park", "Dunes", "Hiking"],
-                   image: .sleepingBear
+                   images: [.sleepingBear1, .sleepingBear2, .sleepingBear3],
+                   phoneNumber: "(231) 326-4700",
+                   websiteURL: URL(string: "https://www.nps.gov/slbe")
                ),
                Beach(
                    id: 2,
@@ -42,7 +46,9 @@ struct Beach: Identifiable {
                               "family", "playground", "picnic", "beach house", "metal detecting",
                               "water access", "track chair", "scenic", "state park"],
                    displayKeywords: ["Lake Michigan","State Park", "Lighthouse", "Fishing"],
-                   image: .grandHaven
+                   images: [.grandHaven1, .grandHaven2, .grandHaven3],
+                   phoneNumber: "(616) 847-1309",
+                   websiteURL: URL(string: "https://www2.dnr.state.mi.us/parksandtrails/Details.aspx?id=449&type=SPRK")
                ),
                Beach(
                    id: 3,
@@ -52,7 +58,9 @@ struct Beach: Identifiable {
                    coordinates: .init(latitude: 43.6753, longitude: -86.5214),
                    keywords: ["lake michigan", "west michigan", "dunes", "orv", "off road", "swimming", "adventure", "family", "scenic", "restroom"],
                    displayKeywords: ["Lake Michigan", "State Park", "Dunes", "ORV"],
-                   image: .silverLake
+                   images: [.silverLake1, .silverLake2, .silverLake3],
+                   phoneNumber: "(231) 873-3083",
+                   websiteURL: URL(string: "https://www2.dnr.state.mi.us/parksandtrails/Details.aspx?id=493&type=SPRK")
                ),
                Beach(
                    id: 4,
@@ -62,7 +70,9 @@ struct Beach: Identifiable {
                    coordinates: .init(latitude: 42.3416, longitude: -82.9625),
                    keywords: ["detroit river", "southeast michigan", "urban", "skyline", "swimming", "family", "park", "scenic","restroom"],
                    displayKeywords: ["Detroit River", "State Park", "Urban", "Boat Launch"],
-                   image: .belleIsle
+                   images: [.belleIsle1, .belleIsle2, .belleIsle3],
+                   phoneNumber: "(313) 821-9844",
+                   websiteURL: URL(string: "https://www.belleislepark.org/")
                ),
                Beach(
                    id: 5,
@@ -76,7 +86,9 @@ struct Beach: Identifiable {
                               "nature programs", "history", "cross country skiing", "snowshoeing",
                               "metal detecting", "pet friendly", "concessions", "beach house"],
                    displayKeywords: ["Lake Huron", "State Park", "Camping", "Hiking"],
-                   image: .smallImagePlaceholder
+                   images: [.saugatuckDunes1, .saugatuckDunes2,.saugatuckDunes3],
+                   phoneNumber: "(989) 362-5041",
+                   websiteURL: URL(string: "https://www2.dnr.state.mi.us/parksandtrails/Details.aspx?id=499&type=SPRK")
                ),
                Beach(
                    id: 6,
@@ -86,7 +98,9 @@ struct Beach: Identifiable {
                    coordinates: .init(latitude: 42.7789, longitude: -86.2048),
                    keywords: ["lake michigan", "west michigan", "lighthouse", "swimming", "fishing", "camping", "family", "scenic", "harbor"],
                    displayKeywords: ["Lake Michigan", "State Park", "Lighthouse", "Camping"],
-                   image: .smallImagePlaceholder
+                   images: [.saugatuckDunes1, .saugatuckDunes2,.saugatuckDunes3],
+                   phoneNumber: "(616) 399-9390",
+                   websiteURL: URL(string: "https://www2.dnr.state.mi.us/parksandtrails/Details.aspx?id=458&type=SPRK")
                ),
                Beach(
                    id: 7,
@@ -96,7 +110,9 @@ struct Beach: Identifiable {
                    coordinates: .init(latitude: 44.0349, longitude: -86.5018),
                    keywords: ["lake michigan", "west michigan", "dunes", "swimming", "hiking", "camping", "fishing", "family", "scenic", "boat launch"],
                    displayKeywords: ["Lake Michigan", "State Park", "Dunes", "Fishing"],
-                   image: .smallImagePlaceholder
+                   images: [.ludington1, .ludington2, .ludington3],
+                   phoneNumber: "(231) 843-2423",
+                   websiteURL: URL(string: "https://www2.dnr.state.mi.us/parksandtrails/Details.aspx?id=468&type=SPRK")
                ),
                Beach(
                    id: 8,
@@ -106,7 +122,9 @@ struct Beach: Identifiable {
                    coordinates: .init(latitude: 43.1329, longitude: -86.2654),
                    keywords: ["lake michigan", "west michigan", "dunes", "swimming", "hiking", "camping", "family", "quiet", "nature", "scenic", "restrooms"],
                    displayKeywords: ["Lake Michigan", "State Park", "Dunes", "Camping"],
-                   image: .smallImagePlaceholder
+                   images: [.hoffmaster1, .hoffmaster2, .hoffmaster3],
+                   phoneNumber: "(231) 798-3711",
+                   websiteURL: URL(string: "https://www2.dnr.state.mi.us/parksandtrails/Details.aspx?id=457&type=SPRK")
                ),
                Beach(
                    id: 9,
@@ -116,7 +134,9 @@ struct Beach: Identifiable {
                    coordinates: .init(latitude: 41.9153, longitude: -86.5934),
                    keywords: ["lake michigan", "southwest michigan", "dunes", "swimming", "hiking", "camping", "family", "adventure", "scenic", "restrooms"],
                    displayKeywords: ["Lake Michigan","State Park", "Dunes", "Camping"],
-                   image: .smallImagePlaceholder
+                   images: [.warrenDunes1, .warrenDunes2, .warrenDunes3],
+                   phoneNumber: "(269) 426-4013",
+                   websiteURL: URL(string: "https://www2.dnr.state.mi.us/parksandtrails/Details.aspx?id=504&type=SPRK")
                ),
                Beach(
                    id: 10,
@@ -125,7 +145,9 @@ struct Beach: Identifiable {
                    description: "Petoskey State Park sits along Little Traverse Bay, one of the most beautiful corners of northern Lake Michigan. The beach is known for Petoskey stone hunting, and you'll find people bent over the shoreline scanning the gravel at low tide all season long. But the park has more going on than fossil coral: the bay views are sweeping, the water shifts from aquamarine to deep blue depending on the light, and the nearby town of Petoskey offers some of the best dining and lodging in northern Michigan. Fall colors here are exceptional. It's the kind of place that earns repeat visits.",
                    coordinates: .init(latitude: 45.4068, longitude: -84.9086),
                    keywords: ["lake michigan", "northwest michigan", "petoskey stones", "rock hunting", "swimming", "hiking", "camping", "family", "scenic", "quiet", "restrooms"], displayKeywords: ["Lake Michigan", "State Park", "Petoskey Stones", "Camping"],
-                   image: .smallImagePlaceholder
+                   images: [.petoskey1, .petoskey2, .petoskey3],
+                   phoneNumber: "(231) 347-2311",
+                   websiteURL: URL(string: "https://www2.dnr.state.mi.us/parksandtrails/Details.aspx?id=484&type=SPRK")
                ),
                Beach(
                    id: 11,
@@ -135,7 +157,9 @@ struct Beach: Identifiable {
                    coordinates: .init(latitude: 46.5643, longitude: -86.3163),
                    keywords: ["lake superior", "upper peninsula", "cliffs", "sea caves", "kayaking", "hiking", "camping", "scenic", "remote", "adventure"],
                    displayKeywords: ["Lake Superior", "National Park", "Cliffs", "Camping"],
-                   image: .smallImagePlaceholder
+                   images: [.picturedRocks1, .picturedRocks2, .picturedRocks3],
+                   phoneNumber: "(906) 387-3700",
+                   websiteURL: URL(string: "https://www.nps.gov/piro")
                ),
                Beach(
                    id: 12,
@@ -145,7 +169,9 @@ struct Beach: Identifiable {
                    coordinates: .init(latitude: 46.5880, longitude: -87.3818),
                    keywords: ["lake superior", "upper peninsula", "marquette", "rocky", "hiking", "swimming", "scenic", "remote", "adventure", "waves"],
                    displayKeywords: ["Lake Superior", "City Park", "Hiking", "Fishing"],
-                   image: .smallImagePlaceholder
+                   images: [.presqueIslePark1, .presqueIslePark2, .presqueIslePark3],
+                   phoneNumber: "(906) 228-0460",
+                   websiteURL: URL(string: "https://www.marquettemi.gov/departments/community-services/parks-recreation/")
                ),
                Beach(
                    id: 13,
@@ -155,7 +181,9 @@ struct Beach: Identifiable {
                    coordinates: .init(latitude: 44.6475, longitude: -83.2976),
                    keywords: ["lake huron", "sunrise coast", "lower peninsula", "swimming", "fishing", "camping", "family", "quiet", "harbor", "scenic", "lodging"],
                    displayKeywords: ["Lake Huron", "State Park", "Lodging", "Hiking"],
-                   image: .smallImagePlaceholder
+                   images: [.harrisville1, .harrisville2, .harrisville3],
+                   phoneNumber: "(989) 724-5126",
+                   websiteURL: URL(string: "https://www2.dnr.state.mi.us/parksandtrails/Details.aspx?id=455&type=SPRK")
                ),
                Beach(
                    id: 14,
@@ -165,7 +193,9 @@ struct Beach: Identifiable {
                    coordinates: .init(latitude: 41.9200, longitude: -83.3415),
                    keywords: ["lake erie", "southeast michigan", "swimming", "fishing", "bird watching", "camping", "family", "quiet", "scenic"],
                    displayKeywords: ["Lake Erie", "State Park", "Boat Launch", "Hiking"],
-                   image: .smallImagePlaceholder
+                   images: [.williamCSterling1, .williamCSterling2, .williamCSterling2],
+                   phoneNumber: "(734) 289-2715",
+                   websiteURL: URL(string: "https://www2.dnr.state.mi.us/parksandtrails/Details.aspx?id=497&type=SPRK")
                ),
                Beach(
                    id: 15,
@@ -175,7 +205,9 @@ struct Beach: Identifiable {
                    coordinates: .init(latitude: 43.2485, longitude: -86.3339),
                    keywords: ["lake michigan", "west michigan", "swimming", "hiking", "camping", "kayaking", "fishing", "family", "scenic", "dunes"],
                    displayKeywords: ["Lake Michigan", "State Park", "Boat Launch", "Hiking"],
-                   image: .smallImagePlaceholder
+                   images: [.muskegonStatePark1, .muskegonStatePark2, .muskegonStatePark3],
+                   phoneNumber: "(231) 744-3480",
+                   websiteURL: URL(string: "https://www2.dnr.state.mi.us/parksandtrails/Details.aspx?id=475&type=SPRK")
                ),
                Beach(
                    id: 16,
@@ -185,7 +217,9 @@ struct Beach: Identifiable {
                    coordinates: .init(latitude: 42.6968, longitude: -86.1903),
                    keywords: ["lake michigan", "west michigan", "dunes", "swimming", "hiking", "quiet", "scenic", "undeveloped", "nature", "family"],
                    displayKeywords: ["Lake Michigan", "State Park", "Dunes", "Hiking"],
-                   image: .smallImagePlaceholder
+                   images: [.saugatuckDunes1, .saugatuckDunes2, .saugatuckDunes3],
+                   phoneNumber: "(269) 637-2788",
+                   websiteURL: URL(string: "https://www2.dnr.state.mi.us/parksandtrails/Details.aspx?id=491&type=SPRK")
                ),
                Beach(
                    id: 17,
@@ -195,7 +229,9 @@ struct Beach: Identifiable {
                    coordinates: .init(latitude: 42.4031, longitude: -86.2736),
                    keywords: ["lake michigan", "west michigan", "lighthouse", "swimming", "fishing", "family", "harbor", "scenic", "charming", "quiet"],
                    displayKeywords: ["Lake Michigan", "City Park", "Lighthouse", "Dunes"],
-                   image: .smallImagePlaceholder
+                   images: [.southHavenSouthBeach1, .southHavenSouthBeach2, .southHavenSouthBeach3],
+                   phoneNumber: "(269) 637-0772",
+                   websiteURL: URL(string: "https://www.southhaven.org/beaches")
                ),
                Beach(
                    id: 18,
@@ -205,7 +241,9 @@ struct Beach: Identifiable {
                    coordinates: .init(latitude: 44.0103, longitude: -83.0508),
                    keywords: ["lake huron", "thumb", "lower peninsula", "swimming", "hiking", "camping", "fishing", "family", "dark sky", "stargazing", "scenic"],
                    displayKeywords: ["Lake Huron", "State Park", "Stargazing", "Fishing"],
-                   image: .smallImagePlaceholder
+                   images: [.portCrescent1, .portCrescent2, .portCrescent3],
+                   phoneNumber: "(989) 738-8663",
+                   websiteURL: URL(string: "https://www2.dnr.state.mi.us/parksandtrails/Details.aspx?id=485&type=SPRK")
                ),
                Beach(
                    id: 19,
@@ -215,7 +253,9 @@ struct Beach: Identifiable {
                    coordinates: .init(latitude: 43.9726, longitude: -83.2055),
                    keywords: ["lake huron", "thumb", "lower peninsula", "swimming", "hiking", "camping", "fishing", "family", "quiet", "scenic", "dune forest"],
                    displayKeywords: ["Lake Huron", "State Park", "Hiking", "Camping"],
-                   image: .smallImagePlaceholder
+                   images: [.albertESleeper1, .albertESleeper2, .albertESleeper3],
+                   phoneNumber: "(989) 856-4411",
+                   websiteURL: URL(string: "https://www2.dnr.state.mi.us/parksandtrails/Details.aspx?id=494&type=SPRK")
                ),
                Beach(
                    id: 20,
@@ -225,7 +265,9 @@ struct Beach: Identifiable {
                    coordinates: .init(latitude: 47.2371, longitude: -88.6088),
                    keywords: ["lake superior", "upper peninsula", "keweenaw", "swimming", "hiking", "camping", "fishing", "scenic", "remote", "sunset"],
                    displayKeywords: ["Lake Superior", "State Park", "Hiking", "Fishing"],
-                   image: .smallImagePlaceholder
+                   images: [.mclainStatePark1, .mclainStatePark2, .mclainStatePark3],
+                   phoneNumber: "(906) 482-0278",
+                   websiteURL: URL(string: "https://www2.dnr.state.mi.us/parksandtrails/Details.aspx?id=423&type=SPRK")
                ),
                Beach(
                    id: 21,
@@ -234,7 +276,9 @@ struct Beach: Identifiable {
                    description: "The Porcupine Mountains are Michigan's largest and wildest state park, stretching along Lake Superior's shore in the remote western Upper Peninsula. Union Bay Beach sits at the eastern entrance to the park, offering a broad gravel-and-sand shoreline with Superior crashing in from the northwest. But the Porkies are more than a beach destination. Old-growth hemlock and maple forest covers most of the park's 60,000 acres. Waterfalls run through deep river gorges. Backcountry trails and rustic cabins extend for days in every direction. It's one of the few places left in the Midwest where the wilderness feels genuinely uncompromised.",
                    coordinates: .init(latitude: 46.7811, longitude: -89.6807),
                    keywords: ["lake superior", "upper peninsula", "wilderness", "hiking", "camping", "fishing", "scenic", "remote", "adventure", "old growth", "rugged"], displayKeywords: ["Lake Superior", "State Park", "Mountains", "Waterfalls"],
-                   image: .smallImagePlaceholder
+                   images: [.porcupineMountainsWildernessStatePark1, .porcupineMountainsWildernessStatePark2, .porcupineMountainsWildernessStatePark3],
+                   phoneNumber: "(906) 885-5275",
+                   websiteURL: URL(string: "https://www2.dnr.state.mi.us/parksandtrails/Details.aspx?id=426&type=SPRK")
                ),
     ]
 }

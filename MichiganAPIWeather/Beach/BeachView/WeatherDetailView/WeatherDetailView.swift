@@ -11,28 +11,19 @@ struct WeatherDetailView: View {
     @Environment(BeachViewModel.self) var viewModel
 
     var body: some View {
-        ZStack {
-            // 1. The Background Layer
-            Image(.forecastBackground)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .ignoresSafeArea() // This makes it go edge-to-edge
+        ScrollView {
+            VStack(spacing: 16) {
+                Spacer()
+                WeatherDashboard()
+                DailyForecastView()
 
-            // 2. The Content Layer
-            ScrollView {
-                VStack(spacing: 16) {
-                    Spacer()
-                        .frame(height: 100) // Adjusts where the content starts
-                    
-                    WeatherDashboard()
-                    DailyForecastView()
-                }
-                .padding(.bottom) // Prevents content from hitting the home indicator
             }
         }
+        .background(
+            Image(.forecastbackground)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+        )
         .environment(viewModel)
     }
 }
-
-
-

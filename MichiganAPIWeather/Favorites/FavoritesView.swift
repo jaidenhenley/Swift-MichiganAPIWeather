@@ -32,7 +32,7 @@ struct FavoritesView: View {
                             BeachView(beach: beach, beachID: beach.id)
                         } label: {
                             HStack(spacing: 12) {
-                                Image(beach.image)
+                                Image(beach.images[0])
                                     .resizable()
                                     .scaledToFill()
                                     .frame(width: 60, height: 60)

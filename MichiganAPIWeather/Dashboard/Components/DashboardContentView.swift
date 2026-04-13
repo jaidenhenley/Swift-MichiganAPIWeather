@@ -30,7 +30,7 @@ struct DashboardContentView: View {
                 VStack(spacing: 0) {
                     
                     ZStack(alignment: .topLeading) {
-                        Image(.grandHaven)
+                        Image(.grandHaven1)
                             .resizable()
                             .scaledToFill()
                             .frame(minWidth: 0, maxWidth: .infinity)
@@ -97,7 +97,7 @@ struct DashboardContentView: View {
                         ScrollView(.horizontal) {
                             HStack {
                                 ForEach(favorites) { beach in
-                                    NearBeachRow(image: beach.image, beach: beach, beachName: beach.beachName, beachID: beach.id)
+                                    NearBeachRow(images: beach.images, beach: beach, beachName: beach.beachName, beachID: beach.id)
                                 }
                             }
                             .padding(.horizontal, 16)

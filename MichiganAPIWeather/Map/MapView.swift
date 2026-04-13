@@ -12,6 +12,7 @@ struct MapView: View {
     @State private var mapVM = MapViewModel()
     @State private var selectedBeach: Beach? = nil
     @State private var showDetail = false
+    
     @State private var position: MapCameraPosition = .region(
         MKCoordinateRegion(
             center: CLLocationCoordinate2D(latitude: 44.0, longitude: -85.5),
@@ -21,42 +22,31 @@ struct MapView: View {
 
     var body: some View {
         ZStack(alignment: .bottom) {
+            
             Map(position: $position) {
-                ForEach(mapVM.beaches) { beach in
-                    Annotation(beach.beachName, coordinate: beach.coordinates) {
-                        Button {
-                            selectedBeach = beach
-                            showDetail = true
-                        } label: {
-                            ZStack {
-                                Circle()
-                                    .fill(selectedBeach?.id == beach.id ? .orange : .blue)
-                                    .frame(width: 36, height: 36)
-                                Image(systemName: "mappin.circle.fill")
-                                    .font(.system(size: 16))
-                                    .foregroundStyle(.white)
-                            }
-                            .shadow(radius: 4)
+                if mapVM.isZoomedOut {
+                    let clusters = mapVM.makeClusters()
+                    
+                    ForEach(clusters) { cluster in
+                        Annotation("", coordinate: cluster.coordinate) {
+                            clusterView(cluster)
+                        }
+                    }
+                    
+                } else {
+                    ForEach(mapVM.filteredBeaches) { beach in
+                        Annotation(beach.beachName, coordinate: beach.coordinates) {
+                            beachAnnotation(beach)
                         }
                     }
                 }
             }
+            .onMapCameraChange(frequency: .continuous) { context in
+                mapVM.updateVisibleBeaches(in: context.region)
+            }
             .ignoresSafeArea()
 
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 12) {
-                    ForEach(mapVM.beaches) { beach in
-                        BeachPreviewCard(beach: beach, isSelected: selectedBeach?.id == beach.id)
-                            .onTapGesture {
-                                selectedBeach = beach
-                                showDetail = true
-                            }
-                    }
-                }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 12)
-            }
-            .background(.ultraThinMaterial)
+            beachListOverlay
         }
         .sheet(isPresented: $showDetail) {
             if let beach = selectedBeach {
@@ -64,8 +54,69 @@ struct MapView: View {
             }
         }
     }
-}
 
+    private func clusterView(_ cluster: BeachCluster) -> some View {
+        Button {
+            withAnimation(.easeInOut) {
+                position = .region(
+                    MKCoordinateRegion(
+                        center: cluster.coordinate,
+                        span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
+                    )
+                )
+            }
+        } label: {
+            ZStack {
+                Circle()
+                    .fill(.orange)
+                    .frame(width: 44, height: 44)
+                
+                Text("\(cluster.beaches.count)")
+                    .foregroundStyle(.white)
+                    .font(.headline)
+            }
+            .shadow(radius: 5)
+        }
+    }
+
+    private func beachAnnotation(_ beach: Beach) -> some View {
+        Button {
+            selectedBeach = beach
+            showDetail = true
+        } label: {
+            ZStack {
+                Circle()
+                    .fill(selectedBeach?.id == beach.id ? .orange : .blue)
+                    .frame(width: 36, height: 36)
+                
+                Image(systemName: "mappin.circle.fill")
+                    .font(.system(size: 16))
+                    .foregroundStyle(.white)
+            }
+            .shadow(radius: 4)
+        }
+    }
+
+    private var beachListOverlay: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 12) {
+                ForEach(mapVM.filteredBeaches) { beach in
+                    BeachPreviewCard(
+                        beach: beach,
+                        isSelected: selectedBeach?.id == beach.id
+                    )
+                    .onTapGesture {
+                        selectedBeach = beach
+                        showDetail = true
+                    }
+                }
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 12)
+        }
+        .background(.ultraThinMaterial)
+    }
+}
 
 #Preview {
     MapView()

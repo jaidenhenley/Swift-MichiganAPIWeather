@@ -5,6 +5,7 @@
 //  Created by Jaiden Henley on 3/19/26.
 //
 
+import SwiftData
 import SwiftUI
 
 @main
@@ -16,6 +17,7 @@ struct MichiganAPIWeatherApp: App {
             ContentView()
                 .environment(beachViewModel)
         }
+        .modelContainer(for: FavoriteBeach.self)
     }
     
     init() {

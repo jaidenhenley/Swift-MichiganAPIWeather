@@ -11,19 +11,15 @@ import SwiftUI
 @Observable
 class MapViewModel {
     
-    // MARK: - Data
     private var allBeaches: [Beach] = Beach.allBeaches
     var filteredBeaches: [Beach] = Beach.allBeaches
     
-    // MARK: - Map State
     var lastRegion: MKCoordinateRegion?
     var isZoomedOut: Bool = true
     
-    // MARK: - Update from Map
     func updateVisibleBeaches(in region: MKCoordinateRegion) {
         self.lastRegion = region
         
-        // Simple zoom threshold (you can tune this)
         self.isZoomedOut = region.span.latitudeDelta > 1.5
         
         let latDelta = region.span.latitudeDelta / 2.0
@@ -38,13 +34,11 @@ class MapViewModel {
         }
     }
     
-    // MARK: - Clusters (CLEAN BASE VERSION)
     func makeClusters() -> [BeachCluster] {
         guard let region = lastRegion else { return [] }
         
         var buckets: [String: [Beach]] = [:]
         
-        // Stable grid size (important)
         let gridSize = max(region.span.latitudeDelta / 6.0, 0.2)
         
         for beach in filteredBeaches {

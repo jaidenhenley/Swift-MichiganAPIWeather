@@ -9,17 +9,19 @@ import CoreML
 import SwiftUI
 
 class CrowdPredictor {
+    static let shared = CrowdPredictor()
+    
     private let model: BeachCrowdClassifier?
         
-    init() {
-        if let m = try? BeachCrowdClassifier(configuration: MLModelConfiguration()) {
-            model = m
-            print("[Crowd Predictior] Model Loaded")
-        } else {
-            model = nil
-            print("[CrowdPredictor] Model failed to load")
+    private init() {
+            if let m = try? BeachCrowdClassifier(configuration: MLModelConfiguration()) {
+                model = m
+                print("[Crowd Predictor] Model Loaded")
+            } else {
+                model = nil
+                print("[CrowdPredictor] Model failed to load")
+            }
         }
-    }
     
     func predict(for date: Date, tempMax: Double, tempMin: Double, precipitation: Double, windMax: Double, waterTemp: Double?, isHoliday: Bool) -> CrowdLevel {
         let cal = Calendar.current

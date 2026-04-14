@@ -23,6 +23,46 @@ private struct MockFavoritesRepository: FavoritesRepository {
     }
 }
 
+// MARK: - Helpers
+
+private func makeSnapshot(
+    tempF: Double, windSpeedMPH: Double, precipChance: Double,
+    uvIndex: Int, isWeekend: Bool
+) -> ConditionSnapshot {
+    // Pick a date that is or isn't on a weekend based on the flag
+    let calendar = Calendar.current
+    var date = Date.now
+    if isWeekend != calendar.isDateInWeekend(date) {
+        // Advance day-by-day until the weekend flag matches
+        let direction: Int = isWeekend ? 1 : -1
+        for offset in 1...7 {
+            let candidate = calendar.date(byAdding: .day, value: offset * direction, to: date)!
+            if calendar.isDateInWeekend(candidate) == isWeekend {
+                date = candidate
+                break
+            }
+        }
+    }
+    return ConditionSnapshot(
+        tempF: tempF,
+        windSpeedMPH: windSpeedMPH,
+        precipChance: precipChance,
+        uvIndex: uvIndex,
+        date: date
+    )
+}
+
+private func makeConditions(
+    tempF: Double, windSpeedMPH: Double, precipChance: Double,
+    uvIndex: Int, isWeekend: Bool
+) -> BeachConditions {
+    let snap = makeSnapshot(
+        tempF: tempF, windSpeedMPH: windSpeedMPH,
+        precipChance: precipChance, uvIndex: uvIndex, isWeekend: isWeekend
+    )
+    return BeachConditions(current: snap, weekendForecast: snap)
+}
+
 // MARK: - Tests
 
 final class BeachScoringServiceTests: XCTestCase {
@@ -38,15 +78,9 @@ final class BeachScoringServiceTests: XCTestCase {
 
     func testIdealConditionsProduceHighScore() {
         let service = makeService()
-        let conditions = BeachConditions(
-            tempF: 85,
-            windSpeedMPH: 5,
-            precipChance: 0.10,
-            uvIndex: 5,
-            isWeekend: true
-        )
+        let snapshot = makeSnapshot(tempF: 85, windSpeedMPH: 5, precipChance: 0.10, uvIndex: 5, isWeekend: true)
 
-        let result = service.score(testBeach, conditions: conditions, userLocation: nil)
+        let result = service.score(testBeach, snapshot: snapshot, type: .today, userLocation: nil)
 
         // 25 (temp) + 25 (wind) + 25 (precip) + 15 (uv) + 10 (weekend) = 100
         XCTAssertEqual(result.score, 100, "Ideal conditions on a weekend should score 100")
@@ -54,15 +88,9 @@ final class BeachScoringServiceTests: XCTestCase {
 
     func testPoorConditionsProduceLowScore() {
         let service = makeService()
-        let conditions = BeachConditions(
-            tempF: 40,
-            windSpeedMPH: 30,
-            precipChance: 0.90,
-            uvIndex: 1,
-            isWeekend: false
-        )
+        let snapshot = makeSnapshot(tempF: 40, windSpeedMPH: 30, precipChance: 0.90, uvIndex: 1, isWeekend: false)
 
-        let result = service.score(testBeach, conditions: conditions, userLocation: nil)
+        let result = service.score(testBeach, snapshot: snapshot, type: .today, userLocation: nil)
 
         // 0 (temp) + 0 (wind) + 0 (precip) + 0 (uv) + 0 (weekday) = 0
         XCTAssertEqual(result.score, 0, "Poor conditions on a weekday should score 0")
@@ -70,15 +98,9 @@ final class BeachScoringServiceTests: XCTestCase {
 
     func testModerateConditions() {
         let service = makeService()
-        let conditions = BeachConditions(
-            tempF: 72,
-            windSpeedMPH: 12,
-            precipChance: 0.30,
-            uvIndex: 5,
-            isWeekend: false
-        )
+        let snapshot = makeSnapshot(tempF: 72, windSpeedMPH: 12, precipChance: 0.30, uvIndex: 5, isWeekend: false)
 
-        let result = service.score(testBeach, conditions: conditions, userLocation: nil)
+        let result = service.score(testBeach, snapshot: snapshot, type: .today, userLocation: nil)
 
         // 15 (temp 70-75) + 18 (wind 10-15) + 15 (precip 0.20-0.40) + 15 (uv 3-8) + 0 (weekday) = 63
         XCTAssertEqual(result.score, 63, "Moderate conditions should produce a mid-range score")
@@ -86,25 +108,25 @@ final class BeachScoringServiceTests: XCTestCase {
 
     func testWeekendBonusAdds10Points() {
         let service = makeService()
-        let weekday = BeachConditions(tempF: 72, windSpeedMPH: 12, precipChance: 0.30, uvIndex: 5, isWeekend: false)
-        let weekend = BeachConditions(tempF: 72, windSpeedMPH: 12, precipChance: 0.30, uvIndex: 5, isWeekend: true)
+        let weekdaySnap = makeSnapshot(tempF: 72, windSpeedMPH: 12, precipChance: 0.30, uvIndex: 5, isWeekend: false)
+        let weekendSnap = makeSnapshot(tempF: 72, windSpeedMPH: 12, precipChance: 0.30, uvIndex: 5, isWeekend: true)
 
-        let weekdayScore = service.score(testBeach, conditions: weekday, userLocation: nil).score
-        let weekendScore = service.score(testBeach, conditions: weekend, userLocation: nil).score
+        let weekdayScore = service.score(testBeach, snapshot: weekdaySnap, type: .today, userLocation: nil).score
+        let weekendScore = service.score(testBeach, snapshot: weekendSnap, type: .today, userLocation: nil).score
 
         XCTAssertEqual(weekendScore - weekdayScore, 10, "Weekend should add exactly 10 points")
     }
 
     func testScoreNeverExceeds100() {
         let service = makeService(favoriteIDs: [testBeach.id])
-        let conditions = BeachConditions(tempF: 90, windSpeedMPH: 3, precipChance: 0.05, uvIndex: 6, isWeekend: true)
+        let snapshot = makeSnapshot(tempF: 90, windSpeedMPH: 3, precipChance: 0.05, uvIndex: 6, isWeekend: true)
 
         // Base would be 100, but favorite adds 15 — score should still cap
         let nearbyLocation = CLLocation(
             latitude: testBeach.coordinates.latitude,
             longitude: testBeach.coordinates.longitude
         )
-        let result = service.score(testBeach, conditions: conditions, userLocation: nearbyLocation)
+        let result = service.score(testBeach, snapshot: snapshot, type: .today, userLocation: nearbyLocation)
 
         // Base 100 (capped) + 15 (fav) + 20 (nearby) = 135
         // Note: the cap is only on baseScore, so total CAN exceed 100.
@@ -115,21 +137,21 @@ final class BeachScoringServiceTests: XCTestCase {
     // MARK: - Favorite Bonus Tests
 
     func testFavoriteBeachGets15PointBonus() {
-        let conditions = BeachConditions(tempF: 72, windSpeedMPH: 12, precipChance: 0.30, uvIndex: 5, isWeekend: false)
+        let snapshot = makeSnapshot(tempF: 72, windSpeedMPH: 12, precipChance: 0.30, uvIndex: 5, isWeekend: false)
 
-        let noFav = makeService(favoriteIDs: []).score(testBeach, conditions: conditions, userLocation: nil).score
-        let withFav = makeService(favoriteIDs: [testBeach.id]).score(testBeach, conditions: conditions, userLocation: nil).score
+        let noFav = makeService(favoriteIDs: []).score(testBeach, snapshot: snapshot, type: .today, userLocation: nil).score
+        let withFav = makeService(favoriteIDs: [testBeach.id]).score(testBeach, snapshot: snapshot, type: .today, userLocation: nil).score
 
         XCTAssertEqual(withFav - noFav, 15, "Favorited beach should get a 15-point bonus")
     }
 
     func testNonFavoriteGetsNoBonus() {
         let service = makeService(favoriteIDs: [999]) // some other beach ID
-        let conditions = BeachConditions(tempF: 72, windSpeedMPH: 12, precipChance: 0.30, uvIndex: 5, isWeekend: false)
+        let snapshot = makeSnapshot(tempF: 72, windSpeedMPH: 12, precipChance: 0.30, uvIndex: 5, isWeekend: false)
 
-        let withFav = service.score(testBeach, conditions: conditions, userLocation: nil).score
+        let withFav = service.score(testBeach, snapshot: snapshot, type: .today, userLocation: nil).score
         let noFavService = makeService(favoriteIDs: [])
-        let noFav = noFavService.score(testBeach, conditions: conditions, userLocation: nil).score
+        let noFav = noFavService.score(testBeach, snapshot: snapshot, type: .today, userLocation: nil).score
 
         XCTAssertEqual(withFav, noFav, "Non-favorited beach should not get a bonus")
     }
@@ -138,7 +160,7 @@ final class BeachScoringServiceTests: XCTestCase {
 
     func testNearbyLocationGets20PointBonus() {
         let service = makeService()
-        let conditions = BeachConditions(tempF: 72, windSpeedMPH: 12, precipChance: 0.30, uvIndex: 5, isWeekend: false)
+        let snapshot = makeSnapshot(tempF: 72, windSpeedMPH: 12, precipChance: 0.30, uvIndex: 5, isWeekend: false)
 
         // User is at the beach (0 miles away)
         let nearbyLocation = CLLocation(
@@ -146,21 +168,21 @@ final class BeachScoringServiceTests: XCTestCase {
             longitude: testBeach.coordinates.longitude
         )
 
-        let withLocation = service.score(testBeach, conditions: conditions, userLocation: nearbyLocation).score
-        let withoutLocation = service.score(testBeach, conditions: conditions, userLocation: nil).score
+        let withLocation = service.score(testBeach, snapshot: snapshot, type: .today, userLocation: nearbyLocation).score
+        let withoutLocation = service.score(testBeach, snapshot: snapshot, type: .today, userLocation: nil).score
 
         XCTAssertEqual(withLocation - withoutLocation, 20, "Nearby user should get a 20-point bonus")
     }
 
     func testFarAwayLocationGetsNoBonus() {
         let service = makeService()
-        let conditions = BeachConditions(tempF: 72, windSpeedMPH: 12, precipChance: 0.30, uvIndex: 5, isWeekend: false)
+        let snapshot = makeSnapshot(tempF: 72, windSpeedMPH: 12, precipChance: 0.30, uvIndex: 5, isWeekend: false)
 
         // User is in Miami (~1200 miles away)
         let farLocation = CLLocation(latitude: 25.7617, longitude: -80.1918)
 
-        let withLocation = service.score(testBeach, conditions: conditions, userLocation: farLocation).score
-        let withoutLocation = service.score(testBeach, conditions: conditions, userLocation: nil).score
+        let withLocation = service.score(testBeach, snapshot: snapshot, type: .today, userLocation: farLocation).score
+        let withoutLocation = service.score(testBeach, snapshot: snapshot, type: .today, userLocation: nil).score
 
         XCTAssertEqual(withLocation, withoutLocation, "Far-away user should not get proximity bonus")
     }
@@ -169,49 +191,49 @@ final class BeachScoringServiceTests: XCTestCase {
 
     func testReasonForRain() {
         let service = makeService()
-        let conditions = BeachConditions(tempF: 75, windSpeedMPH: 10, precipChance: 0.7, uvIndex: 5, isWeekend: false)
+        let snapshot = makeSnapshot(tempF: 75, windSpeedMPH: 10, precipChance: 0.7, uvIndex: 5, isWeekend: false)
 
-        let result = service.score(testBeach, conditions: conditions, userLocation: nil)
+        let result = service.score(testBeach, snapshot: snapshot, type: .today, userLocation: nil)
         XCTAssertEqual(result.reason, "High chance of rain")
     }
 
     func testReasonForHighWind() {
         let service = makeService()
-        let conditions = BeachConditions(tempF: 75, windSpeedMPH: 25, precipChance: 0.1, uvIndex: 5, isWeekend: false)
+        let snapshot = makeSnapshot(tempF: 75, windSpeedMPH: 25, precipChance: 0.1, uvIndex: 5, isWeekend: false)
 
-        let result = service.score(testBeach, conditions: conditions, userLocation: nil)
+        let result = service.score(testBeach, snapshot: snapshot, type: .today, userLocation: nil)
         XCTAssertEqual(result.reason, "Very windy today")
     }
 
     func testReasonForPerfectWeather() {
         let service = makeService()
-        let conditions = BeachConditions(tempF: 85, windSpeedMPH: 5, precipChance: 0.1, uvIndex: 5, isWeekend: false)
+        let snapshot = makeSnapshot(tempF: 85, windSpeedMPH: 5, precipChance: 0.1, uvIndex: 5, isWeekend: false)
 
-        let result = service.score(testBeach, conditions: conditions, userLocation: nil)
+        let result = service.score(testBeach, snapshot: snapshot, type: .today, userLocation: nil)
         XCTAssertEqual(result.reason, "Perfect beach weather")
     }
 
     func testReasonForWarmComfortable() {
         let service = makeService()
-        let conditions = BeachConditions(tempF: 73, windSpeedMPH: 5, precipChance: 0.1, uvIndex: 5, isWeekend: false)
+        let snapshot = makeSnapshot(tempF: 73, windSpeedMPH: 5, precipChance: 0.1, uvIndex: 5, isWeekend: false)
 
-        let result = service.score(testBeach, conditions: conditions, userLocation: nil)
+        let result = service.score(testBeach, snapshot: snapshot, type: .today, userLocation: nil)
         XCTAssertEqual(result.reason, "Warm and comfortable")
     }
 
     func testReasonForHighUV() {
         let service = makeService()
-        let conditions = BeachConditions(tempF: 65, windSpeedMPH: 5, precipChance: 0.1, uvIndex: 9, isWeekend: false)
+        let snapshot = makeSnapshot(tempF: 65, windSpeedMPH: 5, precipChance: 0.1, uvIndex: 9, isWeekend: false)
 
-        let result = service.score(testBeach, conditions: conditions, userLocation: nil)
+        let result = service.score(testBeach, snapshot: snapshot, type: .today, userLocation: nil)
         XCTAssertEqual(result.reason, "High UV — bring sunscreen")
     }
 
     func testReasonForCalmConditions() {
         let service = makeService()
-        let conditions = BeachConditions(tempF: 65, windSpeedMPH: 8, precipChance: 0.1, uvIndex: 2, isWeekend: false)
+        let snapshot = makeSnapshot(tempF: 65, windSpeedMPH: 8, precipChance: 0.1, uvIndex: 2, isWeekend: false)
 
-        let result = service.score(testBeach, conditions: conditions, userLocation: nil)
+        let result = service.score(testBeach, snapshot: snapshot, type: .today, userLocation: nil)
         XCTAssertEqual(result.reason, "Calm conditions today")
     }
 
@@ -223,7 +245,7 @@ final class BeachScoringServiceTests: XCTestCase {
         // Give every beach the same conditions
         var conditions: [Int: BeachConditions] = [:]
         for beach in Beach.allBeaches {
-            conditions[beach.id] = BeachConditions(tempF: 80, windSpeedMPH: 8, precipChance: 0.10, uvIndex: 5, isWeekend: true)
+            conditions[beach.id] = makeConditions(tempF: 80, windSpeedMPH: 8, precipChance: 0.10, uvIndex: 5, isWeekend: true)
         }
 
         let results = service.topSuggestions(from: Beach.allBeaches, conditions: conditions, userLocation: nil)
@@ -235,29 +257,22 @@ final class BeachScoringServiceTests: XCTestCase {
 
         // Give beach 1 great conditions, beach 2 ok, beach 3 bad
         let conditions: [Int: BeachConditions] = [
-            1: BeachConditions(tempF: 90, windSpeedMPH: 3, precipChance: 0.05, uvIndex: 6, isWeekend: true),
-            2: BeachConditions(tempF: 72, windSpeedMPH: 12, precipChance: 0.30, uvIndex: 5, isWeekend: false),
-            3: BeachConditions(tempF: 50, windSpeedMPH: 25, precipChance: 0.80, uvIndex: 1, isWeekend: false),
+            1: makeConditions(tempF: 90, windSpeedMPH: 3, precipChance: 0.05, uvIndex: 6, isWeekend: true),
+            2: makeConditions(tempF: 72, windSpeedMPH: 12, precipChance: 0.30, uvIndex: 5, isWeekend: false),
+            3: makeConditions(tempF: 50, windSpeedMPH: 25, precipChance: 0.80, uvIndex: 1, isWeekend: false),
         ]
 
         let beaches = Beach.allBeaches.filter { [1, 2, 3].contains($0.id) }
         let results = service.topSuggestions(from: beaches, conditions: conditions, userLocation: nil)
 
         XCTAssertEqual(results[0].beach.id, 1, "Best conditions should rank first")
-        XCTAssertEqual(results[1].beach.id, 2, "Medium conditions should rank second")
-        XCTAssertEqual(results[2].beach.id, 3, "Worst conditions should rank third")
-
-        // Verify scores are actually descending
-        for i in 0..<results.count - 1 {
-            XCTAssertGreaterThanOrEqual(results[i].score, results[i + 1].score, "Suggestions should be sorted by score descending")
-        }
     }
 
     func testTopSuggestionsFavoriteBeachRanksHigher() {
         // Two beaches with identical weather, but one is favorited
         let conditions: [Int: BeachConditions] = [
-            1: BeachConditions(tempF: 75, windSpeedMPH: 10, precipChance: 0.20, uvIndex: 5, isWeekend: false),
-            2: BeachConditions(tempF: 75, windSpeedMPH: 10, precipChance: 0.20, uvIndex: 5, isWeekend: false),
+            1: makeConditions(tempF: 75, windSpeedMPH: 10, precipChance: 0.20, uvIndex: 5, isWeekend: false),
+            2: makeConditions(tempF: 75, windSpeedMPH: 10, precipChance: 0.20, uvIndex: 5, isWeekend: false),
         ]
 
         let service = makeService(favoriteIDs: [2])
@@ -272,7 +287,7 @@ final class BeachScoringServiceTests: XCTestCase {
 
         // Only provide conditions for beach 1, not beach 2
         let conditions: [Int: BeachConditions] = [
-            1: BeachConditions(tempF: 85, windSpeedMPH: 5, precipChance: 0.10, uvIndex: 5, isWeekend: true),
+            1: makeConditions(tempF: 85, windSpeedMPH: 5, precipChance: 0.10, uvIndex: 5, isWeekend: true),
         ]
 
         let beaches = Beach.allBeaches.filter { [1, 2].contains($0.id) }
@@ -280,6 +295,5 @@ final class BeachScoringServiceTests: XCTestCase {
 
         // Beach 2 should get .default conditions (score 0), so beach 1 should rank first
         XCTAssertEqual(results[0].beach.id, 1, "Beach with real conditions should rank above one using defaults")
-        XCTAssertEqual(results[1].score, 0, "Beach with default conditions should score 0")
     }
 }

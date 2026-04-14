@@ -10,6 +10,7 @@ import SwiftUI
 
 struct DashboardContentView: View {
     @Environment(BeachViewModel.self) var viewModel
+    @Environment(LocationManager.self) var locationManager
     @Environment(\.modelContext) private var context
     @State private var suggestionsVM: SuggestedBeachViewModel?
 
@@ -115,12 +116,17 @@ struct DashboardContentView: View {
                 }
             }
             .ignoresSafeArea(edges: .top)
-            .task {
-                let vm = SuggestedBeachViewModel(
-                    favoritesRepo: LocalFavoritesRepository(context: context)
-                )
-                suggestionsVM = vm
-                await vm.loadSuggestions(userLocation: nil)
+            .task(id: locationManager.userLocation) {
+                let vm: SuggestedBeachViewModel
+                if let existing = suggestionsVM {
+                    vm = existing
+                } else {
+                    vm = SuggestedBeachViewModel(
+                        favoritesRepo: LocalFavoritesRepository(context: context)
+                    )
+                    suggestionsVM = vm
+                }
+                await vm.loadSuggestions(userLocation: locationManager.userLocation)
             }
         }
     }

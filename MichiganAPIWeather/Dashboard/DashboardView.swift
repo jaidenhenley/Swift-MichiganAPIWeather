@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DashboardView: View {
     @Environment(BeachViewModel.self) var viewModel
+    @Environment(LocationManager.self) var locationManager
     
     
     var body: some View {
@@ -55,6 +56,10 @@ struct DashboardView: View {
                     Spacer()
                 }
             }
+        }
+        .onAppear {
+            print("[Location] Auth status: \(locationManager.authStatus)")
+            locationManager.requestLocation()
         }
     }
 }

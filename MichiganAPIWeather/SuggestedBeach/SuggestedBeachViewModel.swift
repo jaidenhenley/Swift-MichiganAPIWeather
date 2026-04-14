@@ -25,6 +25,8 @@ class SuggestedBeachViewModel {
         isLoading = true
         defer { isLoading = false }
         
+        print("[Suggestions] Loading with location: \(String(describing: userLocation))")
+        
         var conditionsMap: [Int: BeachConditions] = [:]
         
         await withTaskGroup(of: (Int, BeachConditions?).self) { group in
@@ -42,10 +44,14 @@ class SuggestedBeachViewModel {
             }
         }
         
+        print("[Suggestions] Fetched conditions for \(conditionsMap.count)/\(Beach.allBeaches.count) beaches")
+        
         suggestions = scoringService.topSuggestions(
             from: Beach.allBeaches,
             conditions: conditionsMap,
             userLocation: userLocation
         )
+        
+        print("[Suggestions] Generated \(suggestions.count) suggestions")
     }
 }

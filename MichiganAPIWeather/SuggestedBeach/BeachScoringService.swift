@@ -142,6 +142,7 @@ class BeachScoringService {
 
     private func filterByDistance(_ beaches: [Beach], userLocation: CLLocation?) -> [Beach] {
         guard let location = userLocation else { return beaches }
-        return beaches.filter { isWithinTravelLimit($0, to: location) }
+        let nearby = beaches.filter { isWithinTravelLimit($0, to: location) }
+        return nearby.isEmpty ? beaches : nearby
     }
 }

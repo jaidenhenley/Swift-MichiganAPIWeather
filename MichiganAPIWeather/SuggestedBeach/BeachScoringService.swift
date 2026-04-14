@@ -36,21 +36,26 @@ class BeachScoringService {
 
     func topSuggestions(from beaches: [Beach], conditions: [Int: BeachConditions], userLocation: CLLocation?) -> [SuggestedBeach] {
         let filtered = filterByDistance(beaches, userLocation: userLocation)
+        var usedIDs = Set<Int>()
 
         let todayPick = filtered
             .map { score($0, snapshot: conditions[$0.id]?.current ?? BeachConditions.default.current, type: .today, userLocation: userLocation) }
             .sorted { $0.score > $1.score }
-            .first
+            .first { !usedIDs.contains($0.beach.id) }
+
+        if let id = todayPick?.beach.id { usedIDs.insert(id) }
 
         let weekendPick = filtered
             .map { score($0, snapshot: conditions[$0.id]?.weekendForecast ?? BeachConditions.default.weekendForecast, type: .thisWeekend, userLocation: userLocation) }
             .sorted { $0.score > $1.score }
-            .first
+            .first { !usedIDs.contains($0.beach.id) }
+
+        if let id = weekendPick?.beach.id { usedIDs.insert(id) }
 
         let topPick = filtered
             .map { score($0, snapshot: conditions[$0.id]?.current ?? BeachConditions.default.current, type: .topPick, userLocation: userLocation) }
             .sorted { $0.score > $1.score }
-            .first
+            .first { !usedIDs.contains($0.beach.id) }
 
         return [todayPick, weekendPick, topPick].compactMap { $0 }
     }

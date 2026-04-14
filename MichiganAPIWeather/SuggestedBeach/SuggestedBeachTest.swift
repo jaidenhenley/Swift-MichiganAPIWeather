@@ -33,14 +33,18 @@ struct SuggestedBeachTest: View {
          let service = BeachScoringService(favoritesRepo: repo)
          
          // Hardcoded conditions — tweak these to test different scenarios
+         let snapshot = ConditionSnapshot(
+             tempF: 78,
+             windSpeedMPH: 8,
+             precipChance: 0.15,
+             uvIndex: 6,
+             date: .now
+         )
          var conditions: [Int: BeachConditions] = [:]
          for beach in Beach.allBeaches {
              conditions[beach.id] = BeachConditions(
-                 tempF: 78,
-                 windSpeedMPH: 8,
-                 precipChance: 0.15,
-                 uvIndex: 6,
-                 isWeekend: true
+                 current: snapshot,
+                 weekendForecast: snapshot
              )
          }
          

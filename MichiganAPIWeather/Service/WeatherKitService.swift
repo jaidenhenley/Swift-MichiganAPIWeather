@@ -179,6 +179,32 @@ class WeatherKitService {
         let c = weather.currentWeather
         let today = weather.dailyForecast.first
         
-        return BeachConditions(tempF: c.temperature.converted(to: .fahrenheit).value, windSpeedMPH: c.wind.speed.converted(to: .milesPerHour).value, precipChance: today?.precipitationChance ?? 0, uvIndex: c.uvIndex.value, isWeekend: Calendar.current.isDateInWeekend(Date()))
+        let current = ConditionSnapshot(
+            tempF: c.temperature.converted(to: .fahrenheit).value,
+            windSpeedMPH: c.wind.speed.converted(to: .milesPerHour).value,
+            precipChance: today?.precipitationChance ?? 0,
+            uvIndex: c.uvIndex.value,
+            date: .now
+        )
+        
+        let calendar = Calendar.current
+        let weekendDay = weather.dailyForecast.first {
+            calendar.isDateInWeekend($0.date) && $0.date > .now
+        }
+        
+        let weekendForecast: ConditionSnapshot
+        if let day = weekendDay {
+            weekendForecast = ConditionSnapshot(
+                tempF: day.highTemperature.converted(to: .fahrenheit).value,
+                windSpeedMPH: day.wind.speed.converted(to: .milesPerHour).value,
+                precipChance: day.precipitationChance,
+                uvIndex: day.uvIndex.value,
+                date: day.date
+            )
+        } else {
+            weekendForecast = current
+        }
+        
+        return BeachConditions(current: current, weekendForecast: weekendForecast)
     }
 }

@@ -23,6 +23,7 @@ struct WeatherDetailView: View {
             Image(.forecastbackground)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
+                .ignoresSafeArea(edges: .all)
         )
         .environment(viewModel)
     }

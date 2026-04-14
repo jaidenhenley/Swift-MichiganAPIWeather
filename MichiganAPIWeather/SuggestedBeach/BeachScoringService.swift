@@ -17,7 +17,7 @@ class BeachScoringService {
         self.preferences = preferences
     }
 
-    func score(_ beach: Beach, snapshot: ConditionSnapshot, userLocation: CLLocation?) -> SuggestedBeach {
+    func score(_ beach: Beach, snapshot: ConditionSnapshot, type: SuggestionType, userLocation: CLLocation?) -> SuggestedBeach {
         var score = baseScore(from: snapshot)
 
         score += tagScore(for: beach)
@@ -31,24 +31,24 @@ class BeachScoringService {
             score += 20
         }
 
-        return SuggestedBeach(beach: beach, score: score, reason: primaryReason(from: snapshot))
+        return SuggestedBeach(beach: beach, score: score, reason: primaryReason(from: snapshot), type: type)
     }
 
     func topSuggestions(from beaches: [Beach], conditions: [Int: BeachConditions], userLocation: CLLocation?) -> [SuggestedBeach] {
         let filtered = filterByDistance(beaches, userLocation: userLocation)
 
         let todayPick = filtered
-            .map { score($0, snapshot: conditions[$0.id]?.current ?? BeachConditions.default.current, userLocation: userLocation) }
+            .map { score($0, snapshot: conditions[$0.id]?.current ?? BeachConditions.default.current, type: .today, userLocation: userLocation) }
             .sorted { $0.score > $1.score }
             .first
 
         let weekendPick = filtered
-            .map { score($0, snapshot: conditions[$0.id]?.weekendForecast ?? BeachConditions.default.weekendForecast, userLocation: userLocation) }
+            .map { score($0, snapshot: conditions[$0.id]?.weekendForecast ?? BeachConditions.default.weekendForecast, type: .thisWeekend, userLocation: userLocation) }
             .sorted { $0.score > $1.score }
             .first
 
         let topPick = filtered
-            .map { score($0, snapshot: conditions[$0.id]?.current ?? BeachConditions.default.current, userLocation: userLocation) }
+            .map { score($0, snapshot: conditions[$0.id]?.current ?? BeachConditions.default.current, type: .topPick, userLocation: userLocation) }
             .sorted { $0.score > $1.score }
             .first
 

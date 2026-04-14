@@ -15,10 +15,10 @@ class SuggestedBeachViewModel {
     var isLoading = false
     
     private let weatherKit = WeatherKitService()
-    let scoringService: BeachScoringService
+    private let scoringService: BeachScoringService
     
-    init(favoritesRepo: FavoritesRepository) {
-        self.scoringService = BeachScoringService(favoritesRepo: favoritesRepo)
+    init(favoritesRepo: FavoritesRepository, preferances: UserBeachPreferences = .default) {
+        self.scoringService = BeachScoringService(favoritesRepo: favoritesRepo, preferences: preferances)
     }
     
     func loadSuggestions(userLocation: CLLocation?) async {

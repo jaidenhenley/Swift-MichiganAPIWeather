@@ -42,7 +42,7 @@ class BeachViewModel {
     var todayCrowd: CrowdLevel?
     var forecastCrowd: [CrowdLevel] = []
     
-    let crowdPredictor = CrowdPredictor()
+    let crowdPredictor = CrowdPredictor.shared
     
     // Backend-only data
     var buoyData: BuoyData?

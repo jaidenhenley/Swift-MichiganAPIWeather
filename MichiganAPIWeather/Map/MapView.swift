@@ -23,7 +23,6 @@ struct MapView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             
-            // 🗺️ MAP
             Map(position: $position) {
                 if mapVM.isZoomedOut {
                     let clusters = mapVM.makeClusters()
@@ -47,7 +46,6 @@ struct MapView: View {
             }
             .ignoresSafeArea()
 
-            // 📍 BOTTOM SCROLL
             beachListOverlay
         }
         .sheet(isPresented: $showDetail) {
@@ -57,7 +55,6 @@ struct MapView: View {
         }
     }
 
-    // MARK: - Cluster View
     private func clusterView(_ cluster: BeachCluster) -> some View {
         Button {
             withAnimation(.easeInOut) {
@@ -82,7 +79,6 @@ struct MapView: View {
         }
     }
 
-    // MARK: - Beach Pin
     private func beachAnnotation(_ beach: Beach) -> some View {
         Button {
             selectedBeach = beach
@@ -101,7 +97,6 @@ struct MapView: View {
         }
     }
 
-    // MARK: - Bottom Scroll
     private var beachListOverlay: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 12) {

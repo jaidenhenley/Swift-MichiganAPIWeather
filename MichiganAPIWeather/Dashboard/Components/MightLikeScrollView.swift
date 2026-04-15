@@ -8,32 +8,34 @@
 import SwiftUI
 
 struct MightLikeScrollView: View {
+    let suggestions: [SuggestedBeach]
+
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 16) {
-                ForEach(0..<3) { _ in
+                ForEach(suggestions, id: \.beach.id) { suggestion in
                     NavigationLink {
-                        BeachView(beach: Beach.allBeaches[1], beachID: 2) // destination
+                        BeachView(beach: suggestion.beach, beachID: suggestion.beach.id)
                     } label: {
                         VStack(spacing: 0) {
                             ZStack(alignment: .topTrailing) {
-                                Image(.grandHaven1)
+                                Image(suggestion.beach.images.first ?? .grandHaven1)
                                     .resizable()
                                     .scaledToFill()
                                     .frame(width: 332, height: 253 * 0.7)
                                     .clipped()
-                                FavoriteButtonView(beach: Beach.allBeaches[1])
+                                FavoriteButtonView(beach: suggestion.beach)
                                     .padding()
                             }
-                            
+
                             ZStack {
                                 Color.lightBlue
-                                
+
                                 VStack(alignment: .leading) {
-                                    Text("Grand Haven")
+                                    Text(suggestion.beach.beachName)
                                         .font(.headline)
                                         .foregroundStyle(.primary)
-                                    Text("Lake Michigan")
+                                    Text(suggestion.reason)
                                         .font(.subheadline)
                                         .foregroundStyle(.primary.opacity(0.8))
                                 }
@@ -45,13 +47,13 @@ struct MightLikeScrollView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 24))
                     }
                     .buttonStyle(.plain)
-
                 }
             }
             .padding()
         }
     }
 }
+
 #Preview {
-    MightLikeScrollView()
+    MightLikeScrollView(suggestions: [])
 }

@@ -29,6 +29,13 @@
 			);
 			target = 63493F9F2F86E9BA00C8EB4A /* MichiganAPIWeatherTests */;
 		};
+		6364DE7D2F8EDF1800D6A969 /* Exceptions for "MichiganAPIWeather" folder in "MichiganAPIWeather" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 63CEE3ED2F6C86C4001EA186 /* MichiganAPIWeather */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -40,6 +47,7 @@
 		63CEE3F02F6C86C4001EA186 /* MichiganAPIWeather */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
+				6364DE7D2F8EDF1800D6A969 /* Exceptions for "MichiganAPIWeather" folder in "MichiganAPIWeather" target */,
 				63493FAC2F86EA0100C8EB4A /* Exceptions for "MichiganAPIWeather" folder in "MichiganAPIWeatherTests" target */,
 			);
 			path = MichiganAPIWeather;
@@ -221,6 +229,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HCJNSG5PP5;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.henley.jaiden.MichiganAPIWeatherTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -242,6 +251,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HCJNSG5PP5;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.henley.jaiden.MichiganAPIWeatherTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -387,8 +397,10 @@
 				DEVELOPMENT_TEAM = HCJNSG5PP5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MichiganAPIWeather/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = CoastCast;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "CoastCast uses location to suggest nearby beaches";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -427,8 +439,10 @@
 				DEVELOPMENT_TEAM = HCJNSG5PP5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MichiganAPIWeather/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = CoastCast;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "CoastCast uses location to suggest nearby beaches";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

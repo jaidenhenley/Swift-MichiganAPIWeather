@@ -18,6 +18,8 @@ struct BeachEntry: Identifiable, Hashable {
 
 struct ContentView: View {
     @State private var beachViewModel = BeachViewModel()
+    @State private var locationManager = LocationManager()
+
 
     var body: some View {
         TabView {
@@ -37,5 +39,6 @@ struct ContentView: View {
                 }
         }
         .environment(beachViewModel)
+        .environment(locationManager)
     }
 }

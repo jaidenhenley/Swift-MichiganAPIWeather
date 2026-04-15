@@ -5,11 +5,15 @@
 //  Created by Jaiden Henley on 4/2/26.
 //
 
+import SwiftData
 import SwiftUI
 
 struct DashboardContentView: View {
     @Environment(BeachViewModel.self) var viewModel
-    
+    @Environment(LocationManager.self) var locationManager
+    @Environment(\.modelContext) private var context
+    @State private var suggestionsVM: SuggestedBeachViewModel?
+
     var favorites: [Beach] = Beach.allBeaches.filter { [4, 2, 3, 1, 5].contains($0.id) }
     
     var body: some View {
@@ -107,11 +111,23 @@ struct DashboardContentView: View {
                             .padding()
                         Headline(text: "You Might Like")
                             .padding(.bottom)
-                        MightLikeScrollView()
+                        MightLikeScrollView(suggestions: suggestionsVM?.suggestions ?? [])
                     }
                 }
             }
             .ignoresSafeArea(edges: .top)
+            .task(id: locationManager.userLocation) {
+                let vm: SuggestedBeachViewModel
+                if let existing = suggestionsVM {
+                    vm = existing
+                } else {
+                    vm = SuggestedBeachViewModel(
+                        favoritesRepo: LocalFavoritesRepository(context: context)
+                    )
+                    suggestionsVM = vm
+                }
+                await vm.loadSuggestions(userLocation: locationManager.userLocation)
+            }
         }
     }
 }

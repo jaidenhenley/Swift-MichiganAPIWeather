@@ -42,6 +42,11 @@ struct BeachView: View {
                     ContactWebsitePhone()
                         .padding([.bottom,.horizontal], 16)
                     
+                    Spacer()
+                        .frame(height: 100)
+                        .foregroundStyle(.clear)
+                    
+                    
                 }
                 .background(
                     Image(.beachViewBackground)

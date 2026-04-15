@@ -7,8 +7,11 @@
 
 import SwiftUI
 
+import SwiftUI
+
 struct DashboardView: View {
     @Environment(BeachViewModel.self) var viewModel
+    @Environment(LocationManager.self) var locationManager
     @State private var isShowingFilter = false
 
     var body: some View {
@@ -16,17 +19,13 @@ struct DashboardView: View {
         
         NavigationStack {
             ZStack {
-                // 1. Background Content
                 DashboardContentView()
                     .blur(radius: viewModel.isSearching ? 10 : 0)
                     .animation(.easeInOut, value: viewModel.isSearching)
                 
-                // 2. Foreground UI
                 VStack(spacing: 0) {
                     
-                    // SEARCH & FILTER SECTION
                     VStack(spacing: 8) {
-                        // The Search Bar
                         HStack {
                             Image(systemName: "magnifyingglass")
                                 .foregroundStyle(.secondary)
@@ -53,7 +52,6 @@ struct DashboardView: View {
                         .padding(.vertical, 10)
                         .glassEffect()
                         
-                        // FILTER CHIPS SECTION (Only visible when searching)
                         if viewModel.isSearching {
                             HStack(spacing: 12) {
                                 if !viewModel.selectedKeywords.isEmpty {
@@ -93,16 +91,18 @@ struct DashboardView: View {
                                     Image(systemName: "line.3.horizontal")
                                         .font(.title3)
                                         .fontWeight(.semibold)
+                                        .padding(10)
+                                        .background(Color.black.opacity(0.001))
                                         .foregroundStyle(viewModel.selectedKeywords.isEmpty ? AnyShapeStyle(.primary) : AnyShapeStyle(Color.blue))
                                 }
                                 .buttonStyle(.plain)
+                                .contentShape(Rectangle())
                             }
                             .padding(.horizontal, 4)
                         }
                     }
-                    .padding() // Padding around the whole search/filter area
+                    .padding()
                     
-                    // RESULTS SECTION
                     if viewModel.isSearching {
                         BeachListView()
                             .transition(.opacity)
@@ -119,6 +119,10 @@ struct DashboardView: View {
             }
             .animation(.snappy, value: viewModel.selectedKeywords)
             .animation(.easeInOut, value: viewModel.isSearching)
+        }
+        .onAppear {
+            print("[Location] Auth status: \(locationManager.authStatus)")
+            locationManager.requestLocation()
         }
     }
 }

@@ -24,6 +24,7 @@ struct BeachRow: View {
                     Text(beach.beachName)
                         .font(.subheadline)
                         .bold()
+                        .lineLimit(1)
                     
                     Spacer()
                     
@@ -32,26 +33,28 @@ struct BeachRow: View {
                             .foregroundStyle(.red)
                     }
                 }
+                
                 Text(beach.shortDescription)
                     .font(.caption)
                     .foregroundStyle(.beachViewText)
                     .bold()
-                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], alignment: .leading, spacing: 8) {
+                    .lineLimit(3)
+                    .fixedSize(horizontal: false, vertical: true)
+                
+                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], alignment: .leading, spacing: 6) {
                     ForEach(beach.displayKeywords.prefix(4), id: \.self) { word in
                         ListTag(tagName: word)
                     }
-                }            }
-            
-            Spacer()
+                }
+            }
         }
-        .frame(width: 360, height: 130)
-        .padding(.horizontal)
-        .padding(.vertical, 8)
+        .padding(12)
         .background(
             RoundedRectangle(cornerRadius: 12)
                 .foregroundStyle(.white)
         )
-        
+        .padding(.horizontal, 4)
+        .padding(.vertical, 4)
     }
 }
 

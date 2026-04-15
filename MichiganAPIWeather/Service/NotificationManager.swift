@@ -5,38 +5,52 @@
 //  Created by Jaiden Henley on 4/15/26.
 //
 
+import CoreLocation
 import UserNotifications
 
 @Observable
 class NotificationManager {
+    static let shared = NotificationManager()
+    private let notificationID = "top-favorite-beach-alert"
     
     func requestPermission() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in }
     }
     
-    func schedule(for beach: Beach, at date: Date, conditions: BeachConditions) {
+    func scheduleTopFavoriteAlert(
+            favorites: [Beach],
+            conditions: [Int: BeachConditions],
+            scoringService: BeachScoringService,
+            userLocation: CLLocation?,
+            at time: Date
+    ) {
+        guard !favorites.isEmpty else { return }
+        
+        let scored = favorites.map {
+            scoringService.score(
+                $0,
+                snapshot: conditions[$0.id]?.current ?? BeachConditions.default.current,
+                type: .today,
+                userLocation: userLocation
+            )
+        }
+        
+        guard let top = scored.max(by: { $0.score < $1.score }) else { return }
+        
         let content = UNMutableNotificationContent()
-        content.title = beach.beachName
-        content.body = buildBody(from: conditions)
+        content.title = "Best Beach Today: \(top.beach.beachName)"
+        content.body = top.reason
         content.sound = .default
         
-        let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: date)
-        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+        var components = Calendar.current.dateComponents([.hour, .minute], from: time)
+        components.second = 0
+        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
         
-        let request = UNNotificationRequest(
-            identifier: "beach-\(beach.id)",
-            content: content,
-            trigger: trigger
-        )
-        
+        let request = UNNotificationRequest(identifier: notificationID, content: content, trigger: trigger)
         UNUserNotificationCenter.current().add(request)
     }
     
-    func cancel(for beach: Beach) {
-        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["beach-\(beach.id)"])
-    }
-    
-    private func buildBody(from conditions: BeachConditions) -> String {
-        "UV: \(conditions.current.uvIndex), Wind: \(conditions.current.windSpeedMPH)"
-    }
+    func cancelAlert() {
+          UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notificationID])
+      }
 }

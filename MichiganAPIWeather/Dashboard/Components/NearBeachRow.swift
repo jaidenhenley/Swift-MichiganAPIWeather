@@ -34,14 +34,12 @@ struct NearBeachRow: View {
                             .cornerRadius(12)
                             .id("\(beach.id)-\(currentImageIndex)")
                             .transition(.opacity)
+                        
+                        FavoriteButtonView(beach: beach)
                     }
                 }
             }
             .buttonStyle(.plain)
-            .overlay(alignment: .topTrailing) {
-                FavoriteButtonView(beach: beach)
-                    .padding(.top, 4)
-            }
             
             Text(beachName)
                 .font(.caption)

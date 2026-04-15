@@ -33,6 +33,7 @@ struct FavoriteButtonView: View {
             Image(systemName: isFavorited ? "heart.fill" : "heart")
                 .foregroundStyle(isFavorited ? .red : .black)
         }
+        .frame(width: 44, height: 44)
         .buttonStyle(.glass)
         .buttonBorderShape(.circle)
     }

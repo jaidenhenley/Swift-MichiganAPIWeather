@@ -13,10 +13,10 @@ struct BeachHeader: View {
     
     var body: some View {
         HStack {
-                VStack(spacing: 16) {                    
+                VStack(spacing: 8) {                    
                     ZStack {
                         RoundedRectangle(cornerRadius: 14)
-                            .frame(width: 105, height: 105)
+                            .frame(width: 120, height: 120)
                             .foregroundColor(.beachHeaderBox)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 20)
@@ -34,7 +34,7 @@ struct BeachHeader: View {
                     }
                 ZStack {
                     RoundedRectangle(cornerRadius: 20)
-                        .frame(width: 105, height: 105)
+                        .frame(width: 115, height: 115)
                         .foregroundColor(.beachHeaderBox)
                         .overlay(
                             RoundedRectangle(cornerRadius: 14)
@@ -52,7 +52,7 @@ struct BeachHeader: View {
                 }
             }
             UVView()
-                .frame(width: 230, height: 230)
+                .frame(width: 250, height: 250)
         }
         .environment(viewModel)
     }

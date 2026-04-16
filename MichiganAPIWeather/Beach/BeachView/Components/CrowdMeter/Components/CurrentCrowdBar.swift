@@ -25,6 +25,20 @@ struct CurrentCrowdBar: View {
                         .frame(height: 17)
                 }
             }
+            
+            HStack {
+                Text("LIGHT")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .padding([.horizontal, .top], 5)
+
+                Spacer()
+                
+                Text("HEAVY")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .padding([.horizontal, .top], 5)
+            }
         }
     }
     

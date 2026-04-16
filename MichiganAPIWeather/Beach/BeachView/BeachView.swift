@@ -38,7 +38,16 @@ struct BeachView: View {
                         .padding(.horizontal)
                     Divider()
                         .foregroundStyle(.beachViewText)
-                        .frame(height: 2)
+                        .frame(height: 3)
+                        .padding(.vertical, 8)
+                    
+                    Text("\(Image(systemName: "person.3.fill")) CROWD METER")
+                        .foregroundStyle(.beachViewText)
+                        .font(.footnote)
+                        .bold()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal)
+                    
                     CrowdMeterView(forecastCrowd: viewModel.forecastCrowd, forecastDays: viewModel.forecastDays)
                     BeachSummaryView(beachName: viewModel.beachName.isEmpty ? "" : viewModel.beachName, beachdescription: beach.description)
                         .padding(.horizontal)

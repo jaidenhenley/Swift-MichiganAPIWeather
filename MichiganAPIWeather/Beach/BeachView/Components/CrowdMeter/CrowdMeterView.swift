@@ -9,6 +9,7 @@ struct CrowdMeterView: View {
     var body: some View {
         VStack(spacing: 10) {
             
+            
             CurrentCrowdBar(crowdLevel: forecastCrowd.first ?? .medium)
             
             ForecastCrowdChart(forecastCrowd: forecastCrowd, forecastDays: forecastDays)

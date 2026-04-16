@@ -21,7 +21,7 @@ struct DashboardIcons: View {
         VStack {
             ZStack {
                 Circle()
-                    .stroke(Color.blueGreen, lineWidth: 2)
+                    .stroke(Color.blueGreen, lineWidth: 1)
                     .frame(width: 62, height: 62)
                 
                 if icon == "familyIcon" {

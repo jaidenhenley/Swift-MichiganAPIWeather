@@ -63,7 +63,7 @@ struct UVView: View {
                 
                 Spacer()
                 
-                SegmentedProgressBar(uvIndex: uvValue)
+                SegmentedProgressBar(uvIndex: uvValue, color: uvColor)
                 
                 Text(uvAdvice)
                     .font(.footnote)
@@ -84,75 +84,4 @@ struct UVView: View {
         return (clamped / 11) * (width - 14)
     }
     
-}
-
-struct UVIndexBar: View {
-    let uvIndex: Int
-    let uvColor: Color
-
-    let segments = 10
-    
-
-    var body: some View {
-        HStack(spacing: 4) {
-            ForEach(0..<segments, id: \.self) { i in
-                Capsule()
-                    .fill(i <= uvIndex  - 1 ? uvColor : Color.gray.opacity(0.3))
-                    .frame(height: 12)
-            }
-        }
-    }
-}
-
-
-struct SegmentedProgressBar: View {
-    let uvIndex: Int
-    let color: Color = .green
-    
-    let totalSegments = 10
-
-    var body: some View {
-        HStack(spacing: 4) {
-            ForEach(0..<totalSegments, id: \.self) { index in
-                shape(for: index)
-                    .fill(index < uvIndex ? color.opacity(opacity(for: index)) : Color.gray.opacity(0.3))
-                    .frame(height: 15)
-            }
-        }
-    }
-
-    func cornerRadius(for index: Int) -> CGFloat {
-        let isFirst = index == 0
-        let isLast = index == totalSegments - 1
-        return (isFirst || isLast) ? 14 : 2
-    }
-
-    func opacity(for index: Int) -> Double {
-        // Fade effect near the cutoff
-        let distance = uvIndex - 1 - index
-        return distance == 0 ? 0.5 : 1.0
-    }
-    
-    func shape(for index: Int) -> AnyShape {
-        let r: CGFloat = 14
-        let isFirst = index == 0
-        let isLast = index == totalSegments - 1
-
-        if isFirst {
-            return AnyShape(UnevenRoundedRectangle(
-                topLeadingRadius: r, bottomLeadingRadius: r,
-                bottomTrailingRadius: 0, topTrailingRadius: 0
-            ))
-        } else if isLast {
-            return AnyShape(UnevenRoundedRectangle(
-                topLeadingRadius: 0, bottomLeadingRadius: 0,
-                bottomTrailingRadius: r, topTrailingRadius: r
-            ))
-        } else {
-            return AnyShape(Rectangle())
-        }
-    }
-}
-#Preview {
-    UVView()
 }

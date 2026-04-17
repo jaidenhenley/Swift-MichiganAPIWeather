@@ -35,7 +35,6 @@ struct NearBeachRow: View {
                             .id("\(beach.id)-\(currentImageIndex)")
                             .transition(.opacity)
                         
-                        FavoriteButtonView(beach: beach)
                     }
                 }
             }

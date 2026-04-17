@@ -32,7 +32,7 @@ struct DashboardView: View {
                             
                             TextField("Search", text: $viewModel.searchText, onEditingChanged: { editing in
                                 withAnimation(.easeInOut) {
-                                    viewModel.isSearching = editing
+                                    viewModel.isSearching = true
                                 }
                             })
                             

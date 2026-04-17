@@ -68,7 +68,7 @@ struct DashboardContentView: View {
                                         viewModel.isSearching = true
                                     } label: {
                                         Text("Plan Your Trip")
-                                            .font(.subheadline)
+                                            .font(.footnote)
                                             .foregroundStyle(.blueGreen)
                                             .fontWeight(.bold)
                                             .padding(.horizontal, 14)
@@ -112,6 +112,7 @@ struct DashboardContentView: View {
                         Headline(text: "You Might Like")
                             .padding(.bottom)
                         MightLikeScrollView(suggestions: suggestionsVM?.suggestions ?? [])
+                            .environment(\.font, nil)
                     }
                 }
             }

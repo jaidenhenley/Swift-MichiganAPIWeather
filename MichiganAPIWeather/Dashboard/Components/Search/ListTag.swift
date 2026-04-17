@@ -9,14 +9,21 @@ import SwiftUI
 
 struct ListTag: View {
     let tagName: String
+    var icon: String? = nil
     
     var body: some View {
-        Text(tagName)
-            .foregroundStyle(.beachViewText)
-            .font(.caption)
+        HStack(spacing: 4) {
+            if let icon = icon {
+                Image(systemName: icon)
+                    .font(.caption)
+            }
+            Text(tagName)
+                .font(.caption)
+        }
+        .foregroundStyle(.beachViewText)
     }
 }
 
 #Preview {
-    ListTag(tagName: "Fishing")
+    ListTag(tagName: "Fishing", icon: "water.waves")
 }

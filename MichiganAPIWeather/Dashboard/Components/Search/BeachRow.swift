@@ -35,7 +35,7 @@ struct BeachRow: View {
                 }
                 
                 Text(beach.shortDescription)
-                    .font(.caption)
+                    .font(.footnote)
                     .foregroundStyle(.beachViewText)
                     .bold()
                     .lineLimit(3)

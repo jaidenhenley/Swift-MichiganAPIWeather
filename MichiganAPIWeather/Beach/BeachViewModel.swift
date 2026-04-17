@@ -254,11 +254,11 @@ class BeachViewModel {
         return String("\(formattedFTemp)°")
     }
  
-    func dateToTime(_ time: Date!) -> String {
+    func dateToTime(_ time: Date?) -> String {
+        guard let time else { return "--" }
         let formatter = DateFormatter()
-        formatter.dateFormat = "ha"
-        let formattedTime = formatter.string(from: time)
-        return formattedTime
+        formatter.dateFormat = "h:mm a"
+        return formatter.string(from: time)
     }
     
     func formatTemp(_ temp: Measurement<UnitTemperature>) -> String {

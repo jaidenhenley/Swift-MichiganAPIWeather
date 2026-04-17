@@ -106,6 +106,7 @@ struct FilterCard: View {
             HStack {
                 Image(systemName: viewModel.selectedKeywords.contains(keyword) ? "checkmark.circle.fill" : "circle")
                 Text(title)
+                    .font(.footnote)
                     .padding(.bottom, 8)
             }
         }

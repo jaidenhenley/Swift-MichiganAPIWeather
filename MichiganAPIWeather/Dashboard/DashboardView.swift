@@ -123,6 +123,7 @@ struct DashboardView: View {
         .onAppear {
             print("[Location] Auth status: \(locationManager.authStatus)")
             locationManager.requestLocation()
+            
         }
     }
 }

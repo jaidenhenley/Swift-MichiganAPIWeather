@@ -23,8 +23,8 @@ struct BeachRow: View {
                 HStack {
                     Text(beach.beachName)
                         .font(.subheadline)
-                        .bold()
-                        .lineLimit(1)
+                        .fontWeight(.semibold)
+                        .lineLimit(2)
                     
                     Spacer()
                     
@@ -37,9 +37,10 @@ struct BeachRow: View {
                 Text(beach.shortDescription)
                     .font(.footnote)
                     .foregroundStyle(.beachViewText)
-                    .bold()
                     .lineLimit(3)
                     .fixedSize(horizontal: false, vertical: true)
+                Spacer()
+
                 
                 LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], alignment: .leading, spacing: 6) {
                     ForEach(beach.displayKeywords.prefix(4), id: \.label) { keyword in

@@ -93,7 +93,7 @@ struct DashboardView: View {
                                         .fontWeight(.semibold)
                                         .padding(10)
                                         .background(Color.black.opacity(0.001))
-                                        .foregroundStyle(viewModel.selectedKeywords.isEmpty ? AnyShapeStyle(.primary) : AnyShapeStyle(Color.blue))
+                                        .foregroundStyle(viewModel.selectedKeywords.isEmpty ? AnyShapeStyle(.white) : AnyShapeStyle(Color.blue))
                                 }
                                 .buttonStyle(.plain)
                                 .contentShape(Rectangle())

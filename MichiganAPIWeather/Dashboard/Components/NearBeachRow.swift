@@ -20,7 +20,7 @@ struct NearBeachRow: View {
     let timer = Timer.publish(every: 180.0, on: .main, in: .common).autoconnect()
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             NavigationLink {
                 BeachView(beach: beach, beachID: beach.id)
             } label: {
@@ -29,21 +29,22 @@ struct NearBeachRow: View {
                         Image(images[currentImageIndex])
                             .resizable()
                             .scaledToFill()
-                            .frame(width: 120, height: 150)
+                            .frame(width: 95, height: 132)
                             .clipped()
                             .cornerRadius(12)
                             .id("\(beach.id)-\(currentImageIndex)")
                             .transition(.opacity)
                         
-                        FavoriteButtonView(beach: beach)
                     }
                 }
             }
             .buttonStyle(.plain)
             
             Text(beachName)
-                .font(.caption)
-                .lineLimit(1)
+                .font(.footnote)
+                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(width: 80, alignment: .leading)
         }
         .onReceive(timer) { _ in
             if images.count > 1 {

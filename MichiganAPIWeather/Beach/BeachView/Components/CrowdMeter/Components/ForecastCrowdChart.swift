@@ -65,7 +65,7 @@ struct ForecastCrowdChart: View {
 func gridLine(label: String) -> some View {
     VStack(alignment: .leading, spacing: 2) {
         Text(label)
-            .font(.system(size: 8))
+            .font(.caption)
             .foregroundColor(.secondary)
         Divider()
             .background(Color.gray.opacity(0.3))

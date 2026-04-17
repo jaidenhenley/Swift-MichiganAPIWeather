@@ -32,7 +32,7 @@ struct DashboardView: View {
                             
                             TextField("Search", text: $viewModel.searchText, onEditingChanged: { editing in
                                 withAnimation(.easeInOut) {
-                                    viewModel.isSearching = editing
+                                    viewModel.isSearching = true
                                 }
                             })
                             
@@ -104,7 +104,7 @@ struct DashboardView: View {
                     .padding()
                     
                     if viewModel.isSearching {
-                        BeachListView()
+                        BeachListView(beachList: viewModel.filteredBeaches)
                             .transition(.opacity)
                     }
                     

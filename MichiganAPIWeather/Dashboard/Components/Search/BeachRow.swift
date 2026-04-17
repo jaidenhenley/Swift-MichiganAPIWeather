@@ -42,8 +42,8 @@ struct BeachRow: View {
                     .fixedSize(horizontal: false, vertical: true)
                 
                 LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], alignment: .leading, spacing: 6) {
-                    ForEach(beach.displayKeywords.prefix(4), id: \.self) { word in
-                        ListTag(tagName: word)
+                    ForEach(beach.displayKeywords.prefix(4), id: \.label) { keyword in
+                        ListTag(tagName: keyword.label, icon: keyword.icon)
                     }
                 }
             }

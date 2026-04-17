@@ -5,16 +5,18 @@
 //  Created by Jaiden Henley on 4/2/26.
 //
 
-import SwiftUI
+import CoreLocation
 import Combine
+import SwiftUI
 
 struct NearBeachRow: View {
     @Environment(BeachViewModel.self) var viewModel
+    @Environment(LocationManager.self) var locationManager
     let images: [ImageResource]
     let beach: Beach
     let beachName: String
     let beachID: Int
-    
+
     @State private var currentImageIndex = 0
     
     let timer = Timer.publish(every: 180.0, on: .main, in: .common).autoconnect()

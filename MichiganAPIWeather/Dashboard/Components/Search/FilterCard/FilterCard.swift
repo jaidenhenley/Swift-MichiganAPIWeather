@@ -118,31 +118,3 @@ struct FilterCard: View {
     FilterCard()
         .environment(BeachViewModel())
 }
-
-
-
-struct FilterChip: View {
-    let title: String
-    let onRemove: () -> Void
-    
-    var body: some View {
-        HStack(spacing: 6) {
-            Text(title.capitalized)
-                .font(.caption)
-                .fontWeight(.bold)
-                .fontDesign(.rounded)
-            
-            
-        }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 8)
-        .background(.ultraThinMaterial)
-        .clipShape(Capsule())
-        .overlay(
-            Capsule()
-                .stroke(Color.primary.opacity(0.1), lineWidth: 1)
-        )
-    }
-}
-
-

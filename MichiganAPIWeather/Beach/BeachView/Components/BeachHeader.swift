@@ -26,6 +26,7 @@ struct BeachHeader: View {
                         VStack {
                             Text("AIR TEMP")
                                 .font(.caption)
+                                .bold()
                                 .foregroundColor(.beachViewText)
                             Text("\(viewModel.temperatureDisplay)")
                                 .font(.largeTitle)
@@ -44,6 +45,7 @@ struct BeachHeader: View {
                     VStack {
                         Text("WATER TEMP")
                             .font(.caption)
+                            .bold()
                             .foregroundColor(.beachViewText)
                         Text(viewModel.buoyData?.waterTempC.map { String(format: "%.1f°C", $0) } ?? "N/A")
                             .font(.largeTitle)

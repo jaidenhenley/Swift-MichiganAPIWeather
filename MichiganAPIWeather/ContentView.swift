@@ -25,7 +25,7 @@ struct ContentView: View {
         TabView {
             DashboardView()
                 .tabItem {
-                    Label("Home", systemImage: "water.waves")
+                    Label("Plan", systemImage: "water.waves")
                 }
 
             MapView()

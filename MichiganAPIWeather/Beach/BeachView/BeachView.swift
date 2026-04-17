@@ -65,6 +65,11 @@ struct BeachView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                 )
+                .toolbar {
+                    ToolbarItem(placement: .confirmationAction) {
+                       FavoriteButtonView(beach: beach, isToolbarButton: true)
+                    }
+                }
             }
             .ignoresSafeArea(edges: [.top, .bottom])
         }

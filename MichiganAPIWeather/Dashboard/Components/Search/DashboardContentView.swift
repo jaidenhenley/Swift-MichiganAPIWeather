@@ -5,6 +5,7 @@
 //  Created by Jaiden Henley on 4/2/26.
 //
 
+import CoreLocation
 import SwiftData
 import SwiftUI
 
@@ -14,7 +15,10 @@ struct DashboardContentView: View {
     @Environment(\.modelContext) private var context
     @State private var suggestionsVM: SuggestedBeachViewModel?
 
-    var favorites: [Beach] = Beach.allBeaches.filter { [4, 2, 3, 1, 5].contains($0.id) }
+    private static let fallbackLocation = CLLocation(latitude: 44.7631, longitude: -85.6206)
+    var nearby: [Beach] {
+        Array(beachesNearMe(from: locationManager.userLocation ?? DashboardContentView.fallbackLocation, beaches: Beach.allBeaches).prefix(5))
+    }
     
     var body: some View {
         @Bindable var viewModel = viewModel
@@ -100,7 +104,7 @@ struct DashboardContentView: View {
                             .padding(.vertical)
                         ScrollView(.horizontal) {
                             HStack {
-                                ForEach(favorites) { beach in
+                                ForEach(nearby) { beach in
                                     NearBeachRow(images: beach.images, beach: beach, beachName: beach.beachName, beachID: beach.id)
                                 }
                             }
@@ -131,4 +135,12 @@ struct DashboardContentView: View {
             }
         }
     }
+    func beachesNearMe(from location: CLLocation, beaches: [Beach]) -> [Beach] {
+        beaches.sorted { (lhs: Beach, rhs: Beach) in
+            let a = CLLocation(latitude: lhs.coordinates.latitude, longitude: lhs.coordinates.longitude)
+            let b = CLLocation(latitude: rhs.coordinates.latitude, longitude: rhs.coordinates.longitude)
+            return location.distance(from: a) < location.distance(from: b)
+        }
+    }
+
 }

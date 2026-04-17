@@ -14,9 +14,11 @@ struct BeachListView: View {
 
     @Query private var favorites: [FavoriteBeach]
     
+    let beachList: [Beach]
+    
     
     var body: some View {
-        List(viewModel.filteredBeaches) { beach in
+        List(beachList) { beach in
             ZStack {
                 NavigationLink {
                     BeachView(beach: beach, beachID: beach.id)
@@ -43,6 +45,7 @@ struct BeachListView: View {
             .listRowSeparator(.hidden)
             .listRowBackground(Color.clear)
             .listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
+            .shadow(radius: 8)
         }
         .listStyle(.plain)
         .scrollContentBackground(.hidden)

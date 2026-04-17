@@ -41,28 +41,7 @@ struct FavoritesView: View {
                         description: Text("Beaches you favorite will show up here.")
                     )
                 } else {
-                    List(favoriteBeaches) { beach in
-                        NavigationLink {
-                            BeachView(beach: beach, beachID: beach.id)
-                        } label: {
-                            HStack(spacing: 12) {
-                                Image(beach.images[0])
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 60, height: 60)
-                                    .clipShape(RoundedRectangle(cornerRadius: 8))
-
-                                VStack(alignment: .leading) {
-                                    Text(beach.beachName)
-                                        .font(.headline)
-                                    Text(beach.shortDescription)
-                                        .font(.caption)
-                                        .foregroundStyle(.secondary)
-                                        .lineLimit(2)
-                                }
-                            }
-                        }
-                    }
+                BeachListView(beachList: favoriteBeaches)
                 }
             }
             .navigationTitle("Favorites")

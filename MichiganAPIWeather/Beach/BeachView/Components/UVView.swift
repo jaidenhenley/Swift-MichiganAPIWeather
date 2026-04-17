@@ -45,56 +45,43 @@ struct UVView: View {
     var body: some View {
         ZStack {
             Color.beachHeaderBox.cornerRadius(16)
-            
-            VStack(alignment: .leading, spacing: 8) {
-                // Header
+            VStack {
                 Label("UV INDEX", systemImage: "sun.max.fill")
                     .font(.caption)
                     .fontWeight(.semibold)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(.beachViewText)
                 
-                // Index number and category
-                Text("\(uvValue)")
-                    .font(.system(size: 36, weight: .medium))
-                
-                Text(uvCategory)
-                    .font(.title3)
-                    .fontWeight(.medium)
-                
-                Spacer()
-                
-                // Gradient bar
-                GeometryReader { geo in
-                    ZStack(alignment: .leading) {
-                        LinearGradient(
-                            colors: [.green, .yellow, .orange, .red, .purple],
-                            startPoint: .leading,
-                            endPoint: .trailing
-                        )
-                        .clipShape(Capsule())
-                        .frame(height: 6)
-                        
-                        // Indicator dot
-                        Circle()
-                            .fill(.white)
-                            .frame(width: 14, height: 14)
-                            .offset(x: dotOffset(in: geo.size.width))
-                            .offset(y: -4)
-                    }
+                VStack(alignment: .leading, spacing: 8) {
+                    // Header
+                    
+                    
+                    // Index number and category
+                    Text("\(uvValue)")
+                        .font(.system(size: 60, weight: .bold))
+                    
+                    Text(uvCategory)
+                        .font(.title)
+                        .bold()
+                    
+                    Spacer()
+                    
+                    SegmentedProgressBar(uvIndex: uvValue, color: uvColor)
+                    
+                    Text(uvAdvice)
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
-                .frame(height: 14)
-                
-                Text(uvAdvice)
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
             }
-            .padding()
+            .padding(.top, 8)
+            .padding(.horizontal, 16)
+            .padding(.bottom, 16)
             .overlay(
                 RoundedRectangle(cornerRadius: 16)
-                    .stroke(Color.beachViewText, lineWidth: 0.5)
+                    .stroke(Color.beachViewText, lineWidth: 1)
             )
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+            
         }
     }
     
@@ -103,7 +90,4 @@ struct UVView: View {
         return (clamped / 11) * (width - 14)
     }
     
-}
-#Preview {
-    UVView()
 }

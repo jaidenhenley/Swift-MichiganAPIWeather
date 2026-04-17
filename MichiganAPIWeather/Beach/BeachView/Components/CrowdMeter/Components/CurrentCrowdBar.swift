@@ -20,13 +20,48 @@ struct CurrentCrowdBar: View {
                 .foregroundStyle(.secondary)
             HStack(spacing: 4) {
                 ForEach(0..<3, id: \.self) { index in
-                    RoundedRectangle(cornerRadius: 20)
+                    shape(for: index)
                         .fill(index <= crowdLevel.rawValue ? crowdLevel.currentColor : Color.gray.opacity(0.3))
-                        .frame(height: 16)
+                        .frame(height: 17)
                 }
+            }
+            
+            HStack {
+                Text("LIGHT")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .padding([.horizontal, .top], 5)
+
+                Spacer()
+                
+                Text("HEAVY")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .padding([.horizontal, .top], 5)
             }
         }
     }
+    
+    func shape(for index: Int) -> AnyShape {
+        let r: CGFloat = 14
+        let isFirst = index == 0
+        let isLast = index == 2
+
+        if isFirst {
+            return AnyShape(UnevenRoundedRectangle(
+                topLeadingRadius: r, bottomLeadingRadius: r,
+                bottomTrailingRadius: 0, topTrailingRadius: 0
+            ))
+        } else if isLast {
+            return AnyShape(UnevenRoundedRectangle(
+                topLeadingRadius: 0, bottomLeadingRadius: 0,
+                bottomTrailingRadius: r, topTrailingRadius: r
+            ))
+        } else {
+            return AnyShape(Rectangle())
+        }
+    }
+
 }
 
 #Preview {

@@ -9,6 +9,7 @@ struct CrowdMeterView: View {
     var body: some View {
         VStack(spacing: 10) {
             
+            
             CurrentCrowdBar(crowdLevel: forecastCrowd.first ?? .medium)
             
             ForecastCrowdChart(forecastCrowd: forecastCrowd, forecastDays: forecastDays)
@@ -19,7 +20,7 @@ struct CrowdMeterView: View {
             RoundedRectangle(cornerRadius: 14)
                 .stroke(.secondary)
         )
-        .padding()
+        .padding(.horizontal)
     }
 
      func barHeight(for level: CrowdLevel) -> CGFloat {

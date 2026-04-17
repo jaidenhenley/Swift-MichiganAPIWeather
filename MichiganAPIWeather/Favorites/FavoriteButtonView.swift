@@ -10,6 +10,7 @@ import SwiftUI
 
 struct FavoriteButtonView: View {
     let beach: Beach
+    var isToolbarButton: Bool = false
     
     @Query private var favorites: [FavoriteBeach]
     @Environment(\.modelContext) private var context
@@ -23,6 +24,16 @@ struct FavoriteButtonView: View {
     }
     
     var body: some View {
+        if isToolbarButton {
+            favoriteButton
+        } else {
+            favoriteButton
+                .buttonStyle(.glass)
+                .buttonBorderShape(.circle)
+        }
+    }
+    
+    private var favoriteButton: some View {
         Button {
             if let existing = matchedFavorite {
                 context.delete(existing)
@@ -33,8 +44,7 @@ struct FavoriteButtonView: View {
             Image(systemName: isFavorited ? "heart.fill" : "heart")
                 .foregroundStyle(isFavorited ? .red : .black)
         }
-        .buttonStyle(.glass)
-        .buttonBorderShape(.circle)
+        .frame(width: isToolbarButton ? nil : 44, height: isToolbarButton ? nil : 44)
     }
 }
 

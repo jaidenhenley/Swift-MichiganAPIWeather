@@ -50,7 +50,7 @@ struct BeachRow: View {
         }
         .padding(12)
         .background(
-            RoundedRectangle(cornerRadius: 12)
+            RoundedRectangle(cornerRadius: 14)
                 .foregroundStyle(.white)
         )
         .padding(.horizontal, 4)

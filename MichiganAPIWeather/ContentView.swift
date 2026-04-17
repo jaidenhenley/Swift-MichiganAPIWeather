@@ -17,8 +17,8 @@ struct BeachEntry: Identifiable, Hashable {
 // ContentView.swift
 
 struct ContentView: View {
-    @State private var beachViewModel = BeachViewModel()
-    @State private var locationManager = LocationManager()
+    @Environment(BeachViewModel.self) var viewModel
+    @Environment(LocationManager.self) var locationManager
 
 
     var body: some View {
@@ -38,7 +38,5 @@ struct ContentView: View {
                     Label("Favorites", systemImage: "heart.fill")
                 }
         }
-        .environment(beachViewModel)
-        .environment(locationManager)
     }
 }

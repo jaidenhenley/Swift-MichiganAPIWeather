@@ -13,14 +13,7 @@ struct ForecastCrowdChart: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            
-            Label("CROWD FORECAST", systemImage: "person.3.fill")
-                .font(.footnote)
-                .bold()
-                .foregroundColor(.beachViewText)
-            
             Spacer()
-            
             ZStack(alignment: .bottomLeading) {
                 // Bars
                 HStack(alignment: .bottom, spacing: 8) {

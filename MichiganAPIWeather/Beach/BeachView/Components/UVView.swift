@@ -45,37 +45,43 @@ struct UVView: View {
     var body: some View {
         ZStack {
             Color.beachHeaderBox.cornerRadius(16)
-            
-            VStack(alignment: .leading, spacing: 8) {
-                // Header
+            VStack {
                 Label("UV INDEX", systemImage: "sun.max.fill")
                     .font(.caption)
                     .fontWeight(.semibold)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(.beachViewText)
                 
-                // Index number and category
-                Text("\(uvValue)")
-                    .font(.system(size: 36, weight: .medium))
-                
-                Text(uvCategory)
-                    .font(.title3)
-                    .fontWeight(.medium)
-                
-                Spacer()
-                
-                SegmentedProgressBar(uvIndex: uvValue, color: uvColor)
-                
-                Text(uvAdvice)
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
+                VStack(alignment: .leading, spacing: 8) {
+                    // Header
+                    
+                    
+                    // Index number and category
+                    Text("\(uvValue)")
+                        .font(.system(size: 60, weight: .bold))
+                    
+                    Text(uvCategory)
+                        .font(.title)
+                        .bold()
+                    
+                    Spacer()
+                    
+                    SegmentedProgressBar(uvIndex: uvValue, color: uvColor)
+                    
+                    Text(uvAdvice)
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
             }
-            .padding()
+            .padding(.top, 8)
+            .padding(.horizontal, 16)
+            .padding(.bottom, 16)
             .overlay(
                 RoundedRectangle(cornerRadius: 16)
-                    .stroke(Color.beachViewText, lineWidth: 0.5)
+                    .stroke(Color.beachViewText, lineWidth: 1)
             )
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+            
         }
     }
     

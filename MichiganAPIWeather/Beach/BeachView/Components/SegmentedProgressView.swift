@@ -14,12 +14,26 @@ struct SegmentedProgressBar: View {
     let totalSegments = 10
 
     var body: some View {
-        HStack(spacing: 4) {
-            ForEach(0..<totalSegments, id: \.self) { index in
-                shape(for: index)
-                    .fill(index < uvIndex ? color.opacity(opacity(for: index)) : Color.gray.opacity(0.3))
-                    .frame(height: 15)
+        VStack {
+            HStack(spacing: 4) {
+                ForEach(0..<totalSegments, id: \.self) { index in
+                    shape(for: index)
+                        .fill(index < uvIndex ? color.opacity(opacity(for: index)) : Color.gray.opacity(0.3))
+                        .frame(height: 15)
+                }
             }
+            HStack {
+                Text("0")
+                    .foregroundStyle(.secondary)
+                    .font(.caption)
+                
+                Spacer()
+                
+                Text(String(totalSegments))
+                    .foregroundStyle(.secondary)
+                    .font(.caption)
+            }
+            .padding(.horizontal, 4)
         }
     }
 
@@ -54,4 +68,8 @@ struct SegmentedProgressBar: View {
             return AnyShape(Rectangle())
         }
     }
+}
+
+#Preview {
+    SegmentedProgressBar(uvIndex: 2, color: .green)
 }

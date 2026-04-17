@@ -20,7 +20,7 @@ struct CrowdMeterView: View {
             RoundedRectangle(cornerRadius: 14)
                 .stroke(.secondary)
         )
-        .padding()
+        .padding(.horizontal)
     }
 
      func barHeight(for level: CrowdLevel) -> CGFloat {

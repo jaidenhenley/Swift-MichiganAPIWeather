@@ -89,7 +89,7 @@ struct MapView: View {
                     .fill(.blueGreen)
                 
                 Image(systemName: "beach.umbrella.fill")
-                    .font(.system(size: 10))
+                    .font(.system(size: 20))
                     .foregroundStyle(.yellow)
             }
             .shadow(radius: 4)

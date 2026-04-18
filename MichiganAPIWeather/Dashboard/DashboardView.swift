@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct DashboardView: View {
     @Environment(BeachViewModel.self) var viewModel
     @Environment(LocationManager.self) var locationManager

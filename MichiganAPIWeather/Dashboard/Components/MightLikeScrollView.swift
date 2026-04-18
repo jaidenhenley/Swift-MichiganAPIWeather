@@ -52,7 +52,7 @@ struct MightLikeCard: View {
                 }
 
                 ZStack {
-                    Color.lightBlue
+                    Color.youmightlikeoffwhite
 
                     VStack(alignment: .leading, spacing: 6) {
                         HStack() {
@@ -64,7 +64,8 @@ struct MightLikeCard: View {
                                 .fixedSize(horizontal: false, vertical: true)
                             
                             Text(suggestion.beach.bodyOfWater)
-                                .font(Font.custom("Helvetica-Oblique", size: 14))
+                                .font(.subheadline)
+
                                 .foregroundStyle(.blueGreen)
                             
                         }

@@ -114,10 +114,9 @@ struct Beach: Identifiable {
             displayKeywords: [
                 DisplayKeyword(icon: "water.waves", label: "Lake Huron"),
                 DisplayKeyword(icon: "tree", label: "State Park"),
-                DisplayKeyword(icon: nil, label: "Camping"),
-                DisplayKeyword(icon: nil, label: "Hiking")
+               
             ],
-            images: [.saugatuckDunes1, .saugatuckDunes2, .saugatuckDunes3],
+            images: [.tawasStatePark1, .tawasStatePark2, .tawasStatePark3],
             phoneNumber: "(989) 362-5041",
             websiteURL: URL(string: "https://www2.dnr.state.mi.us/parksandtrails/Details.aspx?id=499&type=SPRK"),
             bodyOfWater: "Lake Huron"
@@ -134,7 +133,7 @@ struct Beach: Identifiable {
                 DisplayKeyword(icon: "tree", label: "State Park"),
                 
             ],
-            images: [.saugatuckDunes1, .saugatuckDunes2, .saugatuckDunes3],
+            images: [.hollandStatePark1, .hollandStatePark2, .hollandStatePark3],
             phoneNumber: "(616) 399-9390",
             websiteURL: URL(string: "https://www2.dnr.state.mi.us/parksandtrails/Details.aspx?id=458&type=SPRK"),
             bodyOfWater: "Lake Michigan"
@@ -166,8 +165,7 @@ struct Beach: Identifiable {
             displayKeywords: [
                 DisplayKeyword(icon: "water.waves", label: "Lake Michigan"),
                 DisplayKeyword(icon: "tree", label: "State Park"),
-                DisplayKeyword(icon: nil, label: "Dunes"),
-                DisplayKeyword(icon: nil, label: "Camping")
+               
             ],
             images: [.hoffmaster1, .hoffmaster2, .hoffmaster3],
             phoneNumber: "(231) 798-3711",
@@ -271,7 +269,7 @@ struct Beach: Identifiable {
                 DisplayKeyword(icon: "tree", label: "State Park"),
                 
             ],
-            images: [.williamCSterling1, .williamCSterling2, .williamCSterling2],
+            images: [.williamCSterling1, .williamCSterling2, .williamCSterling3],
             phoneNumber: "(734) 289-2715",
             websiteURL: URL(string: "https://www2.dnr.state.mi.us/parksandtrails/Details.aspx?id=497&type=SPRK"),
             bodyOfWater: "Lake Erie"

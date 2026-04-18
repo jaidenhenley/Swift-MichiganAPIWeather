@@ -101,7 +101,7 @@ struct MapView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 12) {
                 ForEach(mapVM.filteredBeaches) { beach in
-                    BeachPreviewCard(
+                    MapViewCard(
                         beach: beach,
                         isSelected: selectedBeach?.id == beach.id
                     )

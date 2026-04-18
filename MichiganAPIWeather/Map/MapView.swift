@@ -86,12 +86,11 @@ struct MapView: View {
         } label: {
             ZStack {
                 Circle()
-                    .fill(selectedBeach?.id == beach.id ? .orange : .blue)
-                    .frame(width: 36, height: 36)
+                    .fill(.blueGreen)
                 
-                Image(systemName: "mappin.circle.fill")
-                    .font(.system(size: 16))
-                    .foregroundStyle(.white)
+                Image(systemName: "beach.umbrella.fill")
+                    .font(.system(size: 10))
+                    .foregroundStyle(.yellow)
             }
             .shadow(radius: 4)
         }

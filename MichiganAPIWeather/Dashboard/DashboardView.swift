@@ -13,7 +13,7 @@ struct DashboardView: View {
     @Environment(BeachViewModel.self) var viewModel
     @Environment(LocationManager.self) var locationManager
     @State private var isShowingFilter = false
-
+    
     var body: some View {
         @Bindable var viewModel = viewModel
         
@@ -58,22 +58,21 @@ struct DashboardView: View {
                                     ScrollView(.horizontal, showsIndicators: false) {
                                         HStack(spacing: 8) {
                                             ForEach(Array(viewModel.selectedKeywords), id: \.self) { keyword in
-                                                HStack(spacing: 4) {
-                                                    Text(keyword.capitalized)
-                                                        .font(.caption)
-                                                        .bold()
-                                                    
-                                                    Button {
-                                                        viewModel.selectedKeywords.remove(keyword)
-                                                    } label: {
-                                                        Image(systemName: "xmark.circle.fill")
+                                                Button {
+                                                    viewModel.selectedKeywords.remove(keyword)
+                                                } label: {
+                                                    HStack(spacing: 4) {
+                                                        Text(keyword.capitalized)
                                                             .font(.caption)
+                                                            .bold()
+                                                            .foregroundStyle(.beachViewText)
                                                     }
+                                                    .padding(.horizontal, 10)
+                                                    .padding(.vertical, 6)
+                                                    .background(.ultraThinMaterial)
+                                                    .clipShape(RoundedRectangle(cornerRadius: 10))
                                                 }
-                                                .padding(.horizontal, 10)
-                                                .padding(.vertical, 6)
-                                                .background(.ultraThinMaterial)
-                                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                                .buttonStyle(.plain)
                                             }
                                         }
                                     }
@@ -93,7 +92,7 @@ struct DashboardView: View {
                                         .fontWeight(.semibold)
                                         .padding(10)
                                         .background(Color.black.opacity(0.001))
-                                        .foregroundStyle(viewModel.selectedKeywords.isEmpty ? AnyShapeStyle(.primary) : AnyShapeStyle(Color.blue))
+                                        .foregroundStyle(viewModel.selectedKeywords.isEmpty ? AnyShapeStyle(.white) : AnyShapeStyle(Color.blue))
                                 }
                                 .buttonStyle(.plain)
                                 .contentShape(Rectangle())

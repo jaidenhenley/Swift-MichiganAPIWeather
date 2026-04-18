@@ -52,18 +52,49 @@ struct MightLikeCard: View {
                 }
 
                 ZStack {
-                    Color.lightBlue
+                    Color.youmightlikeoffwhite
 
-                    VStack(alignment: .leading) {
-                        Text(suggestion.beach.beachName)
-                            .font(.headline)
-                            .foregroundStyle(.primary)
+                    VStack(alignment: .leading, spacing: 6) {
+                        HStack() {
+                            Text(suggestion.beach.beachName)
+                                .font(.subheadline)
+                                .foregroundStyle(.primary)
+                                .lineLimit(2)
+                                .multilineTextAlignment(.leading)
+                                .fixedSize(horizontal: false, vertical: true)
+                            
+                            Text(suggestion.beach.bodyOfWater)
+                                .font(.subheadline)
+
+                                .foregroundStyle(.blueGreen)
+                            
+                        }
                         Text(suggestion.reason)
-                            .font(.subheadline)
-                            .foregroundStyle(.primary.opacity(0.8))
+                            .font(.caption2)
+                            .foregroundStyle(.blueGreen)
+                        HStack {
+                            ForEach(suggestion.beach.displayKeywords.prefix(2), id: \.label) { keyword in
+                                HStack(spacing: 4) {
+                                    if let icon = keyword.icon {
+                                        
+                                        Image(systemName: icon)
+                                            .font(.caption2)
+                                            .foregroundStyle(.blueGreen)
+
+                                    }
+                                    Text(keyword.label)
+                                        .font(.caption2)
+                                        .foregroundStyle(.blueGreen)
+
+                                }
+                                .padding(.bottom, 8)
+                            }
+                        }
                     }
+                    
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 16)
+                    .padding(.vertical, 2)
                 }
                 .frame(width: 332, height: 253 * 0.3)
             }

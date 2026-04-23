@@ -26,15 +26,20 @@ struct WeatherDescriptors: View {
             .font(.system(size: 8, weight: .bold))
             .foregroundColor(.primary)
 
-            HStack(alignment: stat.unit == "°" ? .top : .firstTextBaseline, spacing: 1) {
-                Text(stat.value)
-                    .font(.caption2)
-                    .bold()
-                
-                Text(stat.unit)
-                    .font(.system(size: 10, weight: .medium))
-                    .foregroundColor(.primary)
-                    .padding(.top, stat.unit == "°" ? 2 : 0)
+            HStack(alignment: .firstTextBaseline, spacing: 1) {
+                if stat.unit == "°" {
+                    Text("\(stat.value)°")
+                        .font(.caption2)
+                        .bold()
+                } else {
+                    Text(stat.value)
+                        .font(.caption2)
+                        .bold()
+                    
+                    Text(stat.unit)
+                        .font(.system(size: 10, weight: .medium))
+                        .foregroundColor(.primary)
+                }
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, 10)

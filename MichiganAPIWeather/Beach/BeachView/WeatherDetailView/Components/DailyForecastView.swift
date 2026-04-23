@@ -24,7 +24,7 @@ struct DailyForecastView: View {
         .padding(.vertical, 10)
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .fill(Color.white.opacity(0.4))
+                .fill(Color.customWhite.opacity(0.4))
         )
         .padding(.horizontal)
         .sheet(item: $selectedDay) { day in

@@ -45,7 +45,7 @@ struct MapViewCard: View {
             .frame(width: 108, height: 118)
         }
         .frame(width: 208, height: 118)
-        .background(Color(.white))
+        .background(Color(.customWhite))
         .clipShape(RoundedRectangle(cornerRadius: 14))
     }
 }

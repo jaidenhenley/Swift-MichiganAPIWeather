@@ -17,9 +17,9 @@ struct ActionButton: View {
         VStack {
             Button(action: action) {
                 Image(systemName: icon)
-                    .font(.system(size: 36))
+                    .font(.title3)
                     .foregroundStyle(.beachViewText)
-                    .frame(width: 100, height: 100)
+                    .frame(width: 64, height: 64)
                     .overlay(
                         Circle()
                             .stroke(.beachViewText)

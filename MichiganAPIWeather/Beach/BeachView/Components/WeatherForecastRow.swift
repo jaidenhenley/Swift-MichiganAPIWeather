@@ -9,6 +9,7 @@ import SwiftUI
 
 struct WeatherForecastRow: View {
     @Environment(BeachViewModel.self) var viewModel
+    @Environment(\.colorScheme) var colorScheme
 
     
     var body: some View {
@@ -44,6 +45,14 @@ struct WeatherForecastRow: View {
             .background(
                 RoundedRectangle(cornerRadius: 20)
                     .fill(Color.lightBlue)
+            )
+            .shadow(
+                color: colorScheme == .dark ? Color.white.opacity(0.08) : Color.black.opacity(0.2),
+                radius: 8
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(Color.crowdMeterBar, lineWidth: 0.5)
             )
             .environment(viewModel)
         

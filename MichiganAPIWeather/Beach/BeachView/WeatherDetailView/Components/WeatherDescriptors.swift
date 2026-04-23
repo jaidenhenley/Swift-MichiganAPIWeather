@@ -28,7 +28,8 @@ struct WeatherDescriptors: View {
 
             HStack(alignment: stat.unit == "°" ? .top : .firstTextBaseline, spacing: 1) {
                 Text(stat.value)
-                    .font(.system(size: 16, weight: .bold))
+                    .font(.caption2)
+                    .bold()
                 
                 Text(stat.unit)
                     .font(.system(size: 10, weight: .medium))

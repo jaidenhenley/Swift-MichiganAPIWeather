@@ -19,6 +19,7 @@ struct ContactWebsitePhone: View {
                     UIApplication.shared.open(url)
                 }
             }
+            Spacer()
             ActionButton(icon: "map.fill", title: "Location") {
                 guard let beach = viewModel.selectedBeach else { return }
                 let coords = beach.coordinates
@@ -27,6 +28,7 @@ struct ContactWebsitePhone: View {
                 mapItem.name = viewModel.beachName
                 mapItem.openInMaps()
             }
+            Spacer()
             ActionButton(icon: "phone.fill", title: "Call") {
                 guard let beach = viewModel.selectedBeach else { return }
                 

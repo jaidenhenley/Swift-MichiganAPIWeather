@@ -99,6 +99,7 @@ struct MightLikeCard: View {
                 .frame(width: 332, height: 253 * 0.3)
             }
             .clipShape(RoundedRectangle(cornerRadius: 24))
+            .shadow(radius: 8)
         }
         .buttonStyle(.plain)
         .animation(.easeInOut(duration: 0.8), value: currentImageIndex)

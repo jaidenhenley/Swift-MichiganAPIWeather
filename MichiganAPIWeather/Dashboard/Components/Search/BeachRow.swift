@@ -12,6 +12,7 @@ struct BeachRow: View {
     let isFavorited: Bool
     
     var body: some View {
+        
         HStack(spacing: 12) {
             Image(beach.images[0])
                 .resizable()
@@ -52,7 +53,7 @@ struct BeachRow: View {
         .padding(12)
         .background(
             RoundedRectangle(cornerRadius: 14)
-                .foregroundStyle(.white)
+                .foregroundStyle(.customWhite)
         )
         .padding(.horizontal, 4)
         .padding(.vertical, 4)

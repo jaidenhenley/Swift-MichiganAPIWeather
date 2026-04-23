@@ -14,7 +14,8 @@ struct DashboardContentView: View {
     @Environment(LocationManager.self) var locationManager
     @Environment(\.modelContext) private var context
     @State private var suggestionsVM: SuggestedBeachViewModel?
-
+    @Environment(\.colorScheme) var colorScheme
+    
     private static let fallbackLocation = CLLocation(latitude: 44.7631, longitude: -85.6206)
     var nearby: [Beach] {
         Array(beachesNearMe(from: locationManager.userLocation ?? DashboardContentView.fallbackLocation, beaches: Beach.allBeaches).prefix(5))
@@ -23,17 +24,21 @@ struct DashboardContentView: View {
     var body: some View {
         @Bindable var viewModel = viewModel
         ZStack {
-            LinearGradient(
-                colors: [
-                    Color(.systemTeal).opacity(0.14),
-                    Color(.systemBackground),
-                    Color(.systemBlue).opacity(0.08)
-                ],
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            .ignoresSafeArea()
-            
+            if colorScheme == .dark {
+                Color(.navy)
+                    .ignoresSafeArea()
+            } else {
+                LinearGradient(
+                    colors: [
+                        Color(.systemTeal).opacity(0.14),
+                        Color(.systemBackground),
+                        Color(.systemBlue).opacity(0.08)
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .ignoresSafeArea()
+            }
             ScrollView {
                 VStack(spacing: 0) {
                     

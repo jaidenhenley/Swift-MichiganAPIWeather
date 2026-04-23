@@ -48,7 +48,7 @@ struct WeatherDashboard: View {
             .padding(.vertical, 15)
             .background(
                 RoundedRectangle(cornerRadius: 20)
-                    .fill(Color.white.opacity(0.4))
+                    .fill(Color.customWhite.opacity(0.4))
             )
             .padding(.horizontal)
         }

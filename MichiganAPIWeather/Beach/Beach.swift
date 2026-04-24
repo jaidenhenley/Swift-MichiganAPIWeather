@@ -21,6 +21,10 @@ struct Beach: Identifiable {
     let websiteURL: URL?
     let bodyOfWater: String
     
+    var clLocation: CLLocation {
+        CLLocation(latitude: coordinates.latitude, longitude: coordinates.longitude)
+        }
+    
     struct DisplayKeyword {
         let icon: String?
         let label: String

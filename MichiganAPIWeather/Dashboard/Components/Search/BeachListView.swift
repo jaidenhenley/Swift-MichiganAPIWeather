@@ -5,6 +5,7 @@
 //  Created by Jaiden Henley on 4/9/26.
 //
 
+import CoreLocation
 import SwiftData
 import SwiftUI
 
@@ -17,12 +18,23 @@ struct BeachListView: View {
     
     let beachList: [Beach]
     let sortByDistance: Bool
+    let distanceRange: DistanceRange
     
     private var displayedBeaches: [Beach] {
-        guard sortByDistance, let userLocation = locationManager.userLocation else {
+        guard let userLocation = locationManager.userLocation else {
             return beachList
         }
-        return beachList.sortedByDistance(from: userLocation)
+        
+        guard let bounds = distanceRange.bounds else {
+            return beachList
+        }
+        
+        return beachList.filter { beach in
+            let distanceMeters = userLocation.distance(from: beach.clLocation)
+            let distanceMiles = distanceMeters / 1609.34
+            return distanceMiles >= bounds.min && distanceMiles < bounds.max
+        }
+        
     }
     
 

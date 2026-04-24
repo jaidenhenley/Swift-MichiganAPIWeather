@@ -13,7 +13,9 @@ struct DashboardView: View {
     @State private var isShowingFilter = false
     @State private var sortByDistance = false
     @State private var distanceRange: DistanceRange = .all
-
+    @FocusState private var isFocused: Bool
+    
+    
     var body: some View {
         @Bindable var viewModel = viewModel
         
@@ -30,19 +32,25 @@ struct DashboardView: View {
                             Image(systemName: "magnifyingglass")
                                 .foregroundStyle(.secondary)
                             
-                            TextField("Search", text: $viewModel.searchText, onEditingChanged: { editing in
-                                withAnimation(.easeInOut) {
-                                    viewModel.isSearching = true
-                                }
-                            })
+                            TextField("Search", text: $viewModel.searchText)
+                                .focused($isFocused)
+                                .onChange(of: isFocused) { _, focused in
+                                       if focused {
+                                           withAnimation(.easeInOut) {
+                                               viewModel.isSearching = true
+                                           }
+                                       }
+                                   }
+
                             
                             if viewModel.isSearching {
                                 Button("Cancel") {
-                                    withAnimation(.easeInOut) {
+                                    isFocused = false
+                                    withAnimation {
                                         viewModel.isSearching = false
-                                        viewModel.searchText = ""
-                                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                     }
+                                    viewModel.searchText = ""
+                                    viewModel.selectedKeywords = []
                                 }
                                 .transition(.move(edge: .trailing).combined(with: .opacity))
                                 .buttonStyle(.plain)
@@ -79,7 +87,7 @@ struct DashboardView: View {
                                 } else {
                                     Text("No active filters")
                                         .font(.caption)
-                                        .foregroundStyle(.secondary)
+                                        .foregroundStyle(.white)
                                 }
                                 
                                 Spacer()

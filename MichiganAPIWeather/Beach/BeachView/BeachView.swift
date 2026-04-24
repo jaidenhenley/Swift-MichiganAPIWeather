@@ -30,6 +30,7 @@ struct BeachView: View {
                     .tabViewStyle(.page(indexDisplayMode: .always))
                     
                     VStack(alignment: .leading, spacing: 8) {
+                        
                         Text(beach.beachName)
                             .font(.title3)
                             .bold()

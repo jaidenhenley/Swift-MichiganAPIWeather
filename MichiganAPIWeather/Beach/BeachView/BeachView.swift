@@ -16,62 +16,87 @@ struct BeachView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack {
+                VStack(spacing: 0) {
                     TabView(selection: $selectedImageIndex) {
                         ForEach(beach.images.indices, id: \.self) { index in
                             Image(beach.images[index])
                                 .resizable()
                                 .scaledToFill()
-                                .frame(height: 250, alignment: .top)
                                 .clipped()
                                 .tag(index)
                         }
                     }
-                    .frame(height: 250)
+                    .frame(height: 200)
                     .tabViewStyle(.page(indexDisplayMode: .always))
+                    
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(beach.beachName)
+                            .font(.title3)
+                            .bold()
+                            .foregroundStyle(.blueGreen)
+                        HStack(spacing: 8) {
+                            ForEach(beach.displayKeywords, id: \.label) { keyword in
+                                HStack(spacing: 4) {
+                                    if let icon = keyword.icon {
+                                        Image(systemName: icon)
+                                            .font(.caption)
+                                            .foregroundStyle(.blueGreen)
+                                    }
+                                    Text(keyword.label)
+                                        .font(.caption)
+                                        .foregroundStyle(.blueGreen)
+                                }
+                                .padding(.vertical, 4)
+                                .background(Color(.systemGray6).opacity(0.6))
+                                .clipShape(Capsule())
+                            }
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
 
-                    Spacer()
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 28)
+                    .padding(.top)
                     
                     BeachHeader(image: beach.images[0])
                         .padding()
+                        .padding(.top, 8)
                     WeatherForecastRow()
                         .padding(.horizontal)
                     Divider()
                         .foregroundStyle(.beachViewText)
                         .frame(height: 3)
-                        .padding(.vertical, 8)
+                        .padding(.vertical)
                     
                     Text("\(Image(systemName: "person.3.fill")) CROWD METER")
                         .foregroundStyle(.beachViewText)
                         .font(.footnote)
                         .bold()
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal)
+                        .padding()
                     
                     CrowdMeterView(forecastCrowd: viewModel.forecastCrowd, forecastDays: viewModel.forecastDays)
                     BeachSummaryView(beachName: viewModel.beachName.isEmpty ? "" : viewModel.beachName, beachdescription: beach.description)
-                        .padding(.horizontal)
+                        .padding()
                     ContactWebsitePhone()
-                        .padding([.bottom,.horizontal])
+                        .padding([.bottom, .horizontal])
                     
                     Spacer()
                         .frame(height: 100)
-                        .foregroundStyle(.clear)
-                    
-                    
                 }
+                .ignoresSafeArea(edges: .top)
                 .background(
                     Image(.beachViewBackground)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                 )
-                .toolbar {
-                    ToolbarItem(placement: .confirmationAction) {
-                       FavoriteButtonView(beach: beach, isToolbarButton: true)
-                    }
+            }
+            .ignoresSafeArea()
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    FavoriteButtonView(beach: beach, isToolbarButton: true)
                 }
             }
-            .ignoresSafeArea(edges: [.top, .bottom])
         }
         .task {
             await viewModel.selectBeach(beach, beachID: beachID)
@@ -79,4 +104,3 @@ struct BeachView: View {
         .environment(viewModel)
     }
 }
-

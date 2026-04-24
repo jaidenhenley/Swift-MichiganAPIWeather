@@ -30,14 +30,14 @@ struct CurrentCrowdBar: View {
                 Text("LIGHT")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
-                    .padding([.horizontal, .top], 5)
+                    .padding( 8)
 
                 Spacer()
                 
                 Text("HEAVY")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
-                    .padding([.horizontal, .top], 5)
+                    .padding([.horizontal, .top], 8)
             }
         }
     }

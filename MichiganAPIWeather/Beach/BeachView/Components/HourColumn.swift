@@ -16,17 +16,17 @@ struct HourColumn: View {
     var body: some View {
         VStack(spacing: 6) {
             Text(label)
-                .font(.system(size: 10, weight: .semibold))
                 .foregroundColor(.primary)
             
             Image(systemName: hour.icon)
                 .symbolVariant(.fill)
-                .font(.system(size: 20))
+                
                 .frame(width: 30, height: 30)
             
             Text(hour.temp)
-                .font(.system(size: 14, weight: .bold))
         }
+        .font(.subheadline)
+            .bold()
         .frame(maxWidth: .infinity)
     }
 }

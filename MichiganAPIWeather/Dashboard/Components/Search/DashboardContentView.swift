@@ -23,17 +23,21 @@ struct DashboardContentView: View {
     var body: some View {
         @Bindable var viewModel = viewModel
         ZStack {
-            LinearGradient(
-                colors: [
-                    Color(.systemTeal).opacity(0.14),
-                    Color(.systemBackground),
-                    Color(.systemBlue).opacity(0.08)
-                ],
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            .ignoresSafeArea()
-            
+            if colorScheme == .dark {
+                Color(.navy)
+                    .ignoresSafeArea()
+            } else {
+                LinearGradient(
+                    colors: [
+                        Color(.systemTeal).opacity(0.14),
+                        Color(.systemBackground),
+                        Color(.systemBlue).opacity(0.08)
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .ignoresSafeArea()
+            }
             ScrollView {
                 VStack(spacing: 0) {
                     
@@ -94,7 +98,7 @@ struct DashboardContentView: View {
                             .padding(.leading, 16)
                             .padding(.bottom, 20)
                         }
-                        .frame(height: 380)
+                        .frame(height: 320)
                     }
                     
                     VStack(spacing: 0) {

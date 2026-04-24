@@ -16,7 +16,7 @@ struct IconStripView: View {
         [
             DashboardCategory(icon: "figure.hiking", title: "Hiking"),
             DashboardCategory(icon: "fish", title: "Fishing"),
-            DashboardCategory(icon: colorScheme == .dark ? "familyIconWhite" : "familyIcon", title: "Family"),
+            DashboardCategory(icon: colorScheme == .dark ? "tent.fill" : "tent", title: "Camping"),
             DashboardCategory(icon: "tree", title: "State Park")
         ]
     }

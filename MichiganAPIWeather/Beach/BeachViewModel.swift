@@ -36,7 +36,8 @@ class BeachViewModel {
     
     var selectedKeywords: Set<String> = []
     
-
+    var filterCamping: Bool = false
+    var filterSwimmable: Bool = false
     
     // Crowd Meter Data
     var todayCrowd: CrowdLevel?
@@ -55,31 +56,33 @@ class BeachViewModel {
     var isSearching: Bool = false
     
     var filteredBeaches: [Beach] {
-            let trimmed = searchText.trimmingCharacters(in: .whitespaces).lowercased()
-            
-            // Step 1: Start with all beaches or the search results
-            let searchResults: [Beach]
-            if trimmed.isEmpty {
-                searchResults = Beach.allBeaches
-            } else {
-                searchResults = Beach.allBeaches.filter { beach in
-                    beach.beachName.lowercased().contains(trimmed) ||
-                    beach.keywords.contains { $0.lowercased().contains(trimmed) }
+        var results = Beach.allBeaches
+
+        if filterCamping {
+            results = results.filter { $0.hasCamping }
+        }
+        if filterSwimmable {
+            results = results.filter { $0.isSwimmable }
+        }
+        if !selectedKeywords.isEmpty {
+            results = results.filter { beach in
+                // park type filtering via keywords
+                let parkTypeMatch = selectedKeywords.intersection(["state park", "national park", "city beach", "county park"])
+                if !parkTypeMatch.isEmpty {
+                    let beachParkKeyword = beach.parkType.rawValue.replacingOccurrences(of: "_", with: " ")
+                    if !parkTypeMatch.contains(beachParkKeyword) { return false }
                 }
-            }
-            
-            // Step 2: Apply your keyword filters to those results
-            if selectedKeywords.isEmpty {
-                return searchResults
-            } else {
-                return searchResults.filter { beach in
-                    // Matches if the beach contains ALL selected keywords (AND logic)
-                    selectedKeywords.allSatisfy { selected in
-                        beach.keywords.map { $0.lowercased() }.contains(selected.lowercased())
-                    }
+                // activity keyword filtering
+                let activityKeywords = selectedKeywords.subtracting(["state park", "national park", "city beach", "county park"])
+                if !activityKeywords.isEmpty {
+                    return !activityKeywords.isDisjoint(with: Set(beach.keywords))
                 }
+                return true
             }
         }
+
+        return results
+    }
     
 
     /// Whether we have successfully loaded data at least once

@@ -7,12 +7,40 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		630AE2222F9C01B100B067CD /* CoastCastWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DEF9A78A2F9BB8D600640CE1 /* CoastCastWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		DEF9A78D2F9BB8D600640CE1 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEF9A78C2F9BB8D600640CE1 /* WidgetKit.framework */; };
 		DEF9A78F2F9BB8D600640CE1 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEF9A78E2F9BB8D600640CE1 /* SwiftUI.framework */; };
-		DEF9A7A02F9BB8D700640CE1 /* CoastCastWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DEF9A78A2F9BB8D600640CE1 /* CoastCastWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		630AE2232F9C01B100B067CD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 63CEE3E62F6C86C4001EA186 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DEF9A7892F9BB8D600640CE1;
+			remoteInfo = CoastCastWidgetExtension;
+		};
+		630AE2262F9C01B600B067CD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 63CEE3E62F6C86C4001EA186 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DEF9A7892F9BB8D600640CE1;
+			remoteInfo = CoastCastWidgetExtension;
+		};
+		630AE2282F9C01BF00B067CD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 63CEE3E62F6C86C4001EA186 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DEF9A7892F9BB8D600640CE1;
+			remoteInfo = CoastCastWidgetExtension;
+		};
+		630AE22A2F9C01C700B067CD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 63CEE3E62F6C86C4001EA186 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DEF9A7892F9BB8D600640CE1;
+			remoteInfo = CoastCastWidgetExtension;
+		};
 		63493FA42F86E9BA00C8EB4A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 63CEE3E62F6C86C4001EA186 /* Project object */;
@@ -20,23 +48,16 @@
 			remoteGlobalIDString = 63CEE3ED2F6C86C4001EA186;
 			remoteInfo = MichiganAPIWeather;
 		};
-		DEF9A79E2F9BB8D700640CE1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 63CEE3E62F6C86C4001EA186 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = DEF9A7892F9BB8D600640CE1;
-			remoteInfo = CoastCastWidgetExtension;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		DEF9A7A52F9BB8D700640CE1 /* Embed Foundation Extensions */ = {
+		630AE2252F9C01B100B067CD /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				DEF9A7A02F9BB8D700640CE1 /* CoastCastWidgetExtension.appex in Embed Foundation Extensions */,
+				630AE2222F9C01B100B067CD /* CoastCastWidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -182,12 +203,15 @@
 				63CEE3EA2F6C86C4001EA186 /* Sources */,
 				63CEE3EB2F6C86C4001EA186 /* Frameworks */,
 				63CEE3EC2F6C86C4001EA186 /* Resources */,
-				DEF9A7A52F9BB8D700640CE1 /* Embed Foundation Extensions */,
+				630AE2252F9C01B100B067CD /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				DEF9A79F2F9BB8D700640CE1 /* PBXTargetDependency */,
+				630AE2242F9C01B100B067CD /* PBXTargetDependency */,
+				630AE2272F9C01B600B067CD /* PBXTargetDependency */,
+				630AE2292F9C01BF00B067CD /* PBXTargetDependency */,
+				630AE22B2F9C01C700B067CD /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				63CEE3F02F6C86C4001EA186 /* MichiganAPIWeather */,
@@ -313,15 +337,30 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		630AE2242F9C01B100B067CD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DEF9A7892F9BB8D600640CE1 /* CoastCastWidgetExtension */;
+			targetProxy = 630AE2232F9C01B100B067CD /* PBXContainerItemProxy */;
+		};
+		630AE2272F9C01B600B067CD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DEF9A7892F9BB8D600640CE1 /* CoastCastWidgetExtension */;
+			targetProxy = 630AE2262F9C01B600B067CD /* PBXContainerItemProxy */;
+		};
+		630AE2292F9C01BF00B067CD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DEF9A7892F9BB8D600640CE1 /* CoastCastWidgetExtension */;
+			targetProxy = 630AE2282F9C01BF00B067CD /* PBXContainerItemProxy */;
+		};
+		630AE22B2F9C01C700B067CD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DEF9A7892F9BB8D600640CE1 /* CoastCastWidgetExtension */;
+			targetProxy = 630AE22A2F9C01C700B067CD /* PBXContainerItemProxy */;
+		};
 		63493FA52F86E9BA00C8EB4A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 63CEE3ED2F6C86C4001EA186 /* MichiganAPIWeather */;
 			targetProxy = 63493FA42F86E9BA00C8EB4A /* PBXContainerItemProxy */;
-		};
-		DEF9A79F2F9BB8D700640CE1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = DEF9A7892F9BB8D600640CE1 /* CoastCastWidgetExtension */;
-			targetProxy = DEF9A79E2F9BB8D700640CE1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -499,7 +538,7 @@
 				CODE_SIGN_ENTITLEMENTS = MichiganAPIWeather/MichiganAPIWeather.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = S4RSN4KFD3;
+				DEVELOPMENT_TEAM = HCJNSG5PP5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = CoastCast;
@@ -540,7 +579,7 @@
 				CODE_SIGN_ENTITLEMENTS = MichiganAPIWeather/MichiganAPIWeather.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = S4RSN4KFD3;
+				DEVELOPMENT_TEAM = HCJNSG5PP5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = CoastCast;

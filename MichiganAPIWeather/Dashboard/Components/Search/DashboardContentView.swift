@@ -120,7 +120,7 @@ struct DashboardContentView: View {
                             .scrollIndicators(.hidden)
                         } else {
                             LocationPromptCard {
-                                locationManager.requestLocation()
+                                locationManager.openSetting()
                             }
                         }
                         Divider()

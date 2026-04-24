@@ -44,6 +44,8 @@ struct NearBeachRow: View {
             
             Text(beachName)
                 .font(.footnote)
+                .frame(height: 40, alignment: .topLeading)
+
                 .lineLimit(2)
                 .fixedSize(horizontal: false, vertical: true)
                 .frame(width: 80, alignment: .leading)

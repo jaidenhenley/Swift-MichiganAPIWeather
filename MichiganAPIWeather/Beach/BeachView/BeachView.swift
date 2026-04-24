@@ -28,6 +28,7 @@ struct BeachView: View {
                     }
                     .frame(height: 200)
                     .tabViewStyle(.page(indexDisplayMode: .always))
+                    
                     VStack(alignment: .leading, spacing: 8) {
                         Text(beach.beachName)
                             .font(.title3)
@@ -46,15 +47,15 @@ struct BeachView: View {
                                         .foregroundStyle(.blueGreen)
                                 }
                                 .padding(.vertical, 4)
-                                .padding(.horizontal, 8)
                                 .background(Color(.systemGray6).opacity(0.6))
                                 .clipShape(Capsule())
                             }
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
+
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal)
+                    .padding(.horizontal, 28)
                     .padding(.top)
                     
                     BeachHeader(image: beach.images[0])

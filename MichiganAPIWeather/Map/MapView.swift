@@ -90,12 +90,13 @@ struct MapView: View {
         } label: {
             ZStack {
                 Circle()
-                    .fill(.blueGreen)
+                    .fill(.mapBlueGreen)
                 
                 Image(systemName: "beach.umbrella.fill")
-                    .font(.system(size: 20))
-                    .foregroundStyle(.yellow)
+                    .font(.system(size: 24))  
+                    .foregroundStyle(.mapYellow)
             }
+            .frame(width: 44, height: 44)
             .shadow(radius: 4)
         }
     }

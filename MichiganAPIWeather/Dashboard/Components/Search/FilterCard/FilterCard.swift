@@ -14,7 +14,7 @@ struct FilterCard: View {
     @Environment(\.dismiss) var dismiss
     
     @Binding var distanceRange: DistanceRange
-    
+    @Binding var sortByDistance: Bool
     var body: some View {
         @Bindable var viewModel = viewModel  
 
@@ -29,6 +29,7 @@ struct FilterCard: View {
                             viewModel.filterCamping = false
                             viewModel.filterSwimmable = false
                             sortByDistance = false
+                            distanceRange = .all
                         }
                     }
                     .font(.subheadline)
@@ -49,40 +50,6 @@ struct FilterCard: View {
             .animation(.snappy, value: viewModel.selectedKeywords.isEmpty)
 
             Divider()
-            
-            VStack(alignment: .leading) {
-                Text("SORT BY")
-                    .bold()
-                    .padding(.bottom, 8)
-
-                
-                Text("Distance")
-                    .font(.subheadline)
-                    .fontWeight(.medium)
-                Spacer()
-                locationStatusLabel
-                
-                Picker("Distance", selection: $distanceRange) {
-                    ForEach(DistanceRange.allCases) { dist in
-                        Text(dist.rawValue).tag(dist)
-                    }
-                }
-                .pickerStyle(.segmented)
-                .disabled(!locationManager.isAuthorized)
-                .opacity(locationManager.isAuthorized ? 1 : 0.5)
-                
-                Divider()
-                
-                Text("FEATURES")
-                    .bold()
-                    .padding(.bottom, 8)
-
-                
-                featureRow(title: "Pet Friendly", keyword: "pet friendly")
-                featureRow(title: "Fishing", keyword: "fishing")
-                featureRow(title: "Lifeguard", keyword: "lifeguard")
-                featureRow(title: "Boating", keyword: "boating/jet ski")
-                featureRow(title: "Hiking", keyword: "hiking")
 
             VStack(alignment: .leading, spacing: 0) {
                 
@@ -93,6 +60,33 @@ struct FilterCard: View {
                     .padding(.bottom, 8)
 
                 toggleRow(title: "Nearest to me", isOn: $sortByDistance)
+                
+                if sortByDistance {
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack {
+                            Text("Within")
+                                .font(.subheadline)
+                                .fontWeight(.medium)
+                            Spacer()
+                            locationStatusLabel
+                        }
+                        
+                        Picker("Distance", selection: $distanceRange) {
+                            ForEach(DistanceRange.allCases) { dist in
+                                Text(dist.rawValue).tag(dist)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+                        .disabled(!locationManager.isAuthorized)
+                        .opacity(locationManager.isAuthorized ? 1 : 0.5)
+                        
+                        if !locationManager.isAuthorized {
+                            locationCTA
+                        }
+                    }
+                    .padding(.top, 8)
+                    .transition(.opacity.combined(with: .move(edge: .top)))
+                }
 
                 Divider().padding(.vertical, 12)
 
@@ -146,7 +140,7 @@ struct FilterCard: View {
     }
 
     @ViewBuilder
-    private var locationStatusLabel: some View {
+    var locationStatusLabel: some View {
         switch locationManager.authStatus {
         case .authorizedWhenInUse, .authorizedAlways:
             EmptyView()
@@ -164,7 +158,7 @@ struct FilterCard: View {
     }
 
     @ViewBuilder
-    private var locationCTA: some View {
+    var locationCTA: some View {
         switch locationManager.authStatus {
         case .notDetermined:
             Button {
@@ -192,7 +186,7 @@ struct FilterCard: View {
     }
     
     @ViewBuilder
-    func featureRow(title: String, keyword: String) -> some View {
+    func keywordRow(title: String, keyword: String) -> some View {
         Button {
             if viewModel.selectedKeywords.contains(keyword) {
                 viewModel.selectedKeywords.remove(keyword)
@@ -228,8 +222,4 @@ struct FilterCard: View {
         }
         .buttonStyle(.plain)
     }
-}
-#Preview {
-    FilterCard()
-        .environment(BeachViewModel())
 }

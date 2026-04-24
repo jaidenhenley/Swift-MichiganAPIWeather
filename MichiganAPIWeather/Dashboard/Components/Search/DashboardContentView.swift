@@ -13,6 +13,7 @@ struct DashboardContentView: View {
     @Environment(BeachViewModel.self) var viewModel
     @Environment(LocationManager.self) var locationManager
     @Environment(\.modelContext) private var context
+    @Environment(\.colorScheme) private var colorScheme
     @State private var suggestionsVM: SuggestedBeachViewModel?
 
     var nearby: [Beach]? {

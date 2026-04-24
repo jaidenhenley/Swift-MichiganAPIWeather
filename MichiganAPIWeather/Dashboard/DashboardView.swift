@@ -11,7 +11,7 @@ struct DashboardView: View {
     @Environment(BeachViewModel.self) var viewModel
     @Environment(LocationManager.self) var locationManager
     @State private var isShowingFilter = false
-    
+    @State private var sortByDistance = false
     @State private var distanceRange: DistanceRange = .all
 
     var body: some View {
@@ -112,7 +112,7 @@ struct DashboardView: View {
             }
             .fontDesign(.rounded)
             .sheet(isPresented: $isShowingFilter) {
-                FilterCard(distanceRange: $distanceRange)
+                FilterCard(distanceRange: $distanceRange, sortByDistance: $sortByDistance)
                     .presentationDetents([.medium, .large])
                     .presentationDragIndicator(.visible)
             }

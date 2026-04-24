@@ -13,6 +13,7 @@ struct MapView: View {
     @State private var selectedBeach: Beach? = nil
     @State private var showDetail = false
     
+    @Environment(LocationManager.self) var locationManager
     @State private var position: MapCameraPosition = .region(
         MKCoordinateRegion(
             center: CLLocationCoordinate2D(latitude: 44.0, longitude: -85.5),
@@ -47,6 +48,9 @@ struct MapView: View {
             .ignoresSafeArea()
 
             beachListOverlay
+        }
+        .task {
+            locationManager.requestLocation()
         }
         .sheet(isPresented: $showDetail) {
             if let beach = selectedBeach {
@@ -102,7 +106,8 @@ struct MapView: View {
                 ForEach(mapVM.filteredBeaches) { beach in
                     MapViewCard(
                         beach: beach,
-                        isSelected: selectedBeach?.id == beach.id
+                        isSelected: selectedBeach?.id == beach.id,
+                        userLocation: locationManager.userLocation
                     )
                     .onTapGesture {
                         selectedBeach = beach

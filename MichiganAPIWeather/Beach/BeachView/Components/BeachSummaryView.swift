@@ -13,9 +13,9 @@ struct BeachSummaryView: View {
     let beachdescription: String
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 6){
+        VStack(alignment: .leading, spacing: 4){
             Text("OVERVIEW")
-                .font(.caption)
+                .font(.caption2)
                 .bold()
                 .foregroundColor(.beachViewText)
             
@@ -25,6 +25,8 @@ struct BeachSummaryView: View {
                 .foregroundColor(.beachViewText)
             
             Text(beachdescription)
+                .font(.subheadline)
+
                 .foregroundColor(.beachViewText)
         }
         .padding(16)

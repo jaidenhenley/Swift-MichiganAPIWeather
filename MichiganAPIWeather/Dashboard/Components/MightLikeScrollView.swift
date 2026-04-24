@@ -102,7 +102,8 @@ struct MightLikeCard: View {
             .shadow(
                 color: colorScheme == .dark ? Color.white.opacity(0.08) : Color.black.opacity(0.2),
                 radius: 8
-            )        }
+            )
+        }
         .buttonStyle(.plain)
         .animation(.easeInOut(duration: 0.8), value: currentImageIndex)
         .onReceive(timer) { _ in

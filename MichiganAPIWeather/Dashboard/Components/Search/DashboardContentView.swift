@@ -99,7 +99,7 @@ struct DashboardContentView: View {
                             .padding(.leading, 16)
                             .padding(.bottom, 20)
                         }
-                        .frame(height: 380)
+                        .frame(height: 320)
                     }
                     
                     VStack(spacing: 0) {

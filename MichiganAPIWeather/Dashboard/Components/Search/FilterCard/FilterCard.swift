@@ -14,13 +14,19 @@ struct FilterCard: View {
     @State private var sortByDistance = false
     
     var body: some View {
-        VStack (spacing:0) {
+        @Bindable var viewModel = viewModel  
+
+        VStack(spacing: 0) {
             
+            // Header
             HStack {
-                if !viewModel.selectedKeywords.isEmpty {
+                if !viewModel.selectedKeywords.isEmpty || viewModel.filterCamping || viewModel.filterSwimmable || sortByDistance {
                     Button("Clear All") {
                         withAnimation(.snappy) {
                             viewModel.selectedKeywords.removeAll()
+                            viewModel.filterCamping = false
+                            viewModel.filterSwimmable = false
+                            sortByDistance = false
                         }
                     }
                     .font(.subheadline)
@@ -28,74 +34,83 @@ struct FilterCard: View {
                     .foregroundStyle(.blue)
                     .transition(.move(edge: .leading).combined(with: .opacity))
                 } else {
-                    Text("Clear All")
-                        .font(.subheadline)
-                        .opacity(0)
+                    Text("Clear All").font(.subheadline).opacity(0)
                 }
 
                 Spacer()
-
-                Text("FILTER & SORT")
-                    .bold()
-                    .fontDesign(.rounded)
-
+                Text("FILTER & SORT").bold().fontDesign(.rounded)
                 Spacer()
-
-                Text("Clear All")
-                    .font(.subheadline)
-                    .opacity(0)
+                Text("Clear All").font(.subheadline).opacity(0)
             }
             .padding(.top, 20)
             .padding(.bottom, 12)
             .animation(.snappy, value: viewModel.selectedKeywords.isEmpty)
-            
+
             Divider()
-            
-            VStack(alignment: .leading) {
+
+            VStack(alignment: .leading, spacing: 0) {
+                
+                // Sort
                 Text("SORT BY")
                     .bold()
+                    .padding(.top, 16)
                     .padding(.bottom, 8)
 
-                
-                Button {
-                    sortByDistance.toggle()
-                } label: {
-                    HStack {
-                        Image(systemName: sortByDistance ? "largecircle.fill.circle" : "circle")
-                        Text("Distance")
-                    }
-                }
-                .buttonStyle(.plain)
-                
-                Divider()
-                
-                Text("FEATURES")
+                toggleRow(title: "Nearest to me", isOn: $sortByDistance)
+
+                Divider().padding(.vertical, 12)
+
+                // Park Type
+                Text("PARK TYPE")
                     .bold()
                     .padding(.bottom, 8)
 
-                
-                featureRow(title: "Pet Friendly", keyword: "pet friendly")
-                featureRow(title: "Fishing", keyword: "fishing")
-                featureRow(title: "Lifeguard", keyword: "lifeguard")
-                featureRow(title: "Boating", keyword: "boating/jet ski")
-                featureRow(title: "Hiking", keyword: "hiking")
+                keywordRow(title: "State Park", keyword: "state park")
+                keywordRow(title: "National Park", keyword: "national park")
+                keywordRow(title: "City Beach", keyword: "city beach")
+                keywordRow(title: "County Park", keyword: "county park")
 
-                Divider().padding(.vertical, 8)
-                
+                Divider().padding(.vertical, 12)
+
+                // Activities
+                Text("ACTIVITIES")
+                    .bold()
+                    .padding(.bottom, 8)
+
+                keywordRow(title: "Hiking", keyword: "hiking")
+                keywordRow(title: "Fishing", keyword: "fishing")
+                keywordRow(title: "Kayaking", keyword: "kayaking")
+                keywordRow(title: "Bird Watching", keyword: "bird watching")
+                keywordRow(title: "Rock Hunting", keyword: "rock hunting")
+                keywordRow(title: "Dark Sky / Stargazing", keyword: "dark sky")
+
+                Divider().padding(.vertical, 12)
+
+                // Amenities
+                Text("AMENITIES")
+                    .bold()
+                    .padding(.bottom, 8)
+
+                toggleRow(title: "Camping available", isOn: $viewModel.filterCamping)
+                toggleRow(title: "Swimmable beach", isOn: $viewModel.filterSwimmable)
+
+                Divider().padding(.vertical, 12)
+
                 Button("Apply Filters") { dismiss() }
                     .frame(maxWidth: .infinity)
                     .buttonStyle(.borderedProminent)
                     .controlSize(.large)
+                    .padding(.bottom, 8)
             }
             .fontDesign(.rounded)
-            
+
             Spacer()
         }
         .padding(.horizontal)
     }
 
     @ViewBuilder
-    func featureRow(title: String, keyword: String) -> some View {
+    func keywordRow(title: String, keyword: String) -> some View {
         Button {
             if viewModel.selectedKeywords.contains(keyword) {
                 viewModel.selectedKeywords.remove(keyword)
@@ -105,15 +120,33 @@ struct FilterCard: View {
         } label: {
             HStack {
                 Image(systemName: viewModel.selectedKeywords.contains(keyword) ? "checkmark.circle.fill" : "circle")
+                    .foregroundStyle(viewModel.selectedKeywords.contains(keyword) ? .blue : .secondary)
                 Text(title)
                     .font(.footnote)
-                    .padding(.bottom, 8)
+                Spacer()
             }
+            .padding(.bottom, 8)
+        }
+        .buttonStyle(.plain)
+    }
+
+    @ViewBuilder
+    func toggleRow(title: String, isOn: Binding<Bool>) -> some View {
+        Button {
+            withAnimation(.snappy) { isOn.wrappedValue.toggle() }
+        } label: {
+            HStack {
+                Image(systemName: isOn.wrappedValue ? "checkmark.circle.fill" : "circle")
+                    .foregroundStyle(isOn.wrappedValue ? .blue : .secondary)
+                Text(title)
+                    .font(.footnote)
+                Spacer()
+            }
+            .padding(.bottom, 8)
         }
         .buttonStyle(.plain)
     }
 }
-
 #Preview {
     FilterCard()
         .environment(BeachViewModel())

@@ -11,7 +11,8 @@ import SwiftUI
 struct FavoriteButtonView: View {
     let beach: Beach
     var isToolbarButton: Bool = false
-    
+    @Environment(\.colorScheme) var colorScheme
+
     @Query private var favorites: [FavoriteBeach]
     @Environment(\.modelContext) private var context
     
@@ -42,7 +43,7 @@ struct FavoriteButtonView: View {
             }
         } label: {
             Image(systemName: isFavorited ? "heart.fill" : "heart")
-                .foregroundStyle(isFavorited ? .red : .black)
+                .foregroundStyle(isFavorited ? .red : .primary)
         }
         .frame(width: isToolbarButton ? nil : 44, height: isToolbarButton ? nil : 44)
     }

@@ -5,13 +5,15 @@
 //  Created by George Clinkscales on 4/14/26.
 //
 
+import CoreLocation
 import SwiftUI
 
 struct FilterCard: View {
     @Environment(BeachViewModel.self) var viewModel
+    @Environment(LocationManager.self) var locationManager
     @Environment(\.dismiss) var dismiss
     
-    @State private var sortByDistance = false
+    @Binding var distanceRange: DistanceRange
     
     var body: some View {
         VStack (spacing:0) {
@@ -57,15 +59,20 @@ struct FilterCard: View {
                     .padding(.bottom, 8)
 
                 
-                Button {
-                    sortByDistance.toggle()
-                } label: {
-                    HStack {
-                        Image(systemName: sortByDistance ? "largecircle.fill.circle" : "circle")
-                        Text("Distance")
+                Text("Distance")
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                Spacer()
+                locationStatusLabel
+                
+                Picker("Distance", selection: $distanceRange) {
+                    ForEach(DistanceRange.allCases) { dist in
+                        Text(dist.rawValue).tag(dist)
                     }
                 }
-                .buttonStyle(.plain)
+                .pickerStyle(.segmented)
+                .disabled(!locationManager.isAuthorized)
+                .opacity(locationManager.isAuthorized ? 1 : 0.5)
                 
                 Divider()
                 
@@ -95,6 +102,52 @@ struct FilterCard: View {
     }
 
     @ViewBuilder
+    private var locationStatusLabel: some View {
+        switch locationManager.authStatus {
+        case .authorizedWhenInUse, .authorizedAlways:
+            EmptyView()
+        case .notDetermined:
+            Text("Off")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        case .denied, .restricted:
+            Text("Disabled")
+                .font(.caption)
+                .foregroundStyle(.red)
+        @unknown default:
+            EmptyView()
+        }
+    }
+
+    @ViewBuilder
+    private var locationCTA: some View {
+        switch locationManager.authStatus {
+        case .notDetermined:
+            Button {
+                locationManager.requestLocation()
+            } label: {
+                Label("Turn on location to sort by distance", systemImage: "location")
+                    .font(.footnote)
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.bordered)
+        case .denied, .restricted:
+            Button {
+                if let url = URL(string: UIApplication.openSettingsURLString) {
+                    UIApplication.shared.open(url)
+                }
+            } label: {
+                Label("Enable in Settings", systemImage: "gear")
+                    .font(.footnote)
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.bordered)
+        default:
+            EmptyView()
+        }
+    }
+    
+    @ViewBuilder
     func featureRow(title: String, keyword: String) -> some View {
         Button {
             if viewModel.selectedKeywords.contains(keyword) {
@@ -112,9 +165,4 @@ struct FilterCard: View {
         }
         .buttonStyle(.plain)
     }
-}
-
-#Preview {
-    FilterCard()
-        .environment(BeachViewModel())
 }

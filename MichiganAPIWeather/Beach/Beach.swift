@@ -395,3 +395,4 @@ struct Beach: Identifiable {
         ),
     ]
 }
+

@@ -15,9 +15,9 @@ struct DashboardContentView: View {
     @Environment(\.modelContext) private var context
     @State private var suggestionsVM: SuggestedBeachViewModel?
 
-    private static let fallbackLocation = CLLocation(latitude: 44.7631, longitude: -85.6206)
-    var nearby: [Beach] {
-        Array(beachesNearMe(from: locationManager.userLocation ?? DashboardContentView.fallbackLocation, beaches: Beach.allBeaches).prefix(5))
+    var nearby: [Beach]? {
+        guard let userLocation = locationManager.userLocation else { return nil }
+        return Beach.allBeaches.sortedByDistance(from: userLocation, limit: 5)
     }
     
     var body: some View {
@@ -100,17 +100,24 @@ struct DashboardContentView: View {
                     VStack(spacing: 0) {
                         IconStripView()
                         Divider()
-                        Headline(text: "Beaches near you")
-                            .padding(.vertical)
-                        ScrollView(.horizontal) {
-                            HStack {
-                                ForEach(nearby) { beach in
-                                    NearBeachRow(images: beach.images, beach: beach, beachName: beach.beachName, beachID: beach.id)
+                        if let nearby {
+                            Headline(text: "Beaches near you")
+                                .padding(.vertical)
+                            ScrollView(.horizontal) {
+                                HStack {
+                                    ForEach(nearby) { beach in
+                                        NearBeachRow(images: beach.images, beach: beach,
+                                                     beachName: beach.beachName, beachID: beach.id)
+                                    }
                                 }
+                                .padding(.horizontal, 16)
                             }
-                            .padding(.horizontal, 16)
+                            .scrollIndicators(.hidden)
+                        } else {
+                            LocationPromptCard {
+                                locationManager.requestLocation()
+                            }
                         }
-                        .scrollIndicators(.hidden)
                         Divider()
                             .padding()
                         Headline(text: "You Might Like")
@@ -135,12 +142,40 @@ struct DashboardContentView: View {
             }
         }
     }
-    func beachesNearMe(from location: CLLocation, beaches: [Beach]) -> [Beach] {
-        beaches.sorted { (lhs: Beach, rhs: Beach) in
-            let a = CLLocation(latitude: lhs.coordinates.latitude, longitude: lhs.coordinates.longitude)
-            let b = CLLocation(latitude: rhs.coordinates.latitude, longitude: rhs.coordinates.longitude)
-            return location.distance(from: a) < location.distance(from: b)
-        }
-    }
+}
 
+struct LocationPromptCard: View {
+    let onEnable: () -> Void
+    
+    var body: some View {
+        VStack(spacing: 12) {
+            Image(systemName: "location.circle.fill")
+                .font(.largeTitle)
+                .foregroundStyle(.blueGreen)
+            
+            Text("See beaches near you")
+                .font(.headline)
+            
+            Text("Enable location to sort Michigan beaches by distance.")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+            
+            Button(action: onEnable) {
+                Text("Enable Location")
+                    .font(.footnote)
+                    .fontWeight(.bold)
+                    .foregroundStyle(.blueGreen)
+                    .padding(.horizontal, 14)
+                    .padding(.vertical, 10)
+                    .background(Color.yellow)
+                    .clipShape(Capsule())
+            }
+        }
+        .padding()
+        .frame(maxWidth: .infinity)
+        .background(.ultraThinMaterial)
+        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .padding(.horizontal)
+    }
 }

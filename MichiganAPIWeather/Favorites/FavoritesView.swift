@@ -41,7 +41,7 @@ struct FavoritesView: View {
                         description: Text("Beaches you favorite will show up here.")
                     )
                 } else {
-                BeachListView(beachList: favoriteBeaches)
+                BeachListView(beachList: favoriteBeaches, sortByDistance: false)
                 }
             }
             .navigationTitle("Favorites")

@@ -9,16 +9,20 @@ import CoreLocation
 import Foundation
 
 @Observable
-class LocationManager: NSObject, CLLocationManagerDelegate {
+@MainActor
+final class LocationManager: NSObject, CLLocationManagerDelegate {
     var userLocation: CLLocation?
-    var authStatus: CLAuthorizationStatus = .notDetermined
+    var authStatus: CLAuthorizationStatus
+    var lastError: Error?
     
     private let manager = CLLocationManager()
     
     override init() {
+        self.authStatus = CLLocationManager().authorizationStatus
         super.init()
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyKilometer
+        self.authStatus = manager.authorizationStatus
     }
     
     func requestLocation() {
@@ -32,18 +36,38 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         }
     }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        userLocation = locations.last
+    nonisolated func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let last = locations.last
+        Task { @MainActor in
+            self.userLocation = last
+            self.lastError = nil
+        }
+        
     }
     
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("[Location] Failed: \(error.localizedDescription)")
+    nonisolated func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        Task { @MainActor in
+            self.lastError = error
+        }
     }
     
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-           authStatus = manager.authorizationStatus
-           if authStatus == .authorizedWhenInUse || authStatus == .authorizedAlways {
-               manager.requestLocation()
-           }
-       }
+    nonisolated func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        let status = manager.authorizationStatus
+        Task { @MainActor in
+            self.authStatus = status
+            if status == .authorizedWhenInUse || status == .authorizedAlways {
+                manager.requestLocation()
+            }
+        }
+    }
+}
+
+extension LocationManager {
+    var isAuthorized: Bool {
+        authStatus == .authorizedWhenInUse || authStatus == .authorizedAlways
+    }
+    
+    var isDenied: Bool {
+        authStatus == .denied || authStatus == .restricted
+    }
 }

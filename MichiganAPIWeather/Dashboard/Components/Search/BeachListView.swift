@@ -10,15 +10,25 @@ import SwiftUI
 
 struct BeachListView: View {
     @Environment(BeachViewModel.self) var viewModel
+    @Environment(LocationManager.self) var locationManager
     @Environment(\.modelContext) private var context
 
     @Query private var favorites: [FavoriteBeach]
     
     let beachList: [Beach]
+    let sortByDistance: Bool
     
+    private var displayedBeaches: [Beach] {
+        guard sortByDistance, let userLocation = locationManager.userLocation else {
+            return beachList
+        }
+        return beachList.sortedByDistance(from: userLocation)
+    }
+    
+
     
     var body: some View {
-        List(beachList) { beach in
+        List(displayedBeaches) { beach in
             ZStack {
                 NavigationLink {
                     BeachView(beach: beach, beachID: beach.id)
@@ -49,5 +59,15 @@ struct BeachListView: View {
         }
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
+        .onAppear {
+            if sortByDistance && locationManager.userLocation == nil {
+                locationManager.requestLocation()
+            }
+        }
+        .overlay {
+            if displayedBeaches.isEmpty {
+                ContentUnavailableView("No Beaches", image: "water.waves")
+            }
+        }
     }
 }

@@ -6,7 +6,41 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		630AE2222F9C01B100B067CD /* CoastCastWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DEF9A78A2F9BB8D600640CE1 /* CoastCastWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		DEF9A78D2F9BB8D600640CE1 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEF9A78C2F9BB8D600640CE1 /* WidgetKit.framework */; };
+		DEF9A78F2F9BB8D600640CE1 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEF9A78E2F9BB8D600640CE1 /* SwiftUI.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
+		630AE2232F9C01B100B067CD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 63CEE3E62F6C86C4001EA186 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DEF9A7892F9BB8D600640CE1;
+			remoteInfo = CoastCastWidgetExtension;
+		};
+		630AE2262F9C01B600B067CD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 63CEE3E62F6C86C4001EA186 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DEF9A7892F9BB8D600640CE1;
+			remoteInfo = CoastCastWidgetExtension;
+		};
+		630AE2282F9C01BF00B067CD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 63CEE3E62F6C86C4001EA186 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DEF9A7892F9BB8D600640CE1;
+			remoteInfo = CoastCastWidgetExtension;
+		};
+		630AE22A2F9C01C700B067CD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 63CEE3E62F6C86C4001EA186 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DEF9A7892F9BB8D600640CE1;
+			remoteInfo = CoastCastWidgetExtension;
+		};
 		63493FA42F86E9BA00C8EB4A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 63CEE3E62F6C86C4001EA186 /* Project object */;
@@ -16,9 +50,26 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		630AE2252F9C01B100B067CD /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				630AE2222F9C01B100B067CD /* CoastCastWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		63493FA02F86E9BA00C8EB4A /* MichiganAPIWeatherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MichiganAPIWeatherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		63CEE3EE2F6C86C4001EA186 /* MichiganAPIWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MichiganAPIWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DEF9A78A2F9BB8D600640CE1 /* CoastCastWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CoastCastWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		DEF9A78C2F9BB8D600640CE1 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		DEF9A78E2F9BB8D600640CE1 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -28,6 +79,13 @@
 				CrowdMeter/BeachCrowdClassifier.mlpackage,
 			);
 			target = 63493F9F2F86E9BA00C8EB4A /* MichiganAPIWeatherTests */;
+		};
+		DEF9A7A42F9BB8D700640CE1 /* Exceptions for "CoastCastWidget" folder in "CoastCastWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = DEF9A7892F9BB8D600640CE1 /* CoastCastWidgetExtension */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -43,6 +101,14 @@
 				63493FAC2F86EA0100C8EB4A /* Exceptions for "MichiganAPIWeather" folder in "MichiganAPIWeatherTests" target */,
 			);
 			path = MichiganAPIWeather;
+			sourceTree = "<group>";
+		};
+		DEF9A7902F9BB8D600640CE1 /* CoastCastWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				DEF9A7A42F9BB8D700640CE1 /* Exceptions for "CoastCastWidget" folder in "CoastCastWidgetExtension" target */,
+			);
+			path = CoastCastWidget;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -62,6 +128,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DEF9A7872F9BB8D600640CE1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DEF9A78F2F9BB8D600640CE1 /* SwiftUI.framework in Frameworks */,
+				DEF9A78D2F9BB8D600640CE1 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -70,6 +145,8 @@
 			children = (
 				63CEE3F02F6C86C4001EA186 /* MichiganAPIWeather */,
 				63493FA12F86E9BA00C8EB4A /* MichiganAPIWeatherTests */,
+				DEF9A7902F9BB8D600640CE1 /* CoastCastWidget */,
+				DEF9A78B2F9BB8D600640CE1 /* Frameworks */,
 				63CEE3EF2F6C86C4001EA186 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -79,8 +156,18 @@
 			children = (
 				63CEE3EE2F6C86C4001EA186 /* MichiganAPIWeather.app */,
 				63493FA02F86E9BA00C8EB4A /* MichiganAPIWeatherTests.xctest */,
+				DEF9A78A2F9BB8D600640CE1 /* CoastCastWidgetExtension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		DEF9A78B2F9BB8D600640CE1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DEF9A78C2F9BB8D600640CE1 /* WidgetKit.framework */,
+				DEF9A78E2F9BB8D600640CE1 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -116,10 +203,15 @@
 				63CEE3EA2F6C86C4001EA186 /* Sources */,
 				63CEE3EB2F6C86C4001EA186 /* Frameworks */,
 				63CEE3EC2F6C86C4001EA186 /* Resources */,
+				630AE2252F9C01B100B067CD /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				630AE2242F9C01B100B067CD /* PBXTargetDependency */,
+				630AE2272F9C01B600B067CD /* PBXTargetDependency */,
+				630AE2292F9C01BF00B067CD /* PBXTargetDependency */,
+				630AE22B2F9C01C700B067CD /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				63CEE3F02F6C86C4001EA186 /* MichiganAPIWeather */,
@@ -131,6 +223,28 @@
 			productReference = 63CEE3EE2F6C86C4001EA186 /* MichiganAPIWeather.app */;
 			productType = "com.apple.product-type.application";
 		};
+		DEF9A7892F9BB8D600640CE1 /* CoastCastWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DEF9A7A12F9BB8D700640CE1 /* Build configuration list for PBXNativeTarget "CoastCastWidgetExtension" */;
+			buildPhases = (
+				DEF9A7862F9BB8D600640CE1 /* Sources */,
+				DEF9A7872F9BB8D600640CE1 /* Frameworks */,
+				DEF9A7882F9BB8D600640CE1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				DEF9A7902F9BB8D600640CE1 /* CoastCastWidget */,
+			);
+			name = CoastCastWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = CoastCastWidgetExtension;
+			productReference = DEF9A78A2F9BB8D600640CE1 /* CoastCastWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -138,7 +252,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 2630;
+				LastSwiftUpdateCheck = 2640;
 				LastUpgradeCheck = 2630;
 				TargetAttributes = {
 					63493F9F2F86E9BA00C8EB4A = {
@@ -147,6 +261,9 @@
 					};
 					63CEE3ED2F6C86C4001EA186 = {
 						CreatedOnToolsVersion = 26.3;
+					};
+					DEF9A7892F9BB8D600640CE1 = {
+						CreatedOnToolsVersion = 26.4.1;
 					};
 				};
 			};
@@ -166,6 +283,7 @@
 			targets = (
 				63CEE3ED2F6C86C4001EA186 /* MichiganAPIWeather */,
 				63493F9F2F86E9BA00C8EB4A /* MichiganAPIWeatherTests */,
+				DEF9A7892F9BB8D600640CE1 /* CoastCastWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -179,6 +297,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		63CEE3EC2F6C86C4001EA186 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DEF9A7882F9BB8D600640CE1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -202,9 +327,36 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DEF9A7862F9BB8D600640CE1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		630AE2242F9C01B100B067CD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DEF9A7892F9BB8D600640CE1 /* CoastCastWidgetExtension */;
+			targetProxy = 630AE2232F9C01B100B067CD /* PBXContainerItemProxy */;
+		};
+		630AE2272F9C01B600B067CD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DEF9A7892F9BB8D600640CE1 /* CoastCastWidgetExtension */;
+			targetProxy = 630AE2262F9C01B600B067CD /* PBXContainerItemProxy */;
+		};
+		630AE2292F9C01BF00B067CD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DEF9A7892F9BB8D600640CE1 /* CoastCastWidgetExtension */;
+			targetProxy = 630AE2282F9C01BF00B067CD /* PBXContainerItemProxy */;
+		};
+		630AE22B2F9C01C700B067CD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DEF9A7892F9BB8D600640CE1 /* CoastCastWidgetExtension */;
+			targetProxy = 630AE22A2F9C01C700B067CD /* PBXContainerItemProxy */;
+		};
 		63493FA52F86E9BA00C8EB4A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 63CEE3ED2F6C86C4001EA186 /* MichiganAPIWeather */;
@@ -460,6 +612,68 @@
 			};
 			name = Release;
 		};
+		DEF9A7A22F9BB8D700640CE1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HCJNSG5PP5;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CoastCastWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CoastCastWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.henley.jaiden.MichiganAPIWeather.CoastCastWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DEF9A7A32F9BB8D700640CE1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HCJNSG5PP5;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CoastCastWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CoastCastWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.henley.jaiden.MichiganAPIWeather.CoastCastWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -486,6 +700,15 @@
 			buildConfigurations = (
 				63CEE3FA2F6C86C6001EA186 /* Debug */,
 				63CEE3FB2F6C86C6001EA186 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DEF9A7A12F9BB8D700640CE1 /* Build configuration list for PBXNativeTarget "CoastCastWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DEF9A7A22F9BB8D700640CE1 /* Debug */,
+				DEF9A7A32F9BB8D700640CE1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

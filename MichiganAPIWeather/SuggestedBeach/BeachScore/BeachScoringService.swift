@@ -113,13 +113,13 @@ class BeachScoringService {
     }
 
     private func primaryReason(from snapshot: ConditionSnapshot) -> String {
-        if snapshot.precipChance >= 0.6 { return "Rain is likely today — might be worth waiting it out" }
-        if snapshot.windSpeedMPH >= 20 { return "Strong winds at the shore — waves will be rough" }
-        if snapshot.tempF >= 80 { return "Hot, sunny, and absolutely made for the beach" }
-        if snapshot.tempF >= 70 { return "Warm temps and comfortable conditions all day" }
-        if snapshot.uvIndex >= 8 { return "Great beach day — just don't forget the sunscreen" }
-        if snapshot.windSpeedMPH <= 10 && snapshot.precipChance <= 0.2 { return "Calm, clear, and conditions are looking great today" }
-        return "Solid conditions — not a bad day for the beach"
+        if snapshot.precipChance >= 0.6 { return "Rain's probably moving in. Might be worth waiting it out." }
+        if snapshot.windSpeedMPH >= 20 { return "Wind is up. Waves will be rough at the shore." }
+        if snapshot.tempF >= 80 { return "Hot and sunny. Made for the beach." }
+        if snapshot.tempF >= 70 { return "Warm and comfortable all day." }
+        if snapshot.uvIndex >= 8 { return "Great day out. Just don't forget the sunscreen." }
+        if snapshot.windSpeedMPH <= 10 && snapshot.precipChance <= 0.2 { return "Calm and clear. Conditions are looking great." }
+        return "Solid conditions. Not a bad day for the beach."
     }
 
     private func tagScore(for beach: Beach) -> Double {

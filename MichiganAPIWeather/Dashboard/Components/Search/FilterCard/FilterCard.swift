@@ -175,7 +175,7 @@ struct FilterCard: View {
                     UIApplication.shared.open(url)
                 }
             } label: {
-                Label("Enable in Settings", systemImage: "gear")
+                Text("Enable Location")
                     .font(.footnote)
                     .frame(maxWidth: .infinity)
             }

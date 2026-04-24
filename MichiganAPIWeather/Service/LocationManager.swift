@@ -7,6 +7,7 @@
 
 import CoreLocation
 import Foundation
+import UIKit
 
 @Observable
 @MainActor
@@ -33,6 +34,12 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
             manager.requestLocation()
         default:
             break
+        }
+    }
+    
+    func openSetting() {
+        if let url = URL(string: UIApplication.openSettingsURLString) {
+            UIApplication.shared.open(url)
         }
     }
     

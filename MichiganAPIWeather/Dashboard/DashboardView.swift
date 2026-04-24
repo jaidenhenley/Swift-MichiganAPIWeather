@@ -113,7 +113,6 @@ struct DashboardView: View {
             .fontDesign(.rounded)
             .sheet(isPresented: $isShowingFilter) {
                 FilterCard(distanceRange: $distanceRange, sortByDistance: $sortByDistance)
-                    .presentationDetents([.medium, .large])
                     .presentationDragIndicator(.visible)
             }
             .animation(.snappy, value: viewModel.selectedKeywords)

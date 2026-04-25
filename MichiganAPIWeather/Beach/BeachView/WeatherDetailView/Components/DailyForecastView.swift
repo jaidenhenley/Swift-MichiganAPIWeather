@@ -13,7 +13,12 @@ struct DailyForecastView: View {
     @Environment(BeachViewModel.self) var viewModel
 
     var bestDay: ForecastDay? {
-        viewModel.forecastDays.dropFirst().max(by: { $0.temp < $1.temp })
+        viewModel.forecastDays.dropFirst().max(by: { a, b in
+            if a.chanceOfPrecipitation != b.chanceOfPrecipitation {
+                return a.chanceOfPrecipitation > b.chanceOfPrecipitation
+            }
+            return a.temp < b.temp
+        })
     }
 
     // in the ForEach:
@@ -95,7 +100,7 @@ struct DailyForecastRow: View {
 
     private var rowOverlay: some View {
         RoundedRectangle(cornerRadius: 12)
-            .stroke(isBestDay ? Color(hex: "EFCA08") : Color.clear, lineWidth: 1.5)
+            .stroke(isBestDay ? Color(.green) : Color.clear, lineWidth: 1.5)
     }
     
     var body: some View {
@@ -126,7 +131,7 @@ struct DailyForecastRow: View {
             .background(rowBackground)
             .overlay(rowOverlay)
             .shadow(
-                color: isBestDay ? Color(hex: "EDD42C").opacity(0.4) : Color.clear,
+                color: isBestDay ? Color(.green).opacity(0.4) : Color.clear,
                 radius: isBestDay ? 8 : 0
             )
         }

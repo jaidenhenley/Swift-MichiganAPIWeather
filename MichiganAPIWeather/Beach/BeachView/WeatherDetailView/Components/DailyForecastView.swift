@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct DailyForecastView: View {
-    @State private var isShowingSheet = false
     @State private var selectedDay: ForecastDay?
     @Environment(BeachViewModel.self) var viewModel
 
@@ -100,7 +99,7 @@ struct DailyForecastRow: View {
 
     private var rowOverlay: some View {
         RoundedRectangle(cornerRadius: 12)
-            .stroke(isBestDay ? Color(.green) : Color.clear, lineWidth: 1.5)
+            .stroke(isBestDay ? Color(.yellow) : Color.clear, lineWidth: 1.5)
     }
     
     var body: some View {
@@ -131,7 +130,7 @@ struct DailyForecastRow: View {
             .background(rowBackground)
             .overlay(rowOverlay)
             .shadow(
-                color: isBestDay ? Color(.green).opacity(0.4) : Color.clear,
+                color: isBestDay ? Color(.yellow).opacity(0.4) : Color.clear,
                 radius: isBestDay ? 8 : 0
             )
         }

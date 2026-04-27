@@ -12,13 +12,12 @@ import Foundation
 struct BeachDetailResponse: Decodable {
     let beach: String?
     let buoyData: BuoyData?
-    let waterQuality: WaterQuality?
+    let waterQuality: [WaterQuality]?
     let alerts: [AlertFeature]
-    let traffic: [TrafficData]
     let holiday: Bool
 
     enum CodingKeys: String, CodingKey {
-        case beach, alerts, traffic, holiday, waterQuality
+        case beach, alerts, holiday, waterQuality
         case buoyData = "buoy_data"
     }
 }
@@ -54,17 +53,6 @@ struct WaterQuality: Decodable {
     let unit: String
     let status: String
     let source: String
-}
-
-// MARK: - Traffic
-
-struct TrafficData: Decodable {
-    let currentSpeed: Double?
-    let freeFlowSpeed: Double?
-    let currentTravelTime: Double?
-    let freeFlowTravelTime: Double?
-    let confidence: Double?
-    let roadClosures: Bool?
 }
 
 // MARK: - Alerts

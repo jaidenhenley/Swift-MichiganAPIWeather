@@ -47,8 +47,7 @@ class BeachViewModel {
     
     // Backend-only data
     var buoyData: BuoyData?
-    var waterQuality: WaterQuality?
-    var traffic: [TrafficData] = []
+    var waterQuality: [WaterQuality]?
     var holiday: Bool = false
     
     // Search Filtering
@@ -147,7 +146,6 @@ class BeachViewModel {
             for alert in alerts {
                 print("[API] Alert: \(alert.event) — \(alert.severity) — \(alert.headline)")
             }
-            traffic = response.traffic
             holiday = response.holiday
         } else if !hasData {
             errorMessage = "Couldn't load beach data"

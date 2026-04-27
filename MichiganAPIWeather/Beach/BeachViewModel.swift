@@ -26,7 +26,7 @@ class BeachViewModel {
     var pressure: String?
     var forecastDays: [ForecastDay] = []
     var hourForecast: [HourForecast] = []
-    var activeAlerts: Int = 0
+    var alerts: [AlertFeature] = []
     var isLoading: Bool = false
     var errorMessage: String?
     var useCelsius: Bool = false
@@ -143,7 +143,10 @@ class BeachViewModel {
             buoyData = response.buoyData
             waterQuality = response.waterQuality
             print("[WATER QUALITY]: \(String(describing: waterQuality))")
-            activeAlerts = response.alerts.count
+            alerts = response.alerts
+            for alert in alerts {
+                print("[API] Alert: \(alert.event) — \(alert.severity) — \(alert.headline)")
+            }
             traffic = response.traffic
             holiday = response.holiday
         } else if !hasData {

@@ -69,7 +69,14 @@ struct TrafficData: Decodable {
 
 // MARK: - Alerts
 
-struct AlertFeature: Decodable {}
+struct AlertFeature: Decodable {
+    let event: String
+    let headline: String
+    let severity: String
+    let urgency: String
+    let effective: String
+    let expires: String
+}
 
 // MARK: - Holiday
 

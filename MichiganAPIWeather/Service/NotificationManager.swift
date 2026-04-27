@@ -50,6 +50,45 @@ class NotificationManager {
         UNUserNotificationCenter.current().add(request)
     }
     
+    func refresh(
+        favorites: [Beach],
+        scoringService: BeachScoringService,
+        weatherService: WeatherKitService,
+        userLocation: CLLocation?,
+        at time: Date
+    ) async {
+        
+        guard !favorites.isEmpty else {
+            cancelAlert()
+            return
+        }
+        
+        var conditions: [Int: BeachConditions] = [:]
+        
+        await withTaskGroup(of: (Int, BeachConditions?).self) { group in
+            for beach in favorites {
+                group.addTask {
+                    let result = await weatherService.fetchConditions(latitude: beach.coordinates.latitude, longitude: beach.coordinates.longitude)
+                    return (beach.id, result)
+                }
+            }
+            
+            for await (id, condition) in group {
+                if let condition {
+                    conditions[id] = condition
+                }
+            }
+        }
+        cancelAlert()
+        scheduleTopFavoriteAlert(
+            favorites: favorites,
+            conditions: conditions,
+            scoringService: scoringService,
+            userLocation: userLocation,
+            at: time
+        )
+    }
+    
     func cancelAlert() {
           UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notificationID])
       }

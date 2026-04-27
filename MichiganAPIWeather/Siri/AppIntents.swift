@@ -25,3 +25,18 @@ struct GetBeachConditionsIntent: AppIntent {
         return .result(value: "Got it! Opening \(beach.beachName) in CoastCast.")
     }
 }
+
+struct CoastCastShortcuts: AppShortcutsProvider {
+    static var appShortcuts: [AppShortcut] {
+        AppShortcut(
+            intent: GetBeachConditionsIntent(),
+            phrases: [
+                "Get beach conditions in \(.applicationName)",
+                "Check beach in \(.applicationName)",
+                "What's the water like in \(.applicationName)"
+            ],
+            shortTitle: "Beach Conditions",
+            systemImageName: "water.waves"
+        )
+    }
+}

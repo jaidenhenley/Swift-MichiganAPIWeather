@@ -23,7 +23,3 @@ struct ListTag: View {
         .foregroundStyle(.beachViewText)
     }
 }
-
-#Preview {
-    ListTag(tagName: "Fishing", icon: "water.waves")
-}

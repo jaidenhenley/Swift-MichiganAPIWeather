@@ -47,6 +47,7 @@ class BeachViewModel {
     
     // Backend-only data
     var buoyData: BuoyData?
+    var waterQuality: WaterQuality?
     var traffic: [TrafficData] = []
     var holiday: Bool = false
     
@@ -58,6 +59,16 @@ class BeachViewModel {
     var filteredBeaches: [Beach] {
         var results = Beach.allBeaches
 
+        // Text Search
+        if !searchText.isEmpty {
+            let query = searchText.lowercased()
+            results = results.filter{ beach in
+                beach.beachName.lowercased().contains(query) ||
+                beach.shortDescription.lowercased().contains(query) ||
+                beach.keywords.contains { $0.lowercased().contains(query) }
+            }
+        }
+        
         if filterCamping {
             results = results.filter { $0.hasCamping }
         }
@@ -130,6 +141,8 @@ class BeachViewModel {
         if let response {
             beachName = response.beach ?? ""
             buoyData = response.buoyData
+            waterQuality = response.waterQuality
+            print("[WATER QUALITY]: \(String(describing: waterQuality))")
             activeAlerts = response.alerts.count
             traffic = response.traffic
             holiday = response.holiday

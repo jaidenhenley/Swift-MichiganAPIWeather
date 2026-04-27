@@ -12,12 +12,13 @@ import Foundation
 struct BeachDetailResponse: Decodable {
     let beach: String?
     let buoyData: BuoyData?
+    let waterQuality: WaterQuality?
     let alerts: [AlertFeature]
     let traffic: [TrafficData]
     let holiday: Bool
 
     enum CodingKeys: String, CodingKey {
-        case beach, alerts, traffic, holiday
+        case beach, alerts, traffic, holiday, waterQuality
         case buoyData = "buoy_data"
     }
 }
@@ -43,6 +44,16 @@ struct BuoyData: Decodable {
         case windSpeedMph = "wind_speed_mph"
         case windDirection = "wind_direction"
     }
+}
+
+// MARK: Water Quality
+
+struct WaterQuality: Decodable {
+    let lastReading: String
+    let value: Double
+    let unit: String
+    let status: String
+    let source: String
 }
 
 // MARK: - Traffic

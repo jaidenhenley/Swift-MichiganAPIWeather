@@ -59,6 +59,16 @@ class BeachViewModel {
     var filteredBeaches: [Beach] {
         var results = Beach.allBeaches
 
+        // Text Search
+        if !searchText.isEmpty {
+            let query = searchText.lowercased()
+            results = results.filter{ beach in
+                beach.beachName.lowercased().contains(query) ||
+                beach.shortDescription.lowercased().contains(query) ||
+                beach.keywords.contains { $0.lowercased().contains(query) }
+            }
+        }
+        
         if filterCamping {
             results = results.filter { $0.hasCamping }
         }

@@ -47,6 +47,7 @@ class BeachViewModel {
     
     // Backend-only data
     var buoyData: BuoyData?
+    var waterQuality: WaterQuality?
     var traffic: [TrafficData] = []
     var holiday: Bool = false
     
@@ -130,6 +131,8 @@ class BeachViewModel {
         if let response {
             beachName = response.beach ?? ""
             buoyData = response.buoyData
+            waterQuality = response.waterQuality
+            print("[WATER QUALITY]: \(String(describing: waterQuality))")
             activeAlerts = response.alerts.count
             traffic = response.traffic
             holiday = response.holiday

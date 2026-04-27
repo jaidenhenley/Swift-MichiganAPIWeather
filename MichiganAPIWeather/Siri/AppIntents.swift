@@ -10,33 +10,16 @@ import AppIntents
 struct GetBeachConditionsIntent: AppIntent {
     static var title: LocalizedStringResource = "Get Beach Conditions"
     static var description = IntentDescription("Check current conditions at a Michigan beach")
-    
-    
-    @Parameter(title: "Beach Name")
-    var beachName: String
-    
-    func perform() async throws -> some ReturnsValue<String> {
-        guard let beach = Beach.allBeaches.first(where: {
-            $0.beachName.lowercased().contains(beachName.lowercased())
-        }) else {
-            return .result(value: "I could not find a beach called \(beachName) in CoastCast.")
-        }
-        
-        return .result(value: "Got it! Opening \(beach.beachName) in CoastCast.")
-    }
-}
+    static var openAppWhenRun: Bool = true
 
-struct CoastCastShortcuts: AppShortcutsProvider {
-    static var appShortcuts: [AppShortcut] {
-        AppShortcut(
-            intent: GetBeachConditionsIntent(),
-            phrases: [
-                "Get beach conditions in \(.applicationName)",
-                "Check beach in \(.applicationName)",
-                "What's the water like in \(.applicationName)"
-            ],
-            shortTitle: "Beach Conditions",
-            systemImageName: "water.waves"
-        )
+    static var parameterSummary: some ParameterSummary {
+        Summary("Get conditions for \(\.$beach)")
+    }
+
+    @Parameter(title: "Beach")
+    var beach: BeachEntity
+
+    func perform() async throws -> some IntentResult & ProvidesDialog {
+        return .result(dialog: "Opening \(beach.name) in CoastCast.")
     }
 }

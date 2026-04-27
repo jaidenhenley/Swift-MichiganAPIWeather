@@ -2,32 +2,43 @@
 //  BeachEntity.swift
 //  MichiganAPIWeather
 //
-//  Created by George Clinkscales on 4/24/26.
+//  Created by Jaiden Henley on 4/27/26.
 //
 
+import Foundation
 import AppIntents
 
 struct BeachEntity: AppEntity {
+    static var typeDisplayRepresentation: TypeDisplayRepresentation = "Beach"
+    static var defaultQuery = BeachQuery()
+
     let id: Int
     let name: String
-    
-    static var typeDisplayRepresentation: TypeDisplayRepresentation = "Beach"
-    static var defaultQuery =  BeachQuery()
-    
+
     var displayRepresentation: DisplayRepresentation {
         DisplayRepresentation(title: "\(name)")
     }
 }
 
+struct BeachQuery: EnumerableEntityQuery {
+    func allEntities() async throws -> [BeachEntity] {
+        Beach.allBeaches.map { BeachEntity(id: $0.id, name: $0.beachName) }
+    }
 
-struct BeachQuery: EntityQuery {
     func entities(for identifiers: [Int]) async throws -> [BeachEntity] {
         Beach.allBeaches
             .filter { identifiers.contains($0.id) }
             .map { BeachEntity(id: $0.id, name: $0.beachName) }
     }
-    
+
     func suggestedEntities() async throws -> [BeachEntity] {
         Beach.allBeaches.map { BeachEntity(id: $0.id, name: $0.beachName) }
     }
+
+    func entities(matching query: String) async throws -> [BeachEntity] {
+        Beach.allBeaches
+            .filter { $0.beachName.lowercased().contains(query.lowercased()) }
+            .map { BeachEntity(id: $0.id, name: $0.beachName) }
+    }
 }
+

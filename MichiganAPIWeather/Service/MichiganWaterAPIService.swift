@@ -32,14 +32,6 @@ class MichiganWaterAPIService {
             }
 
             print("[API]   Alerts: \(response.alerts.count)")
-            print("[API]   Traffic: \(response.traffic.count) segment(s)")
-
-            for (i, t) in response.traffic.enumerated() {
-                print("[API]     [\(i)] speed=\(t.currentSpeed.map { "\($0)" } ?? "nil")"
-                    + " freeFlow=\(t.freeFlowSpeed.map { "\($0)" } ?? "nil")"
-                    + " closures=\(t.roadClosures.map { "\($0)" } ?? "nil")")
-            }
-
             print("[API]   Holiday: \(response.holiday)")
 
             return response

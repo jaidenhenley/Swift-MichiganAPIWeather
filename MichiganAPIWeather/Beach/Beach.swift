@@ -9,6 +9,7 @@ import CoreLocation
 import SwiftUI
 
 struct Beach: Identifiable {
+    
     let id: Int
     let beachName: String
     let shortDescription: String

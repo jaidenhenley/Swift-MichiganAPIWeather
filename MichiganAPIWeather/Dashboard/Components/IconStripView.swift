@@ -10,8 +10,8 @@ import SwiftUI
 struct IconStripView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(BeachViewModel.self) var viewModel
-
-
+    
+    
     var dashboardCategories: [DashboardCategory] {
         [
             DashboardCategory(icon: "figure.hiking", title: "Hiking"),
@@ -22,19 +22,27 @@ struct IconStripView: View {
     }
     var body: some View {
         @Bindable var viewModel = viewModel
-            HStack(spacing: 30) {
-                ForEach(dashboardCategories) { category in
-                    Button {
-                        viewModel.isSearching = true
-                        viewModel.searchText = category.title
-                    } label: {
-                        DashboardIcons(icon: category.icon, title: category.title)
+        HStack(spacing: 30) {
+            ForEach(dashboardCategories) { category in
+                Button {
+                    viewModel.isSearching = true
+                    if category.title == "Camping" {
+                        viewModel.filterCamping.toggle()
+                    } else {
+                        if viewModel.selectedKeywords.contains(category.title.lowercased()) {
+                            viewModel.selectedKeywords.remove(category.title.lowercased())
+                        } else {
+                            viewModel.selectedKeywords.insert(category.title.lowercased())
+                        }
                     }
-                    .buttonStyle(.plain)
-                    .foregroundStyle(.beachViewText)
-                    
+                } label: {
+                    DashboardIcons(icon: category.icon, title: category.title)
                 }
+                .buttonStyle(.plain)
+                .foregroundStyle(.beachViewText)
+                
             }
-            .padding()
+        }
+        .padding()
     }
 }

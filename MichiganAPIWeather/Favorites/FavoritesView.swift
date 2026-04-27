@@ -85,16 +85,21 @@ struct FavoritesView: View {
     }
 
     private func reschedule() {
-        let favoriteIDs = Set(favoriteBeaches.map(\.id))
+        let favorites = favoriteBeaches
+        let favoriteIDs = Set(favorites.map(\.id))
         let repo = InlineFavoritesRepository(favoriteIDs: favoriteIDs)
         let scoringService = BeachScoringService(favoritesRepo: repo)
-        NotificationManager.shared.scheduleTopFavoriteAlert(
-            favorites: favoriteBeaches,
-            conditions: [:],
-            scoringService: scoringService,
-            userLocation: locationManager.userLocation,
-            at: Date(timeIntervalSince1970: alertTimeInterval)
-        )
+        let weatherService = WeatherKitService()
+        
+        Task {
+            await NotificationManager.shared.refresh(
+                favorites: favorites,
+                scoringService: scoringService,
+                weatherService: weatherService,
+                userLocation: locationManager.userLocation,
+                at: Date(timeIntervalSince1970: alertTimeInterval)
+            )
+        }
     }
 }
 

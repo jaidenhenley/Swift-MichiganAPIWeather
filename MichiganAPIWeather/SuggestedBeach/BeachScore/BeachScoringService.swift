@@ -11,10 +11,12 @@ import Foundation
 class BeachScoringService {
     private let favoritesRepo: FavoritesRepository
     private let preferences: UserBeachPreferences
+    private let weights: ScoringWeights
 
-    init(favoritesRepo: FavoritesRepository, preferences: UserBeachPreferences = .default) {
+    init(favoritesRepo: FavoritesRepository, preferences: UserBeachPreferences = .default, weights: ScoringWeights = .default) {
         self.favoritesRepo = favoritesRepo
         self.preferences = preferences
+        self.weights = weights
     }
 
     func score(_ beach: Beach, snapshot: ConditionSnapshot, type: SuggestionType, userLocation: CLLocation?) -> SuggestedBeach {
@@ -24,11 +26,11 @@ class BeachScoringService {
         score += crowdScore()
 
         if favoritesRepo.isFavorite(beachID: beach.id) {
-            score += 15
+            score += weights.favorite
         }
 
         if let location = userLocation, isWithinTravelLimit(beach, to: location) {
-            score += 20
+            score += weights.withinTravelLimit
         }
 
         return SuggestedBeach(beach: beach, score: score, reason: primaryReason(from: snapshot), type: type)
@@ -68,69 +70,69 @@ class BeachScoringService {
         score += windScore(snapshot.windSpeedMPH)
         score += precipScore(snapshot.precipChance)
         score += uvScore(Double(snapshot.uvIndex))
-        score += Calendar.current.isDateInWeekend(snapshot.date) ? 10 : 0
+        score += Calendar.current.isDateInWeekend(snapshot.date) ? weights.weekendBonus : 0
         return min(score, 100)
     }
 
     private func temperatureScore(_ temp: Double) -> Double {
         switch temp {
-        case 80...: return 25
-        case 75..<80: return 20
-        case 70..<75: return 15
-        case 65..<70: return 8
+        case 80...: return weights.tempHot
+        case 75..<80: return weights.tempWarm
+        case 70..<75: return weights.tempMild
+        case 65..<70: return weights.tempCool
         default: return 0
         }
     }
 
     private func windScore(_ speed: Double) -> Double {
         switch speed {
-        case 0..<10: return 25
-        case 10..<15: return 18
-        case 15..<20: return 10
-        case 20..<25: return 4
+        case 0..<10: return weights.windCalm
+        case 10..<15: return weights.windLight
+        case 15..<20: return weights.windModerate
+        case 20..<25: return weights.windStrong
         default: return 0
         }
     }
 
     private func precipScore(_ chance: Double) -> Double {
         switch chance {
-        case 0..<0.20: return 25
-        case 0.20..<0.40: return 15
-        case 0.40..<0.60: return 8
-        case 0.60..<0.80: return 2
+        case 0..<0.20: return weights.precipLow
+        case 0.20..<0.40: return weights.precipMild
+        case 0.40..<0.60: return weights.precipModerate
+        case 0.60..<0.80: return weights.precipHigh
         default: return 0
         }
     }
 
     private func uvScore(_ uv: Double) -> Double {
         switch uv {
-        case 3..<8: return 15
-        case 8..<10: return 8
+        case 3..<8: return weights.uvComfortable
+        case 8..<10: return weights.uvHigh
         default: return 0
         }
     }
 
     private func primaryReason(from snapshot: ConditionSnapshot) -> String {
-        if snapshot.precipChance >= 0.6 { return "Rain is likely today — might be worth waiting it out" }
-        if snapshot.windSpeedMPH >= 20 { return "Strong winds at the shore — waves will be rough" }
-        if snapshot.tempF >= 80 { return "Hot, sunny, and absolutely made for the beach" }
-        if snapshot.tempF >= 70 { return "Warm temps and comfortable conditions all day" }
-        if snapshot.uvIndex >= 8 { return "Great beach day — just don't forget the sunscreen" }
-        if snapshot.windSpeedMPH <= 10 && snapshot.precipChance <= 0.2 { return "Calm, clear, and conditions are looking great today" }
-        return "Solid conditions — not a bad day for the beach"
+        if snapshot.precipChance >= 0.6 { return "Rain's probably moving in. Might be worth waiting it out." }
+        if snapshot.windSpeedMPH >= 20 { return "Wind is up. Waves will be rough at the shore." }
+        if snapshot.tempF >= 80 { return "Hot and sunny. Made for the beach." }
+        if snapshot.tempF >= 70 { return "Warm and comfortable all day." }
+        if snapshot.uvIndex >= 8 { return "Great day out. Just don't forget the sunscreen." }
+        if snapshot.windSpeedMPH <= 10 && snapshot.precipChance <= 0.2 { return "Calm and clear. Conditions are looking great." }
+        return "Solid conditions. Not a bad day for the beach."
     }
 
     private func tagScore(for beach: Beach) -> Double {
         guard !preferences.amenities.isEmpty else { return 0 }
         let matches = beach.keywords.filter { preferences.amenities.contains($0) }.count
-        return Double(matches) * 5
+        return Double(matches) * weights.amenityMatchPerTag
     }
 
     private func crowdScore() -> Double {
         switch preferences.crowdTolerance {
-        case .quiet: return 10
-        case .moderate: return 0
-        case .busy: return -10
+        case .quiet: return weights.crowdQuiet
+        case .moderate: return weights.crowdModerate
+        case .busy: return weights.crowdBusy
         }
     }
 

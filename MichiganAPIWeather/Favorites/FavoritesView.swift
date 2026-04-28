@@ -13,6 +13,7 @@ struct FavoritesView: View {
     @Query private var favorites: [FavoriteBeach]
     @Environment(BeachViewModel.self) private var beachViewModel
     @Environment(LocationManager.self) private var locationManager
+    @Environment(NavigationManager.self) private var navManager
     @Environment(\.dismiss) var dismiss
     
     @AppStorage("beachAlertEnabled") private var alertEnabled = false
@@ -32,34 +33,32 @@ struct FavoritesView: View {
     }
     
     var body: some View {
-        NavigationStack {
-            Group {
-                if favoriteBeaches.isEmpty {
-                    ContentUnavailableView(
-                        "No Favorites Yet",
-                        systemImage: "heart.slash",
-                        description: Text("Beaches you favorite will show up here.")
-                    )
-                } else {
-                    BeachListView(beachList: favoriteBeaches, sortByDistance: false, distanceRange: .all)
-                }
+        Group {
+            if favoriteBeaches.isEmpty {
+                ContentUnavailableView(
+                    "No Favorites Yet",
+                    systemImage: "heart.slash",
+                    description: Text("Beaches you favorite will show up here.")
+                )
+            } else {
+                BeachListView(beachList: favoriteBeaches, sortByDistance: false, distanceRange: .all)
             }
-            .navigationTitle("Favorites")
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        if alertEnabled {
-                            alertEnabled = false
-                            NotificationManager.shared.cancelAlert()
-                        } else {
-                            alertEnabled = true
-                            NotificationManager.shared.requestPermission()
-                            reschedule()
-                            showingAlertSheet = true
-                        }
-                    } label: {
-                        Image(systemName: alertEnabled ? "bell.fill" : "bell.slash")
+        }
+        .navigationTitle("Favorites")
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    if alertEnabled {
+                        alertEnabled = false
+                        NotificationManager.shared.cancelAlert()
+                    } else {
+                        alertEnabled = true
+                        NotificationManager.shared.requestPermission()
+                        reschedule()
+                        showingAlertSheet = true
                     }
+                } label: {
+                    Image(systemName: alertEnabled ? "bell.fill" : "bell.slash")
                 }
             }
         }
@@ -90,12 +89,14 @@ struct FavoritesView: View {
         let repo = InlineFavoritesRepository(favoriteIDs: favoriteIDs)
         let scoringService = BeachScoringService(favoritesRepo: repo)
         let weatherService = WeatherKitService()
+        let apiService = MichiganWaterAPIService()
         
         Task {
             await NotificationManager.shared.refresh(
                 favorites: favorites,
                 scoringService: scoringService,
                 weatherService: weatherService,
+                apiService: apiService,
                 userLocation: locationManager.userLocation,
                 at: Date(timeIntervalSince1970: alertTimeInterval)
             )

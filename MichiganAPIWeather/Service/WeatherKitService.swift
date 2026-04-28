@@ -94,20 +94,25 @@ class WeatherKitService {
     var hourlyForecast: [HourForecastSnapshot] = []
     var isLoading = false
     var error: Error?
-
+    
     private let service = WeatherService.shared
-
+    
     /// Fetch current weather + 7-day daily forecast for a coordinate.
     func fetchWeather(latitude: Double, longitude: Double) async {
         isLoading = true
         defer { isLoading = false }
-
+        
         let location = CLLocation(latitude: latitude, longitude: longitude)
-
+        
         do {
-            let weather = try await service.weather(for: location)
-            let c = weather.currentWeather
-
+            let weather = try await service.weather(
+                for: location,
+                including: .current, .daily, .hourly
+            )
+            let c = weather.0 // current
+            let daily = weather.1
+            let hourly = weather.2
+            
             current = CurrentWeatherSnapshot(
                 temperature: c.temperature.converted(to: .celsius).value,
                 condition: c.condition.description,
@@ -117,10 +122,10 @@ class WeatherKitService {
                 dewPoint: c.dewPoint.converted(to: .celsius).value,
                 pressure: c.pressure.converted(to: .hectopascals).value,
                 uvIndex: c.uvIndex.value,
-                chanceOfPrecipitation: weather.hourlyForecast.first?.precipitationChance ?? 0.0
+                chanceOfPrecipitation: hourly.first?.precipitationChance ?? 0.0
             )
-
-            dailyForecast = Array(weather.dailyForecast.prefix(10)).map { day in
+            
+            dailyForecast = Array(daily.prefix(10)).map { day in
                 DailyForecastSnapshot(
                     date: day.date,
                     dayName: day.date.formatted(.dateTime.weekday(.wide)),
@@ -134,19 +139,17 @@ class WeatherKitService {
                     windDirection: day.wind.direction,
                     uvIndex: day.uvIndex.value,
                     chanceOfPrecipitation: day.precipitationChance
-
                 )
             }
-            let now = Date()
             
-            hourlyForecast = Array(weather.hourlyForecast.filter { $0.date >= now }.prefix(12)).map { hour in
+            let now = Date()
+            hourlyForecast = Array(hourly.filter { $0.date >= now }.prefix(12)).map { hour in
                 HourForecastSnapshot(
                     time: hour.date,
                     icon: hour.symbolName,
                     temp: hour.temperature,
                     uvIndex: hour.uvIndex.value,
                     chanceOfPrecipitation: hour.precipitationChance
-
                 )
             }
         } catch {
@@ -154,30 +157,17 @@ class WeatherKitService {
             print("WeatherKit fetch error: \(error)")
         }
     }
-
-    /// Raw WeatherKit CurrentWeather for CoreML features.
-    func mlFeatures(latitude: Double, longitude: Double) async -> [String: Double]? {
-        let location = CLLocation(latitude: latitude, longitude: longitude)
-        guard let weather = try? await service.weather(for: location) else { return nil }
-        let w = weather.currentWeather
-        return [
-            "temperature": w.temperature.converted(to: .celsius).value,
-            "humidity": w.humidity,
-            "wind_speed": w.wind.speed.converted(to: .kilometersPerHour).value,
-            "uv_index": Double(w.uvIndex.value),
-            "visibility": w.visibility.converted(to: .kilometers).value,
-            "dew_point": w.dewPoint.converted(to: .celsius).value,
-            "pressure": w.pressure.converted(to: .hectopascals).value,
-            "condition_code": Double(w.condition.rawValue.hashValue)
-        ]
-    }
     
     func fetchConditions(latitude: Double, longitude: Double) async -> BeachConditions? {
         let location = CLLocation(latitude: latitude, longitude: longitude)
-        guard let weather = try? await service.weather(for: location) else { return nil }
+        guard let weather = try? await service.weather(
+            for: location,
+            including: .current, .daily
+        ) else { return nil }
         
-        let c = weather.currentWeather
-        let today = weather.dailyForecast.first
+        let c = weather.0
+        let daily = weather.1
+        let today = daily.first
         
         let current = ConditionSnapshot(
             tempF: c.temperature.converted(to: .fahrenheit).value,
@@ -188,7 +178,7 @@ class WeatherKitService {
         )
         
         let calendar = Calendar.current
-        let weekendDay = weather.dailyForecast.first {
+        let weekendDay = daily.first {
             calendar.isDateInWeekend($0.date) && $0.date > .now
         }
         

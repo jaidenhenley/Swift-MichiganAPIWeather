@@ -5,6 +5,7 @@
 //  Created by Jaiden Henley on 4/9/26.
 //
 
+
 import CoreLocation
 import SwiftData
 import SwiftUI
@@ -12,60 +13,55 @@ import SwiftUI
 struct BeachListView: View {
     @Environment(BeachViewModel.self) var viewModel
     @Environment(LocationManager.self) var locationManager
+    @Environment(NavigationManager.self) var navManager
     @Environment(\.modelContext) private var context
 
     @Query private var favorites: [FavoriteBeach]
-    
+
     let beachList: [Beach]
     let sortByDistance: Bool
     let distanceRange: DistanceRange
-    
+
     private var displayedBeaches: [Beach] {
         guard let userLocation = locationManager.userLocation else {
             return beachList
         }
-        
+
         guard let bounds = distanceRange.bounds else {
             return beachList
         }
-        
+
         return beachList.filter { beach in
             let distanceMeters = userLocation.distance(from: beach.clLocation)
             let distanceMiles = distanceMeters / 1609.34
             return distanceMiles >= bounds.min && distanceMiles < bounds.max
         }
-        
     }
-    
 
-    
     var body: some View {
         List(displayedBeaches) { beach in
-            ZStack {
-                NavigationLink(value: AppRoute.beachDetail(beachID: beach.id)) {
-                    EmptyView()
-                }
-                .opacity(0)
-                
-                BeachRow(beach: beach, isFavorited: favorites.contains(where: { $0.beachId == beach.id}))
+            Button {
+                navManager.openBeach(id: beach.id)
+            } label: {
+                BeachRow(beach: beach, isFavorited: favorites.contains(where: { $0.beachId == beach.id }))
             }
             .buttonStyle(.plain)
-            .swipeActions {
-                Button {
-                    if let existing = favorites.first(where: { $0.beachId == beach.id }) {
-                        context.delete(existing)
-                    } else {
-                        context.insert(FavoriteBeach(beachId: beach.id))
+                .swipeActions {
+                    Button {
+                        if let existing = favorites.first(where: { $0.beachId == beach.id }) {
+                            context.delete(existing)
+                        } else {
+                            context.insert(FavoriteBeach(beachId: beach.id))
+                        }
+                    } label: {
+                        Label("Favorite", systemImage: "heart")
                     }
-                } label: {
-                    Label("Favorite", systemImage: "heart")
+                    .tint(.orange)
                 }
-                .tint(.orange)
-            }
-            .listRowSeparator(.hidden)
-            .listRowBackground(Color.clear)
-            .listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
-            .shadow(radius: 8)
+                .listRowSeparator(.hidden)
+                .listRowBackground(Color.clear)
+                .listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
+                .shadow(radius: 8)
         }
         .listStyle(.plain)
         .scrollContentBackground(.hidden)

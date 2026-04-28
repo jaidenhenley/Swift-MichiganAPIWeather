@@ -12,12 +12,15 @@ import SwiftUI
 struct MichiganAPIWeatherApp: App {
     @State private var beachViewModel = BeachViewModel()
     @State private var locationManager = LocationManager()
+    @State private var navManager = NavigationManager()
+
 
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environment(beachViewModel)
                 .environment(locationManager)
+                .environment(navManager)
         }
         .modelContainer(for: [FavoriteBeach.self, UserBeachPreferences.self])
     }

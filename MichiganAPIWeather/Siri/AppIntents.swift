@@ -6,6 +6,7 @@
 //
 
 import AppIntents
+import CoreLocation
 
 struct GetBeachConditionsIntent: AppIntent {
     static var title: LocalizedStringResource = "Get Beach Conditions"
@@ -20,6 +21,9 @@ struct GetBeachConditionsIntent: AppIntent {
     var beach: BeachEntity
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
+        await MainActor.run {
+            NavigationManager.shared.openBeach(id: beach.id)
+        }
         return .result(dialog: "Opening \(beach.name) in CoastCast.")
     }
 }

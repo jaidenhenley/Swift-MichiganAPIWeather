@@ -12,15 +12,22 @@ struct ContentView: View {
     @Environment(BeachViewModel.self) var viewModel
     @Environment(LocationManager.self) var locationManager
     
-    @State private var navManager = NavigationManager()
+    @State private var manager = NavigationManager()
     
     var body: some View {
         
-        TabView(selection: $navManager.selectedTab) {
-            NavigationStack(path: $navManager.path) {
+        TabView(selection: $manager.selectedTab) {
+            NavigationStack(path: $manager.path) {
                 DashboardView()
                     .navigationDestination(for: AppRoute.self) { route in
-                        destinationView(for: route)
+                        switch route {
+                        case .beachDetail(let beachID):
+                            if let beach = Beach.allBeaches.first(where: {  $0.id == beachID }) {
+                                BeachView(beach: beach, beachID: beachID)
+                            }
+                        case .weatherDetail:
+                            WeatherDetailView()
+                        }
                     }
             }
             .tabItem {
@@ -40,19 +47,6 @@ struct ContentView: View {
                 }
                 .tag(AppTab.favorites)
         }
-        .environment(navManager)
+        .environment(manager)
     }
- 
-    @ViewBuilder
-    private func destinationView(for route: AppRoute) -> some View {
-        switch route {
-        case .beachDetail(let beachID):
-            if let beach = Beach.allBeaches.first(where: { $0.id == beachID }) {
-                BeachView(beach: beach, beachID: beachID)
-            }
-        case .weatherDetail:
-            WeatherDetailView()
-        }
-    }
-    
 }

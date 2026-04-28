@@ -8,52 +8,49 @@
 import CoreLocation
 import SwiftUI
 
-struct BeachEntry: Identifiable, Hashable {
-    let id: Int
-    let name: String
-    let region: String
-    let iconName: String
-}
-
-// ContentView.swift
-
 struct ContentView: View {
     @Environment(BeachViewModel.self) var viewModel
     @Environment(LocationManager.self) var locationManager
-
-
+    
+    @State private var navManager = NavigationManager()
+    
     var body: some View {
         
-        TabView {
-            DashboardView()
-                .tabItem {
-                    Label("Plan", systemImage: "water.waves")
-                }
-
+        TabView(selection: $navManager.selectedTab) {
+            NavigationStack(path: $navManager.path) {
+                DashboardView()
+                    .navigationDestination(for: AppRoute.self) { route in
+                        destinationView(for: route)
+                    }
+            }
+            .tabItem {
+                Label("Plan", systemImage: "water.waves")
+            }
+            .tag(AppTab.plan)
+            
             MapView()
                 .tabItem {
                     Label("Map", systemImage: "map.fill")
                 }
-
+                .tag(AppTab.map)
+            
             FavoritesView()
                 .tabItem {
                     Label("Favorites", systemImage: "heart.fill")
                 }
+                .tag(AppTab.favorites)
         }
-        .onAppear {
-            sampleData()
+        .environment(navManager)
+    }
+ 
+    @ViewBuilder
+    private func destinationView(for route: AppRoute) -> some View {
+        switch route {
+        case .beachDetail(let beachID):
+            if let beach = Beach.allBeaches.first(where: { $0.id == beachID }) {
+                BeachView(beach: beach, beachID: beachID)
+            }
         }
     }
     
-    func sampleData() {
-        let json = Beach.allBeaches.map { beach in
-            [
-                "id": beach.id,
-                "name": beach.beachName,
-                "lat": beach.coordinates.latitude,
-                "lon": beach.coordinates.longitude
-            ]
-        }
-        print(String(data: (try? JSONSerialization.data(withJSONObject: json, options: [.prettyPrinted])) ?? Data(), encoding: .utf8) ?? "")
-    }
 }

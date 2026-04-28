@@ -42,9 +42,7 @@ struct BeachListView: View {
     var body: some View {
         List(displayedBeaches) { beach in
             ZStack {
-                NavigationLink {
-                    BeachView(beach: beach, beachID: beach.id)
-                } label: {
+                NavigationLink(value: AppRoute.beachDetail(beachID: beach.id)) {
                     EmptyView()
                 }
                 .opacity(0)

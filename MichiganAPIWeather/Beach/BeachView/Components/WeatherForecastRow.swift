@@ -24,10 +24,7 @@ struct WeatherForecastRow: View {
                 .padding(.top)
             }
             .scrollIndicators(.hidden)
-                NavigationLink {
-                    WeatherDetailView()
-                        .environment(viewModel)
-                } label: {
+            NavigationLink(value: AppRoute.weatherDetail){
                     HStack {
                         Text("SEE MORE")
                             .font(.caption)

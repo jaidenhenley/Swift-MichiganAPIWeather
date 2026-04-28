@@ -50,6 +50,8 @@ struct ContentView: View {
             if let beach = Beach.allBeaches.first(where: { $0.id == beachID }) {
                 BeachView(beach: beach, beachID: beachID)
             }
+        case .weatherDetail:
+            WeatherDetailView()
         }
     }
     

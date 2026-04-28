@@ -9,6 +9,7 @@ import Foundation
 
 enum AppRoute: Hashable {
     case beachDetail(beachID: Int)
+    case weatherDetail
 }
 
 enum AppTab {

@@ -5,6 +5,7 @@
 //  Created by Jaiden Henley on 3/19/26.
 //
 
+import AppIntents
 import SwiftData
 import SwiftUI
 
@@ -12,12 +13,18 @@ import SwiftUI
 struct MichiganAPIWeatherApp: App {
     @State private var beachViewModel = BeachViewModel()
     @State private var locationManager = LocationManager()
+    @State private var navManager = NavigationManager()
+
 
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environment(beachViewModel)
                 .environment(locationManager)
+                .environment(navManager)
+                .onAppear {
+                    CoastCastShortcuts.updateAppShortcutParameters()
+                }
         }
         .modelContainer(for: [FavoriteBeach.self, UserBeachPreferences.self])
     }

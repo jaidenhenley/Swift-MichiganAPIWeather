@@ -12,91 +12,89 @@ struct BeachView: View {
     @State private var selectedImageIndex = 0
     let beach: Beach
     let beachID: Int
-
+    
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(spacing: 0) {
-                    TabView(selection: $selectedImageIndex) {
-                        ForEach(beach.images.indices, id: \.self) { index in
-                            Image(beach.images[index])
-                                .resizable()
-                                .scaledToFill()
-                                .clipped()
-                                .tag(index)
-                        }
+        ScrollView {
+            VStack(spacing: 0) {
+                TabView(selection: $selectedImageIndex) {
+                    ForEach(beach.images.indices, id: \.self) { index in
+                        Image(beach.images[index])
+                            .resizable()
+                            .scaledToFill()
+                            .clipped()
+                            .tag(index)
                     }
-                    .frame(height: 200)
-                    .tabViewStyle(.page(indexDisplayMode: .always))
+                }
+                .frame(height: 200)
+                .tabViewStyle(.page(indexDisplayMode: .always))
+                
+                VStack(alignment: .leading, spacing: 8) {
                     
-                    VStack(alignment: .leading, spacing: 8) {
-                        
-                        Text(beach.beachName)
-                            .font(.title3)
-                            .bold()
-                            .foregroundStyle(.blueGreen)
-                        HStack(spacing: 8) {
-                            ForEach(beach.displayKeywords, id: \.label) { keyword in
-                                HStack(spacing: 4) {
-                                    if let icon = keyword.icon {
-                                        Image(systemName: icon)
-                                            .font(.caption)
-                                            .foregroundStyle(.blueGreen)
-                                    }
-                                    Text(keyword.label)
+                    Text(beach.beachName)
+                        .font(.title3)
+                        .bold()
+                        .foregroundStyle(.blueGreen)
+                    HStack(spacing: 8) {
+                        ForEach(beach.displayKeywords, id: \.label) { keyword in
+                            HStack(spacing: 4) {
+                                if let icon = keyword.icon {
+                                    Image(systemName: icon)
                                         .font(.caption)
                                         .foregroundStyle(.blueGreen)
                                 }
-                                .padding(.vertical, 4)
-                                .background(Color(.systemGray6).opacity(0.6))
-                                .clipShape(Capsule())
+                                Text(keyword.label)
+                                    .font(.caption)
+                                    .foregroundStyle(.blueGreen)
                             }
+                            .padding(.vertical, 4)
+                            .background(Color(.systemGray6).opacity(0.6))
+                            .clipShape(Capsule())
                         }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, 28)
-                    .padding(.top)
                     
-                    BeachHeader(image: beach.images[0])
-                        .padding()
-                        .padding(.top, 8)
-                    WeatherForecastRow()
-                        .padding(.horizontal)
-                    Divider()
-                        .foregroundStyle(.beachViewText)
-                        .frame(height: 3)
-                        .padding(.vertical)
-                    
-                    Text("\(Image(systemName: "person.3.fill")) CROWD METER")
-                        .foregroundStyle(.beachViewText)
-                        .font(.footnote)
-                        .bold()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding()
-                    
-                    CrowdMeterView(forecastCrowd: viewModel.forecastCrowd, forecastDays: viewModel.forecastDays)
-                    BeachSummaryView(beachName: viewModel.beachName.isEmpty ? "" : viewModel.beachName, beachdescription: beach.description)
-                        .padding()
-                    ContactWebsitePhone()
-                        .padding([.bottom, .horizontal])
-                    
-                    Spacer()
-                        .frame(height: 100)
                 }
-                .ignoresSafeArea(edges: .top)
-                .background(
-                    Image(.beachViewBackground)
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                )
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 28)
+                .padding(.top)
+                
+                BeachHeader(image: beach.images[0])
+                    .padding()
+                    .padding(.top, 8)
+                WeatherForecastRow()
+                    .padding(.horizontal)
+                Divider()
+                    .foregroundStyle(.beachViewText)
+                    .frame(height: 3)
+                    .padding(.vertical)
+                
+                Text("\(Image(systemName: "person.3.fill")) CROWD METER")
+                    .foregroundStyle(.beachViewText)
+                    .font(.footnote)
+                    .bold()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding()
+                
+                CrowdMeterView(forecastCrowd: viewModel.forecastCrowd, forecastDays: viewModel.forecastDays)
+                BeachSummaryView(beachName: viewModel.beachName.isEmpty ? "" : viewModel.beachName, beachdescription: beach.description)
+                    .padding()
+                ContactWebsitePhone()
+                    .padding([.bottom, .horizontal])
+                
+                Spacer()
+                    .frame(height: 100)
             }
-            .ignoresSafeArea()
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    FavoriteButtonView(beach: beach, isToolbarButton: true)
-                }
+            .ignoresSafeArea(edges: .top)
+            .background(
+                Image(.beachViewBackground)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+            )
+        }
+        .ignoresSafeArea()
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                FavoriteButtonView(beach: beach, isToolbarButton: true)
             }
         }
         .task {

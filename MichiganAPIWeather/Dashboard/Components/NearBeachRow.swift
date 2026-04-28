@@ -23,9 +23,7 @@ struct NearBeachRow: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            NavigationLink {
-                BeachView(beach: beach, beachID: beach.id)
-            } label: {
+            NavigationLink(value: AppRoute.beachDetail(beachID: beach.id)) {
                 ZStack(alignment: .topTrailing) {
                     if !images.isEmpty {
                         Image(images[currentImageIndex])

@@ -32,9 +32,7 @@ struct MightLikeCard: View {
     let timer = Timer.publish(every: 180.0, on: .main, in: .common).autoconnect()
 
     var body: some View {
-        NavigationLink {
-            BeachView(beach: suggestion.beach, beachID: suggestion.beach.id)
-        } label: {
+        NavigationLink(value: AppRoute.beachDetail(beachID: suggestion.beach.id)) {
             VStack(spacing: 0) {
                 ZStack(alignment: .topTrailing) {
                     if !suggestion.beach.images.isEmpty {

@@ -22,7 +22,7 @@ struct FavoritesView: View {
     private var alertTime: Binding<Date> {
         Binding(
             get: { Date( timeIntervalSince1970: alertTimeInterval) },
-                set: { alertTimeInterval = $0.timeIntervalSince1970 }
+            set: { alertTimeInterval = $0.timeIntervalSince1970 }
         )
     }
     
@@ -30,7 +30,7 @@ struct FavoritesView: View {
         let favoriteIDs = Set(favorites.map(\.beachId))
         return Beach.allBeaches.filter { favoriteIDs.contains($0.id) }
     }
-
+    
     var body: some View {
         NavigationStack {
             Group {
@@ -62,28 +62,28 @@ struct FavoritesView: View {
                     }
                 }
             }
-            .sheet(isPresented: $showingAlertSheet) {
-                VStack(spacing: 24) {
-                    Text("Daily Beach Alert")
-                        .font(.headline)
-                    Text("We'll notify you about your top-scored favorite beach.")
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                        .multilineTextAlignment(.center)
-                    DatePicker("Alert time", selection: alertTime, displayedComponents: .hourAndMinute)
-                        .labelsHidden()
-                        .onChange(of: alertTimeInterval) { _, _ in reschedule() }
-                    Button("Done") {
-                        showingAlertSheet = false
-                    }
-                        .buttonStyle(.borderedProminent)
+        }
+        .sheet(isPresented: $showingAlertSheet) {
+            VStack(spacing: 24) {
+                Text("Daily Beach Alert")
+                    .font(.headline)
+                Text("We'll notify you about your top-scored favorite beach.")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+                DatePicker("Alert time", selection: alertTime, displayedComponents: .hourAndMinute)
+                    .labelsHidden()
+                    .onChange(of: alertTimeInterval) { _, _ in reschedule() }
+                Button("Done") {
+                    showingAlertSheet = false
                 }
-                .padding()
-                .presentationDetents([.height(260)])
+                .buttonStyle(.borderedProminent)
             }
+            .padding()
+            .presentationDetents([.height(260)])
         }
     }
-
+    
     private func reschedule() {
         let favorites = favoriteBeaches
         let favoriteIDs = Set(favorites.map(\.id))
@@ -105,11 +105,11 @@ struct FavoritesView: View {
 
 private struct InlineFavoritesRepository: FavoritesRepository {
     let favoriteIDs: Set<Int>
-
+    
     func isFavorite(beachID: Int) -> Bool {
         favoriteIDs.contains(beachID)
     }
-
+    
     func allFavorites() -> [Beach] {
         Beach.allBeaches.filter { favoriteIDs.contains($0.id) }
     }

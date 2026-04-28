@@ -30,9 +30,11 @@ struct DashboardContentView: View {
             } else {
                 LinearGradient(
                     colors: [
-                        Color(.systemTeal).opacity(0.14),
-                        Color(.systemBackground),
-                        Color(.systemBlue).opacity(0.08)
+                        Color(red: 0.78, green: 0.85, blue: 0.90),
+                        Color(red: 0.90, green: 0.93, blue: 0.96),
+                        .white,
+                        Color(red: 0.90, green: 0.93, blue: 0.96),
+                        Color(red: 0.78, green: 0.85, blue: 0.90)
                     ],
                     startPoint: .top,
                     endPoint: .bottom

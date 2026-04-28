@@ -16,6 +16,7 @@ class NavigationManager {
     var path: [AppRoute] = []
     
     func openBeach(id: Int) {
+        path = [.beachDetail(beachID: 0)]
         selectedTab = .plan
         path = [.beachDetail(beachID: id)]
     }

@@ -116,6 +116,26 @@ class BeachViewModel {
         isLoading = true
         errorMessage = nil
 
+        beachName = ""
+        condition = ""
+        temperatureDisplay = ""
+        windMPH = ""
+        windDirection = ""
+        humidity = ""
+        visibility = ""
+        dewpoint = nil
+        pressure = nil
+        uvIndex = 0
+        chanceOfPrecipitation = 0
+        forecastDays = []
+        hourForecast = []
+        alerts = []
+        buoyData = nil
+        waterQuality = nil
+        holiday = false
+        todayCrowd = nil
+        forecastCrowd = []
+
         let coords = beach.coordinates
 
         // Fetch backend conditions and WeatherKit in parallel

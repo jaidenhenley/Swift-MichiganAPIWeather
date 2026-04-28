@@ -16,7 +16,7 @@ struct ContentView: View {
     
     var body: some View {
         TabView(selection: $navManager.selectedTab) {
-            NavigationStack(path: $navManager.path) {
+            NavigationStack(path: $navManager.planPath) {
                 DashboardView()
                     .navigationDestination(for: AppRoute.self) { route in
                         switch route {
@@ -36,7 +36,7 @@ struct ContentView: View {
                 .tabItem { Label("Map", systemImage: "map.fill") }
                 .tag(AppTab.map)
             
-            NavigationStack(path: $navManager.path) {
+            NavigationStack(path: $navManager.favoritesPath) {
                 FavoritesView()
                     .navigationDestination(for: AppRoute.self) { route in
                         switch route {

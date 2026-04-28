@@ -21,6 +21,8 @@ struct BeachListView: View {
     let beachList: [Beach]
     let sortByDistance: Bool
     let distanceRange: DistanceRange
+    
+    let isFavorites: Bool
 
     private var displayedBeaches: [Beach] {
         guard let userLocation = locationManager.userLocation else {
@@ -41,7 +43,11 @@ struct BeachListView: View {
     var body: some View {
         List(displayedBeaches) { beach in
             Button {
-                navManager.openBeach(id: beach.id)
+                if isFavorites {
+                    navManager.openBeach(id: beach.id, from: .favorites)
+                } else {
+                    navManager.openBeach(id: beach.id)
+                }
             } label: {
                 BeachRow(beach: beach, isFavorited: favorites.contains(where: { $0.beachId == beach.id }))
             }

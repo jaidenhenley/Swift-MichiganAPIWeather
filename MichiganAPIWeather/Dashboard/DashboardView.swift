@@ -110,7 +110,7 @@ struct DashboardView: View {
                 .padding()
                 
                 if viewModel.isSearching {
-                    BeachListView(beachList: viewModel.filteredBeaches, sortByDistance: distanceRange != .all, distanceRange: distanceRange)
+                    BeachListView(beachList: viewModel.filteredBeaches, sortByDistance: distanceRange != .all, distanceRange: distanceRange, isFavorites: false)
                         .transition(.opacity)
                 }
                 

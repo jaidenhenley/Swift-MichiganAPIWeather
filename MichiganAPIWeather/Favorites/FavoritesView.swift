@@ -32,32 +32,34 @@ struct FavoritesView: View {
     }
     
     var body: some View {
-        Group {
-            if favoriteBeaches.isEmpty {
-                ContentUnavailableView(
-                    "No Favorites Yet",
-                    systemImage: "heart.slash",
-                    description: Text("Beaches you favorite will show up here.")
-                )
-            } else {
-                BeachListView(beachList: favoriteBeaches, sortByDistance: false, distanceRange: .all)
+        NavigationStack {
+            Group {
+                if favoriteBeaches.isEmpty {
+                    ContentUnavailableView(
+                        "No Favorites Yet",
+                        systemImage: "heart.slash",
+                        description: Text("Beaches you favorite will show up here.")
+                    )
+                } else {
+                    BeachListView(beachList: favoriteBeaches, sortByDistance: false, distanceRange: .all)
+                }
             }
-        }
-        .navigationTitle("Favorites")
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    if alertEnabled {
-                        alertEnabled = false
-                        NotificationManager.shared.cancelAlert()
-                    } else {
-                        alertEnabled = true
-                        NotificationManager.shared.requestPermission()
-                        reschedule()
-                        showingAlertSheet = true
+            .navigationTitle("Favorites")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        if alertEnabled {
+                            alertEnabled = false
+                            NotificationManager.shared.cancelAlert()
+                        } else {
+                            alertEnabled = true
+                            NotificationManager.shared.requestPermission()
+                            reschedule()
+                            showingAlertSheet = true
+                        }
+                    } label: {
+                        Image(systemName: alertEnabled ? "bell.fill" : "bell.slash")
                     }
-                } label: {
-                    Image(systemName: alertEnabled ? "bell.fill" : "bell.slash")
                 }
             }
         }

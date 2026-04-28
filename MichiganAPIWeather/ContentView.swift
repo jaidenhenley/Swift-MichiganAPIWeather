@@ -16,7 +16,7 @@ struct ContentView: View {
     
     var body: some View {
         TabView(selection: $navManager.selectedTab) {
-            NavigationStack(path: $navManager.path) {
+            NavigationStack(path: $navManager.planPath) {
                 DashboardView()
                     .navigationDestination(for: AppRoute.self) { route in
                         switch route {
@@ -36,9 +36,21 @@ struct ContentView: View {
                 .tabItem { Label("Map", systemImage: "map.fill") }
                 .tag(AppTab.map)
             
-            FavoritesView()
-                .tabItem { Label("Favorites", systemImage: "heart.fill") }
-                .tag(AppTab.favorites)
+            NavigationStack(path: $navManager.favoritesPath) {
+                FavoritesView()
+                    .navigationDestination(for: AppRoute.self) { route in
+                        switch route {
+                        case .beachDetail(let beachID):
+                            if let beach = Beach.allBeaches.first(where: { $0.id == beachID }) {
+                                BeachView(beach: beach, beachID: beachID)
+                            }
+                        case .weatherDetail:
+                            WeatherDetailView()
+                        }
+                    }
+            }
+            .tabItem { Label("Favorites", systemImage: "heart.fill") }
+            .tag(AppTab.favorites)
         }
         .environment(navManager)
     }

@@ -11,6 +11,7 @@ import SwiftUI
 
 @main
 struct MichiganAPIWeatherApp: App {
+    @Environment(\.scenePhase) var scenePhase
     @State private var beachViewModel = BeachViewModel()
     @State private var locationManager = LocationManager()
     @State private var navManager = NavigationManager()
@@ -27,6 +28,11 @@ struct MichiganAPIWeatherApp: App {
                 }
         }
         .modelContainer(for: [FavoriteBeach.self, UserBeachPreferences.self])
+        .onChange(of: scenePhase) { _, newPhase in
+            if newPhase == .background {
+                BackgroundTaskManager.scheduleNext()
+            }
+        }
     }
     
     init() {
@@ -35,6 +41,7 @@ struct MichiganAPIWeatherApp: App {
             diskCapacity: 50_000_000, // 50 MB
             diskPath: "coastcast_cache"
         )
+        BackgroundTaskManager.registerTask()
     }
     
     

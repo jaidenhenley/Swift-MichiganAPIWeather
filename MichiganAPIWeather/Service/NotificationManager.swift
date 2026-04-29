@@ -19,9 +19,9 @@ extension UNUserNotificationCenter: NotificationScheduling {}
 class NotificationManager {
     static let shared = NotificationManager()
     private let center: NotificationScheduling
-    private let notificationID = "top-favorite-beach-alert"
-    private let thresholdID = "beach-score-threshold-alert"
-    private let severeAlertID = "beach-severe-weather-alert"
+    let notificationID = "top-favorite-beach-alert"
+    let thresholdID = "beach-score-threshold-alert"
+    let severeAlertID = "beach-severe-weather-alert"
     
     private var lastThresholdFiredDate: Date? {
         get { UserDefaults.standard.object(forKey: "lastThresholdFired") as? Date }

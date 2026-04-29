@@ -61,7 +61,42 @@ struct GetBeachConditionsIntent: AppIntent {
             userLocation: nil
         )
 
-        let dialog = "\(matchedBeach.beachName) \(result.siriResponse). Temperature is \(conditions.current.tempF.rounded())"
+        let dialog = "\(matchedBeach.beachName) \(result.siriResponse). Temperature is \(Int(conditions.current.tempF.rounded()))°"
         return .result(dialog: IntentDialog(stringLiteral: dialog))
+    }
+}
+
+struct FindClosestBeachIntent: AppIntent {
+    static var title: LocalizedStringResource = "Find Closest Beach"
+    static var description = IntentDescription("Finds the Michigan beach closest to your current location.")
+
+    @MainActor
+    func perform() async throws -> some ReturnsValue<String> & ProvidesDialog {
+        let manager = CLLocationManager()
+        
+        guard manager.authorizationStatus == .authorizedWhenInUse ||
+              manager.authorizationStatus == .authorizedAlways else {
+            return .result(
+                value: "Location unavailable",
+                dialog: "CoastCast needs location access to find the closest beach. Enable it in Settings."
+            )
+        }
+
+        guard let location = manager.location else {
+            return .result(
+                value: "Location unavailable",
+                dialog: "Couldn't get your current location. Try again in a moment."
+            )
+        }
+
+        let closest = Beach.allBeaches.min(by: {
+            location.distance(from: CLLocation(latitude: $0.coordinates.latitude, longitude: $0.coordinates.longitude)) <
+            location.distance(from: CLLocation(latitude: $1.coordinates.latitude, longitude: $1.coordinates.longitude))
+        })!
+
+        return .result(
+            value: closest.beachName,
+            dialog: "The closest beach to you is \(closest.beachName)."
+        )
     }
 }

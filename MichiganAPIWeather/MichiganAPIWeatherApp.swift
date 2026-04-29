@@ -42,6 +42,7 @@ struct MichiganAPIWeatherApp: App {
             diskPath: "coastcast_cache"
         )
         BackgroundTaskManager.registerTask()
+        BackgroundTaskManager.scheduleNext()
     }
     
     

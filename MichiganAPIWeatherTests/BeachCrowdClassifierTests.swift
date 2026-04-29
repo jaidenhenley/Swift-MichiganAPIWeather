@@ -7,24 +7,23 @@
 
 // Temporarily disabled — CoreML model deallocation causes malloc crash
 // that kills the entire test process, including unrelated tests.
-#if false
 import Foundation
 import Testing
 @testable import MichiganAPIWeather
 
 struct CrowdPredictorTests {
-
+    
     // Single shared instance to avoid repeated CoreML model load/dealloc
-    private var predictor: CrowdPredictor { CrowdPredictor() }
-
+    private var predictor = CrowdPredictor.shared
+    
     private func date(from str: String) -> Date {
         let f = DateFormatter()
         f.dateFormat = "yyyy-MM-dd"
         return f.date(from: str) ?? Date()
     }
-
+    
     // MARK: - Test cases (expected: 0 = Low, 1 = Medium, 2 = High)
-
+    
     static let testCases: [(String, String, Double, Double, Double, Double, Double?, Int)] = [
         // Low (expected: 0)
         ("2001-04-26 Low", "2001-04-26", 47.6, 41.5, 4.6,  37.5, 41.2, 0),
@@ -87,7 +86,7 @@ struct CrowdPredictorTests {
         ("1988-10-01 Low", "1988-10-01", 65.7, 59.1, 26.5, 23.9, 57.4, 0),
         ("2003-05-21 Low", "2003-05-21", 43.8, 39.3, 0.0,  19.3, 48.8, 0),
         ("1990-10-05 Low", "1990-10-05", 63.1, 54.0, 0.3,  30.3, 57.4, 0),
-
+        
         // Medium (expected: 1)
         ("1979-06-25 Medium", "1979-06-25", 59.9, 52.2, 0.0,  15.1, 58.0, 1),
         ("1987-09-27 Medium", "1987-09-27", 68.7, 62.2, 0.0,  24.1, 66.1, 1),
@@ -119,7 +118,7 @@ struct CrowdPredictorTests {
         ("2002-07-29 Medium", "2002-07-29", 75.3, 70.4, 9.2,  25.3, 66.6, 1),
         ("1981-08-04 Medium", "1981-08-04", 72.9, 69.4, 11.2, 20.2, 69.5, 1),
         ("1993-07-29 Medium", "1993-07-29", 69.0, 63.5, 0.5,  30.8, 66.6, 1),
-
+        
         // High (expected: 2)
         ("1983-07-09 High", "1983-07-09", 70.2, 66.1, 0.0,  20.9, 66.6, 2),
         ("2002-08-04 High", "2002-08-04", 74.9, 72.2, 12.5, 22.0, 69.5, 2),
@@ -181,8 +180,14 @@ struct CrowdPredictorTests {
         ("1997-07-07 High", "1997-07-07", 62.5, 56.7, 0.0, 15.1, 66.6, 2),
         ("2021-07-18 High", "2021-07-18", 73.8, 58.7, 0.0, 9.9,  69.4, 2),
         ("2018-08-19 High", "2018-08-19", 75.1, 62.3, 1.2, 15.3, 75.5, 2),
+        
+        // Holidays
+        
+        ("2024-07-04 Holiday", "2024-07-04", 82.0, 68.0, 0.0, 10.0, 70.0, 2),
+        ("2024-09-02 Holiday", "2024-09-02", 78.0, 65.0, 0.0, 12.0, 68.0, 2),
+        ("2024-05-27 Holiday", "2024-05-27", 72.0, 58.0, 0.0, 11.0, 55.0, 2)
     ]
-
+    
     @Test("Crowd model predictions match expected levels", arguments: Self.testCases)
     func crowdPrediction(
         name: String, dateStr: String,
@@ -197,5 +202,21 @@ struct CrowdPredictorTests {
         )
         #expect(result.rawValue == expected, "\(name): got \(result.rawValue), expected \(expected)")
     }
+    
+    @Test("Holiday cases predict high")
+    func holidayPredictions() {
+        let holidays: [(String, Double, Double, Int)] = [
+            ("2024-07-04", 82.0, 70.0, 2),
+            ("2024-09-02", 78.0, 68.0, 2),
+            ("2024-05-27", 72.0, 55.0, 2),
+        ]
+        for (dateStr, tMax, water, expected) in holidays {
+            let result = predictor.predict(
+                for: date(from: dateStr), tempMax: tMax, tempMin: 60,
+                precipitation: 0.0, windMax: 10,
+                waterTemp: water, isHoliday: true
+            )
+            #expect(result.rawValue == expected, "\(dateStr) holiday: got \(result.rawValue), expected \(expected)")
+        }
+    }
 }
-#endif

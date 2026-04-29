@@ -15,6 +15,16 @@ class NotificationManager {
     private let thresholdID = "beach-score-threshold-alert"
     private let severeAlertID = "beach-severe-weather-alert"
     
+    private var lastThresholdFiredDate: Date? {
+        get { UserDefaults.standard.object(forKey: "lastThresholdFired") as? Date }
+        set { UserDefaults.standard.set(newValue, forKey: "lastThresholdFired") }
+    }
+    
+    private var lastSevereFiredDate: Date? {
+        get { UserDefaults.standard.object(forKey: "lastSevereFired") as? Date }
+        set { UserDefaults.standard.object(forKey: "lastSevereFired") }
+    }
+    
     func requestPermission() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in }
     }
@@ -57,6 +67,8 @@ class NotificationManager {
         scoringService: BeachScoringService,
         userLocation: CLLocation?
     ) {
+        if let last = lastThresholdFiredDate, Calendar.current.isDateInToday(last) { return }
+        
         let scored = favorites.map {
             scoringService.score(
                 $0,
@@ -74,6 +86,7 @@ class NotificationManager {
 
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
         let request = UNNotificationRequest(identifier: thresholdID, content: content, trigger: trigger)
+        lastThresholdFiredDate = Date()
         UNUserNotificationCenter.current().add(request)
     }
     
@@ -83,6 +96,7 @@ class NotificationManager {
             let severe = alerts.first { $0.severity == "Severe" || $0.severity == "Extreme" }
             return severe.map { (beach, $0) }
         }
+        if let last = lastSevereFiredDate, Calendar.current.isDateInToday(last) { return }
         guard let (beach, alert) = severeAlerts.first else { return }
 
         let content = UNMutableNotificationContent()
@@ -92,6 +106,7 @@ class NotificationManager {
 
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
         let request = UNNotificationRequest(identifier: severeAlertID, content: content, trigger: trigger)
+        lastSevereFiredDate = Date()
         UNUserNotificationCenter.current().add(request)
     }
     
@@ -104,37 +119,33 @@ class NotificationManager {
         at time: Date
     ) async {
         guard !favorites.isEmpty else {
-            cancelAlert()
+            cancelAll()
             return
         }
 
         var conditions: [Int: BeachConditions] = [:]
         var alertsByBeach: [Int: [AlertFeature]] = [:]
 
-        let batches = favorites.chunked(into: 3)
-
         await withTaskGroup(of: (Int, BeachConditions?, [AlertFeature]).self) { group in
-            for batch in batches {
-                for beach in batch {
-                    group.addTask {
-                        async let weather = weatherService.fetchConditions(
-                            latitude: beach.coordinates.latitude,
-                            longitude: beach.coordinates.longitude
-                        )
-                        async let details = try? apiService.fetchBeachDetails(beachID: beach.id)
-                        let (w, d) = await (weather, details)
-                        return (beach.id, w, d?.alerts ?? [])
-                    }
+            for beach in favorites {
+                group.addTask {
+                    async let weather = weatherService.fetchConditions(
+                        latitude: beach.coordinates.latitude,
+                        longitude: beach.coordinates.longitude
+                    )
+                    async let details = try? apiService.fetchBeachDetails(beachID: beach.id)
+                    let (w, d) = await (weather, details)
+                    return (beach.id, w, d?.alerts ?? [])
                 }
+            }
 
-                for await (id, condition, alerts) in group {
-                    if let condition { conditions[id] = condition }
-                    alertsByBeach[id] = alerts
-                }
+            for await (id, condition, alerts) in group {
+                if let condition { conditions[id] = condition }
+                alertsByBeach[id] = alerts
             }
         }
 
-        cancelAlert()
+        cancelAll()
         scheduleTopFavoriteAlert(
             favorites: favorites,
             conditions: conditions,
@@ -150,8 +161,8 @@ class NotificationManager {
         )
         scheduleSevereAlertIfNeeded(alertsByBeach: alertsByBeach, favorites: favorites)
     }
-    func cancelAlert() {
-        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notificationID])
+    func cancelAll() {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notificationID, thresholdID, severeAlertID])
     }
 }
 

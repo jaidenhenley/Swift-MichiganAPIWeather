@@ -50,7 +50,7 @@ struct FavoritesView: View {
                 Button {
                     if alertEnabled {
                         alertEnabled = false
-                        NotificationManager.shared.cancelAlert()
+                        NotificationManager.shared.cancelAll()
                     } else {
                         alertEnabled = true
                         NotificationManager.shared.requestPermission()
@@ -63,23 +63,7 @@ struct FavoritesView: View {
             }
         }
         .sheet(isPresented: $showingAlertSheet) {
-            VStack(spacing: 24) {
-                Text("Daily Beach Alert")
-                    .font(.headline)
-                Text("We'll notify you about your top-scored favorite beach.")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.center)
-                DatePicker("Alert time", selection: alertTime, displayedComponents: .hourAndMinute)
-                    .labelsHidden()
-                    .onChange(of: alertTimeInterval) { _, _ in reschedule() }
-                Button("Done") {
-                    showingAlertSheet = false
-                }
-                .buttonStyle(.borderedProminent)
-            }
-            .padding()
-            .presentationDetents([.height(260)])
+           NotificationSheet(showingAlertSheet: $showingAlertSheet, alertTimeInterval: $alertTimeInterval)
         }
     }
     

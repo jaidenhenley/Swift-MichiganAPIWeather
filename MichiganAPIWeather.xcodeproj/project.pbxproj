@@ -265,6 +265,7 @@
 				TargetAttributes = {
 					63493F9F2F86E9BA00C8EB4A = {
 						CreatedOnToolsVersion = 26.3;
+						TestTargetID = 63CEE3ED2F6C86C4001EA186;
 					};
 					63CEE3ED2F6C86C4001EA186 = {
 						CreatedOnToolsVersion = 26.3;
@@ -375,6 +376,7 @@
 		63493FA72F86E9BA00C8EB4A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HCJNSG5PP5;
@@ -389,12 +391,14 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MichiganAPIWeather.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MichiganAPIWeather";
 			};
 			name = Debug;
 		};
 		63493FA82F86E9BA00C8EB4A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HCJNSG5PP5;
@@ -409,6 +413,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MichiganAPIWeather.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MichiganAPIWeather";
 			};
 			name = Release;
 		};

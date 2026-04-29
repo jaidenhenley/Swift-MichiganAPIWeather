@@ -8,9 +8,17 @@
 import CoreLocation
 import UserNotifications
 
+protocol NotificationScheduling {
+    func add(_ request: UNNotificationRequest, withCompletionHandler completionHandler: ((Error?) -> Void)?)
+    func removePendingNotificationRequests(withIdentifiers identifiers: [String])
+}
+
+extension UNUserNotificationCenter: NotificationScheduling {}
+
 @Observable
 class NotificationManager {
     static let shared = NotificationManager()
+    private let center: NotificationScheduling
     private let notificationID = "top-favorite-beach-alert"
     private let thresholdID = "beach-score-threshold-alert"
     private let severeAlertID = "beach-severe-weather-alert"
@@ -22,7 +30,11 @@ class NotificationManager {
     
     private var lastSevereFiredDate: Date? {
         get { UserDefaults.standard.object(forKey: "lastSevereFired") as? Date }
-        set { UserDefaults.standard.object(forKey: "lastSevereFired") }
+        set { UserDefaults.standard.set(newValue, forKey: "lastSevereFired") }
+    }
+    
+    init(center: NotificationScheduling = UNUserNotificationCenter.current()) {
+        self.center = center
     }
     
     func requestPermission() {
@@ -58,7 +70,7 @@ class NotificationManager {
         let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
 
         let request = UNNotificationRequest(identifier: notificationID, content: content, trigger: trigger)
-        UNUserNotificationCenter.current().add(request)
+        center.add(request, withCompletionHandler: nil)
     }
     
     func scheduleThresholdAlert(
@@ -87,7 +99,7 @@ class NotificationManager {
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
         let request = UNNotificationRequest(identifier: thresholdID, content: content, trigger: trigger)
         lastThresholdFiredDate = Date()
-        UNUserNotificationCenter.current().add(request)
+        center.add(request, withCompletionHandler: nil)
     }
     
     func scheduleSevereAlertIfNeeded(alertsByBeach: [Int: [AlertFeature]], favorites: [Beach]) {
@@ -107,7 +119,7 @@ class NotificationManager {
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
         let request = UNNotificationRequest(identifier: severeAlertID, content: content, trigger: trigger)
         lastSevereFiredDate = Date()
-        UNUserNotificationCenter.current().add(request)
+        center.add(request, withCompletionHandler: nil)
     }
     
     func refresh(
@@ -162,7 +174,7 @@ class NotificationManager {
         scheduleSevereAlertIfNeeded(alertsByBeach: alertsByBeach, favorites: favorites)
     }
     func cancelAll() {
-        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notificationID, thresholdID, severeAlertID])
+        center.removePendingNotificationRequests(withIdentifiers: [notificationID, thresholdID, severeAlertID])
     }
 }
 

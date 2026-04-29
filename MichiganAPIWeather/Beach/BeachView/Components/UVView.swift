@@ -51,7 +51,7 @@ struct UVView: View {
                     .fontWeight(.semibold)
                     .foregroundStyle(.beachViewText)
                 
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: 4) {
                     // Header
                     
                     
@@ -70,12 +70,11 @@ struct UVView: View {
                     Text(uvAdvice)
                         .font(.footnote)
                         .foregroundStyle(.secondary)
-                        .fixedSize(horizontal: false, vertical: true)
                 }
             }
-            .padding(.top, 8)
+            .padding(.top, 4)
             .padding(.horizontal, 16)
-            .padding(.bottom, 16)
+            .padding(.bottom, 8)
             .overlay(
                 RoundedRectangle(cornerRadius: 16)
                     .stroke(Color.beachViewText, lineWidth: 1)

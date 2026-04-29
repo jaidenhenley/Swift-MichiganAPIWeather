@@ -53,16 +53,48 @@ struct BeachView: View {
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
+                    // Water Quality Alert
+                    if let quality = viewModel.waterQuality?.first, quality.status != "safe" {
+                        VStack(alignment: .leading, spacing: 8) {
+                            
+                            
+                            AlertCard(alert: AlertFeature(
+                                event: "E. coli Warning",
+                                headline: "Warning! E. coli levels are high. Swimming may not be safe.",
+                                severity: quality.status == "unsafe" ? "Moderate" : "Minor",
+                                urgency: "Expected",
+                                effective: quality.lastReading,
+                                expires: quality.lastReading
+                            ))
+                        }
+                    }
+                    
+                    
+                    if !viewModel.alerts.isEmpty {
+                        VStack(alignment: .leading, spacing: 8) {
+                           
+                            
+                            ForEach(viewModel.alerts, id: \.event) { alert in
+                                AlertCard(alert: alert)
+                                    
+                            }
+                        }
+                    }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, 28)
+                .padding(.horizontal)
                 .padding(.top)
                 
                 BeachHeader(image: beach.images[0])
-                    .padding()
-                    .padding(.top, 8)
-                WeatherForecastRow()
                     .padding(.horizontal)
+                    .padding(.top, 8)
+                
+                WeatherForecastRow()
+                    .padding(.top, 11)
+                    .padding(.horizontal)
+                
+                
+                    
                 Divider()
                     .foregroundStyle(.beachViewText)
                     .frame(height: 3)

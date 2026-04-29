@@ -33,7 +33,7 @@ class BeachScoringService {
             score += weights.withinTravelLimit
         }
 
-        return SuggestedBeach(beach: beach, score: score, reason: primaryReason(from: snapshot), type: type)
+        return SuggestedBeach(beach: beach, score: score, reason: primaryReason(from: snapshot), siriResponse: siriResponses(from: snapshot), type: type)
     }
 
     func topSuggestions(from beaches: [Beach], conditions: [Int: BeachConditions], userLocation: CLLocation?) -> [SuggestedBeach] {
@@ -120,6 +120,16 @@ class BeachScoringService {
         if snapshot.uvIndex >= 8 { return "Great day out. Just don't forget the sunscreen." }
         if snapshot.windSpeedMPH <= 10 && snapshot.precipChance <= 0.2 { return "Calm and clear. Conditions are looking great." }
         return "Solid conditions. Not a bad day for the beach."
+    }
+    
+    private func siriResponses(from snapshot: ConditionSnapshot) -> String {
+        if snapshot.precipChance >= 0.6 { return "rain is likely moving in. Might be worth waiting it out." }
+        if snapshot.windSpeedMPH >= 20 { return "wind is up and waves will be rough at the shore." }
+        if snapshot.tempF >= 80 { return "hot and sunny. Made for the beach." }
+        if snapshot.tempF >= 70 { return "warm and comfortable all day." }
+        if snapshot.uvIndex >= 8 { return "great day out. Don't forget the sunscreen." }
+        if snapshot.windSpeedMPH <= 10 && snapshot.precipChance <= 0.2 { return "calm and clear. Conditions are looking great." }
+        return "solid conditions. Not a bad day for the beach."
     }
 
     private func tagScore(for beach: Beach) -> Double {

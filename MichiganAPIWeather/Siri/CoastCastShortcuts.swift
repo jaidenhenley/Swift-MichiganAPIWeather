@@ -11,7 +11,7 @@ import Foundation
 struct CoastCastShortcuts: AppShortcutsProvider {
     static var appShortcuts: [AppShortcut] {
         AppShortcut(
-            intent: GetBeachConditionsIntent(),
+            intent: OpenBeachIntent(),
             phrases: [
                 "Open \(\.$beach) in \(.applicationName)",
                 "Check \(\.$beach) in \(.applicationName)",
@@ -19,8 +19,18 @@ struct CoastCastShortcuts: AppShortcutsProvider {
                 "Show me \(\.$beach) in \(.applicationName)",
                 "Beach conditions at \(\.$beach) in \(.applicationName)",
             ],
-            shortTitle: "Beach Conditions",
+            shortTitle: "Open Beach",
             systemImageName: "water.waves"
+        )
+        
+        AppShortcut(
+            intent: GetBeachConditionsIntent(),
+            phrases: [
+                "Tell me \(\.$beach) conditions with \(.applicationName)",
+                "What are the conditions at \(\.$beach) with \(.applicationName)",
+            ],
+            shortTitle: "Beach Conditions",
+            systemImageName: "speaker.wave.2"
         )
     }
 }

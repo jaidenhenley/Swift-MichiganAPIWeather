@@ -11,6 +11,7 @@ struct SuggestedBeach {
     let beach: Beach
     let score: Double
     let reason: String
+    let siriResponse: String
     let type: SuggestionType
 }
 

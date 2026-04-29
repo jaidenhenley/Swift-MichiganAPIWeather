@@ -115,10 +115,13 @@ class NotificationManager {
         content.title = "Weather Alert: \(beach.beachName)"
         content.body = alert.headline
         content.sound = .defaultCritical
-
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        
+        // MARK: temporarily change for testing
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+//        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
         let request = UNNotificationRequest(identifier: severeAlertID, content: content, trigger: trigger)
         lastSevereFiredDate = Date()
+        print("DEBUG: scheduling severe alert for \(beach.beachName)")
         center.add(request, withCompletionHandler: nil)
     }
     
@@ -134,6 +137,8 @@ class NotificationManager {
             cancelAll()
             return
         }
+        print("DEBUG: refresh started with \(favorites.count) favorites")
+
 
         var conditions: [Int: BeachConditions] = [:]
         var alertsByBeach: [Int: [AlertFeature]] = [:]

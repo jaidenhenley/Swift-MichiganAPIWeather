@@ -98,8 +98,8 @@ class BeachViewModel {
     /// Whether we have successfully loaded data at least once
     var hasData: Bool { !beachName.isEmpty }
 
-    private let apiService = MichiganWaterAPIService()
-    private let weatherKitService = WeatherKitService()
+    let apiService = MichiganWaterAPIService()
+    let weatherKitService = WeatherKitService()
     private var rawTempCelsius: Double?
 
     func toggleUnit() {

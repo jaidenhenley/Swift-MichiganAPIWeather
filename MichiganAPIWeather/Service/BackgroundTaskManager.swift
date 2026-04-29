@@ -39,6 +39,7 @@ struct BackgroundTaskManager {
     }
 
     private static func runRefresh() async {
+        URLCache.shared.removeAllCachedResponses()
         let container = try? ModelContainer(for: FavoriteBeach.self, UserBeachPreferences.self)
         guard let container else { return }
 

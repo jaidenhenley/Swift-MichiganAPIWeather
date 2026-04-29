@@ -33,72 +33,71 @@ struct FavoritesView: View {
     }
     
     var body: some View {
-        Group {
-            if favoriteBeaches.isEmpty {
-                ContentUnavailableView(
-                    "No Favorites Yet",
-                    systemImage: "heart.slash",
-                    description: Text("Beaches you favorite will show up here.")
-                )
-            } else {
-                BeachListView(beachList: favoriteBeaches, sortByDistance: false, distanceRange: .all, isFavorites: true)
+            Group {
+                if favoriteBeaches.isEmpty {
+                    ContentUnavailableView(
+                        "No Favorites Yet",
+                        systemImage: "heart.slash",
+                        description: Text("Beaches you favorite will show up here.")
+                    )
+                } else {
+                    BeachListView(beachList: favoriteBeaches, sortByDistance: false, distanceRange: .all, isFavorites: true)
+                }
+            }
+            .navigationTitle("Favorites")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        if alertEnabled {
+                            alertEnabled = false
+                            NotificationManager.shared.cancelAll()
+                        } else {
+                            alertEnabled = true
+                            NotificationManager.shared.requestPermission()
+                            reschedule()
+                            showingAlertSheet = true
+                        }
+                    } label: {
+                        Image(systemName: alertEnabled ? "bell.fill" : "bell.slash")
+                    }
+                }
+            }
+            .sheet(isPresented: $showingAlertSheet) {
+                NotificationSheet(showingAlertSheet: $showingAlertSheet, alertTimeInterval: $alertTimeInterval)
             }
         }
-        .navigationTitle("Favorites")
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    if alertEnabled {
-                        alertEnabled = false
-                        NotificationManager.shared.cancelAll()
-                    } else {
-                        alertEnabled = true
-                        NotificationManager.shared.requestPermission()
-                        reschedule()
-                        showingAlertSheet = true
-                    }
-                } label: {
-                    Image(systemName: alertEnabled ? "bell.fill" : "bell.slash")
+    
+            private func reschedule() {
+                let favorites = favoriteBeaches
+                let favoriteIDs = Set(favorites.map(\.id))
+                let repo = InlineFavoritesRepository(favoriteIDs: favoriteIDs)
+                let scoringService = BeachScoringService(favoritesRepo: repo)
+                let weatherService = WeatherKitService()
+                let apiService = MichiganWaterAPIService()
+                
+                Task {
+                    await NotificationManager.shared.refresh(
+                        favorites: favorites,
+                        scoringService: scoringService,
+                        weatherService: weatherService,
+                        apiService: apiService,
+                        userLocation: locationManager.userLocation,
+                        at: Date(timeIntervalSince1970: alertTimeInterval)
+                    )
                 }
             }
         }
-        .sheet(isPresented: $showingAlertSheet) {
-           NotificationSheet(showingAlertSheet: $showingAlertSheet, alertTimeInterval: $alertTimeInterval)
+        private struct InlineFavoritesRepository: FavoritesRepository {
+            let favoriteIDs: Set<Int>
+            
+            func isFavorite(beachID: Int) -> Bool {
+                favoriteIDs.contains(beachID)
+            }
+            
+            func allFavorites() -> [Beach] {
+                Beach.allBeaches.filter { favoriteIDs.contains($0.id) }
+            }
         }
-    }
-    
-    private func reschedule() {
-        let favorites = favoriteBeaches
-        let favoriteIDs = Set(favorites.map(\.id))
-        let repo = InlineFavoritesRepository(favoriteIDs: favoriteIDs)
-        let scoringService = BeachScoringService(favoritesRepo: repo)
-        let weatherService = WeatherKitService()
-        let apiService = MichiganWaterAPIService()
-        
-        Task {
-            await NotificationManager.shared.refresh(
-                favorites: favorites,
-                scoringService: scoringService,
-                weatherService: weatherService,
-                apiService: apiService,
-                userLocation: locationManager.userLocation,
-                at: Date(timeIntervalSince1970: alertTimeInterval)
-            )
-        }
-    }
-}
-
-private struct InlineFavoritesRepository: FavoritesRepository {
-    let favoriteIDs: Set<Int>
-    
-    func isFavorite(beachID: Int) -> Bool {
-        favoriteIDs.contains(beachID)
-    }
-    
-    func allFavorites() -> [Beach] {
-        Beach.allBeaches.filter { favoriteIDs.contains($0.id) }
-    }
-}
 
 #Preview {
     FavoritesView()

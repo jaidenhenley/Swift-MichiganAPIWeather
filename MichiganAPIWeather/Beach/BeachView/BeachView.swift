@@ -53,16 +53,31 @@ struct BeachView: View {
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
+                    if !viewModel.alerts.isEmpty {
+                        VStack(alignment: .leading, spacing: 8) {
+                           
+                            
+                            ForEach(viewModel.alerts, id: \.event) { alert in
+                                AlertCard(alert: alert)
+                                    
+                            }
+                        }
+                    }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, 28)
+                .padding(.horizontal)
                 .padding(.top)
                 
                 BeachHeader(image: beach.images[0])
-                    .padding()
-                    .padding(.top, 8)
-                WeatherForecastRow()
                     .padding(.horizontal)
+                    .padding(.top, 8)
+                
+                WeatherForecastRow()
+                    .padding(.top, 11)
+                    .padding(.horizontal)
+                
+                
+                    
                 Divider()
                     .foregroundStyle(.beachViewText)
                     .frame(height: 3)

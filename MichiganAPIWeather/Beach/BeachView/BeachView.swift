@@ -53,6 +53,23 @@ struct BeachView: View {
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
+                    // Water Quality Alert
+                    if let quality = viewModel.waterQuality?.first, quality.status != "safe" {
+                        VStack(alignment: .leading, spacing: 8) {
+                            
+                            
+                            AlertCard(alert: AlertFeature(
+                                event: "E. coli Warning",
+                                headline: "E. coli levels measured at \(quality.value) \(quality.unit) on \(quality.lastReading). Swimming may not be safe.",
+                                severity: quality.status == "unsafe" ? "Moderate" : "Minor",
+                                urgency: "Expected",
+                                effective: quality.lastReading,
+                                expires: quality.lastReading
+                            ))
+                        }
+                    }
+                    
+                    
                     if !viewModel.alerts.isEmpty {
                         VStack(alignment: .leading, spacing: 8) {
                            

@@ -29,3 +29,8 @@ struct LocalFavoritesRepository: FavoritesRepository {
         return Beach.allBeaches.filter { favoriteIDs.contains($0.id) }
     }
 }
+
+struct NoFavoritesRepository: FavoritesRepository {
+    func isFavorite(beachID: Int) -> Bool { false }
+    func allFavorites() -> [Beach] { [] }
+}

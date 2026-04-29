@@ -60,7 +60,7 @@ struct BeachView: View {
                             
                             AlertCard(alert: AlertFeature(
                                 event: "E. coli Warning",
-                                headline: "E. coli levels measured at \(quality.value) \(quality.unit) on \(quality.lastReading). Swimming may not be safe.",
+                                headline: "Warning! E. coli levels are high. Swimming may not be safe.",
                                 severity: quality.status == "unsafe" ? "Moderate" : "Minor",
                                 urgency: "Expected",
                                 effective: quality.lastReading,

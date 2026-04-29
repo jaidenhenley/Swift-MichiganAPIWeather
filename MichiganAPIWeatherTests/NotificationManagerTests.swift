@@ -190,7 +190,7 @@ struct NotificationManagerTests {
         let beach = Beach.allBeaches[0]
         let alert = AlertFeature(
             event: "Beach Hazards Statement",
-            headline: "Dangerous swim conditions expected",
+            headline: "Warning! Dangerous swim conditions expected",
             severity: "Severe",
             urgency: "Expected",
             effective: "2026-04-29T00:00:00Z",
@@ -454,7 +454,7 @@ struct NotificationManagerTests {
         let beach = Beach.allBeaches[0]
         let alert = AlertFeature(
             event: "Beach Hazards Statement",
-            headline: "Dangerous swim conditions",
+            headline: "Warning! Dangerous swim conditions",
             severity: "Severe",
             urgency: "Expected",
             effective: "2026-04-29T00:00:00Z",

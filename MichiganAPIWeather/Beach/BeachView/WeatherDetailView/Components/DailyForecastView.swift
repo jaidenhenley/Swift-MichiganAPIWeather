@@ -137,6 +137,10 @@ struct DailyForecastRow: View {
         .buttonStyle(.plain)
         .padding(.horizontal, 12)
         .padding(.vertical, 5)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(day.name), \(day.dateText), \(day.shortForecast), \(day.temp) degrees\(isBestDay ? ", best beach day" : "")")
+        .accessibilityHint("Double tap for more details")
+        .accessibilityAddTraits(.isButton)
     }
 }
 

@@ -8,6 +8,7 @@
 import CoreLocation
 import SwiftData
 import SwiftUI
+import Combine
 
 struct DashboardContentView: View {
     @Environment(BeachViewModel.self) var viewModel
@@ -15,6 +16,10 @@ struct DashboardContentView: View {
     @Environment(\.modelContext) private var context
     @Environment(\.colorScheme) private var colorScheme
     @State private var suggestionsVM: SuggestedBeachViewModel?
+    
+    @State private var currentImage = 0
+    let images = ["CoastCastDash2", "CoastCastDash1"]
+    let timer = Timer.publish(every: 180, on: .main, in: .common).autoconnect()
 
     var nearby: [Beach]? {
         guard let userLocation = locationManager.userLocation else { return nil }
@@ -45,18 +50,29 @@ struct DashboardContentView: View {
                 VStack(spacing: 0) {
                     
                     ZStack(alignment: .topLeading) {
-                        Image(.coastCastDash2)
-                            .resizable()
-                            .scaledToFill()
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                            .clipped()
-                            .overlay {
-                                LinearGradient(
-                                    colors: [.black.opacity(0.7), .clear],
-                                    startPoint: .top,
-                                    endPoint: .bottom
-                                )
+                        TabView(selection: $currentImage) {
+                            ForEach(images.indices, id: \.self) { index in
+                                Image(images[index])
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(minWidth: 0, maxWidth: .infinity)
+                                    .clipped()
+                                    .tag(index)
                             }
+                        }
+                        .tabViewStyle(.page(indexDisplayMode: .never))
+                        .overlay {
+                            LinearGradient(
+                                colors: [.black.opacity(0.7), .clear],
+                                startPoint: .top,
+                                endPoint: .bottom
+                            )
+                        }
+                        .onReceive(timer) { _ in
+                            withAnimation(.easeInOut(duration: 1.0)) {
+                                currentImage = (currentImage + 1) % images.count
+                            }
+                        }
                         VStack(alignment: .leading, spacing: 12) {
                             
                             

@@ -45,7 +45,7 @@ struct DashboardContentView: View {
                 VStack(spacing: 0) {
                     
                     ZStack(alignment: .topLeading) {
-                        Image(.grandHaven1)
+                        Image(.coastCastDash2)
                             .resizable()
                             .scaledToFill()
                             .frame(minWidth: 0, maxWidth: .infinity)
@@ -92,10 +92,7 @@ struct DashboardContentView: View {
                                     
                                     Spacer()
                                     
-                                    Text("Grand Haven (2014)")
-                                        .font(.caption)
-                                        .foregroundStyle(.white)
-                                        .padding(.trailing)
+                                    
                                 }
                             }
                             .padding(.leading, 16)

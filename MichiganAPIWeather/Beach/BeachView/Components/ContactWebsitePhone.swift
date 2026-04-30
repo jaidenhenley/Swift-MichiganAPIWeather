@@ -19,6 +19,8 @@ struct ContactWebsitePhone: View {
                     UIApplication.shared.open(url)
                 }
             }
+            .accessibilityLabel("Visit website")
+            .accessibilityHint("Opens the beach website in Safari")
             Spacer()
             ActionButton(icon: "map.fill", title: "Location") {
                 guard let beach = viewModel.selectedBeach else { return }
@@ -28,6 +30,8 @@ struct ContactWebsitePhone: View {
                 mapItem.name = viewModel.beachName
                 mapItem.openInMaps()
             }
+            .accessibilityLabel("Get directions to \(viewModel.beachName)")
+            .accessibilityHint("Opens Apple Maps")
             Spacer()
             ActionButton(icon: "phone.fill", title: "Call") {
                 guard let beach = viewModel.selectedBeach else { return }
@@ -38,6 +42,8 @@ struct ContactWebsitePhone: View {
                     UIApplication.shared.open(url)
                 }
             }
+            .accessibilityLabel("Call \(viewModel.beachName)")
+            .accessibilityHint("Opens the phone dialer")
         }
         .padding()
     }

@@ -66,6 +66,7 @@ struct UVView: View {
                     Spacer()
                     
                     SegmentedProgressBar(uvIndex: uvValue, color: uvColor)
+                        .accessibilityHidden(true)
                     
                     Text(uvAdvice)
                         .font(.footnote)
@@ -82,6 +83,8 @@ struct UVView: View {
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
             
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("UV Index, \(uvValue), \(uvCategory). \(uvAdvice)")
     }
     
     func dotOffset(in width: CGFloat) -> CGFloat {

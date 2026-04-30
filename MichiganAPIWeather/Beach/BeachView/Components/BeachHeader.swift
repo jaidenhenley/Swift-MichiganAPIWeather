@@ -22,7 +22,7 @@ struct BeachHeader: View {
                                 RoundedRectangle(cornerRadius: 20)
                                     .stroke(Color.beachViewText, lineWidth: 0.5)
                             )
-                        
+                            .accessibilityHidden(true)
                         VStack {
                             Text("AIR TEMP")
                                 .font(.caption)
@@ -33,6 +33,8 @@ struct BeachHeader: View {
                         }
                     
                     }
+                    .accessibilityElement(children: .ignore)
+                    .accessibilityLabel("Air temperature, \(viewModel.temperatureDisplay)")
                     
                     
                     
@@ -44,7 +46,8 @@ struct BeachHeader: View {
                             RoundedRectangle(cornerRadius: 14)
                                 .stroke(Color.beachViewText, lineWidth: 0.5)
                         )
-                    
+                        .accessibilityHidden(true)
+
                     VStack {
                         Text("WATER TEMP")
                             .font(.caption)
@@ -55,6 +58,8 @@ struct BeachHeader: View {
                     }
                     
                 }
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel("Water temperature, \(viewModel.buoyData?.waterTempC.map { String(format: "%.1f degrees Celsius", $0) } ?? "not available")")
             }
             UVView()
                 

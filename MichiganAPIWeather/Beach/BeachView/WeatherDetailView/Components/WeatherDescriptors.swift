@@ -49,5 +49,7 @@ struct WeatherDescriptors: View {
             )
         }
         .frame(maxWidth: .infinity)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(stat.name), \(stat.value)\(stat.unit)")
     }
 }

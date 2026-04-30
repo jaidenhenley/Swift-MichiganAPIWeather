@@ -60,6 +60,8 @@ struct FavoritesView: View {
                     } label: {
                         Image(systemName: alertEnabled ? "bell.fill" : "bell.slash")
                     }
+                    .accessibilityLabel(alertEnabled ? "Disable beach alerts" : "Enable beach alerts")
+                    .accessibilityHint(alertEnabled ? "Double tap to turn off morning notifications" : "Double tap to set up morning beach notifications")
                 }
             }
             .sheet(isPresented: $showingAlertSheet) {

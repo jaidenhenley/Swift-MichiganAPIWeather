@@ -81,6 +81,8 @@ struct MapView: View {
             }
             .shadow(radius: 5)
         }
+        .accessibilityLabel("\(cluster.beaches.count) beaches in this area")
+        .accessibilityHint("Double tap to zoom in")
     }
 
     private func beachAnnotation(_ beach: Beach) -> some View {
@@ -98,7 +100,10 @@ struct MapView: View {
             }
             .frame(width: 44, height: 44)
             .shadow(radius: 4)
+            
         }
+        .accessibilityLabel(beach.beachName)
+           .accessibilityHint("Double tap to view beach details")
     }
 
     private var beachListOverlay: some View {
@@ -114,12 +119,16 @@ struct MapView: View {
                         selectedBeach = beach
                         showDetail = true
                     }
+                    .accessibilityLabel(beach.beachName)
+                    .accessibilityHint("Double tap to view beach details")
+                    .accessibilityAddTraits(.isButton)
                 }
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 12)
         }
         .background(.ultraThinMaterial)
+        .accessibilityLabel("Nearby beaches")
     }
 }
 

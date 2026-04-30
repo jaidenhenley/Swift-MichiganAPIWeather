@@ -86,6 +86,8 @@ struct DashboardView: View {
                                                 .clipShape(RoundedRectangle(cornerRadius: 10))
                                             }
                                             .buttonStyle(.plain)
+                                            .accessibilityLabel("Remove \(keyword.capitalized) filter")
+                                            .accessibilityHint("Double tap to remove this filter")
                                         }
                                     }
                                 }

@@ -58,6 +58,8 @@ struct DashboardContentView: View {
                                     .frame(minWidth: 0, maxWidth: .infinity)
                                     .clipped()
                                     .tag(index)
+                                    .accessibilityHidden(true)
+
                             }
                         }
                         .tabViewStyle(.page(indexDisplayMode: .never))
@@ -67,6 +69,8 @@ struct DashboardContentView: View {
                                 startPoint: .top,
                                 endPoint: .bottom
                             )
+                            .accessibilityHidden(true)
+
                         }
                         .onReceive(timer) { _ in
                             withAnimation(.easeInOut(duration: 1.0)) {
@@ -103,6 +107,8 @@ struct DashboardContentView: View {
                                             .background(Color.yellow)
                                             .clipShape(Capsule())
                                     }
+                                    .accessibilityLabel("Plan Your Trip")
+                                    .accessibilityHint("Opens beach search")
                                     
                                     
                                     
@@ -172,6 +178,8 @@ struct LocationPromptCard: View {
             Image(systemName: "location.circle.fill")
                 .font(.largeTitle)
                 .foregroundStyle(.blueGreen)
+                .accessibilityHidden(true)
+
             
             Text("See beaches near you")
                 .font(.headline)

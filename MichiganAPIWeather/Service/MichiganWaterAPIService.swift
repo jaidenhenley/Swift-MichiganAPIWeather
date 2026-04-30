@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import SwiftUI
+
 
 class MichiganWaterAPIService {
     private let baseURL = URL(string: "https://michiganwaterapi.onrender.com")
@@ -43,6 +45,11 @@ class MichiganWaterAPIService {
             }
             throw error
         }
+    }
+    
+    func fetchBeachAlerts(beachId: Int) async throws -> BeachAlertsResponse {
+        let data = try await get(path: "/beaches/\(beachId)/alerts")
+        return try JSONDecoder().decode(BeachAlertsResponse.self, from: data)
     }
 
     func fetchAllBeaches() async throws -> [BeachSummary] {

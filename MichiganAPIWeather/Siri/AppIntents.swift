@@ -100,3 +100,36 @@ struct FindClosestBeachIntent: AppIntent {
         )
     }
 }
+
+struct GetBeachAlertsIntent: AppIntent {
+    static var title: LocalizedStringResource = "Get Beach Alerts"
+    static var description = IntentDescription("Check water quality and active weather alerts for a beach.")
+    
+    let service = MichiganWaterAPIService()
+    
+    @Parameter(title: "Beach")
+    var beach: BeachEntity
+    
+    func perform() async throws -> some ReturnsValue<String> & ProvidesDialog {
+        let response = try await service.fetchBeachAlerts(beachId: beach.id)
+        
+        print("Started Alerts")
+        var parts: [String] = []
+        
+        if let wq = response.waterQuality, !wq.isEmpty {
+            let readings = wq.map { "\($0.status) (\($0.value) \($0.unit))" }
+            parts.append("Water quality: \(readings.joined(separator: ", ")).")
+        }
+        
+        if let alerts = response.alerts, !alerts.isEmpty {
+            parts.append(contentsOf: alerts.map { "\($0.event): \($0.headline)" })
+        }
+        
+        if parts.isEmpty {
+            parts.append("No active alerts or advisories.")
+        }
+        
+        let result = parts.joined(separator: " ")
+        return .result(value: result, dialog: "\(result)")
+    }
+}

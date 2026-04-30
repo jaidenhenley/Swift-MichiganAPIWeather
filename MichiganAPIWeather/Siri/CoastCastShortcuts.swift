@@ -25,6 +25,24 @@ struct CoastCastShortcuts: AppShortcutsProvider {
         )
         
         AppShortcut(
+            intent: GetBeachAlertsIntent(),
+            phrases: [
+                "Any alerts at \(\.$beach) in \(.applicationName)",
+                "Check water quality at \(\.$beach) in \(.applicationName)",
+                "Is the water safe at \(\.$beach) in \(.applicationName)",
+                "Is there an E. coli warning at \(\.$beach) in \(.applicationName)",
+                "Any advisories at \(\.$beach) in \(.applicationName)",
+                "Are there any warnings at \(\.$beach) in \(.applicationName)",
+                "Is \(\.$beach) safe to swim in \(.applicationName)",
+                "\(.applicationName) alerts for \(\.$beach)",
+                "\(.applicationName) is \(\.$beach) safe",
+                "\(.applicationName) water quality \(\.$beach)",
+            ],
+            shortTitle: "Beach Alerts",
+            systemImageName: "exclamationmark.triangle"
+        )
+        
+        AppShortcut(
             intent: GetBeachConditionsIntent(),
             phrases: [
                 "Check \(\.$beach) in \(.applicationName)",

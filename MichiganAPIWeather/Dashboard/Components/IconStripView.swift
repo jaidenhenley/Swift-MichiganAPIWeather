@@ -26,14 +26,11 @@ struct IconStripView: View {
             ForEach(dashboardCategories) { category in
                 Button {
                     viewModel.isSearching = true
-                    if category.title == "Camping" {
-                        viewModel.filterCamping.toggle()
+                    let keyword = category.title.lowercased()
+                    if viewModel.selectedKeywords.contains(keyword) {
+                        viewModel.selectedKeywords.remove(keyword)
                     } else {
-                        if viewModel.selectedKeywords.contains(category.title.lowercased()) {
-                            viewModel.selectedKeywords.remove(category.title.lowercased())
-                        } else {
-                            viewModel.selectedKeywords.insert(category.title.lowercased())
-                        }
+                        viewModel.selectedKeywords.insert(keyword)
                     }
                 } label: {
                     DashboardIcons(icon: category.icon, title: category.title)

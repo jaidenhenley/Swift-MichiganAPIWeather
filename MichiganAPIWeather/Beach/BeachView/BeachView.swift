@@ -18,19 +18,18 @@ struct BeachView: View {
             VStack(spacing: 0) {
                 TabView(selection: $selectedImageIndex) {
                     ForEach(beach.images.indices, id: \.self) { index in
-                        Image(beach.images[index])
-                            .resizable()
-                            .scaledToFill()
-                            .clipped()
-                            .tag(index)
+                        beachImage(at: index)
                     }
                 }
+                .frame(height: 200)
+                .tabViewStyle(.page(indexDisplayMode: .always))
                 .frame(height: 200)
                 .tabViewStyle(.page(indexDisplayMode: .always))
                 
                 VStack(alignment: .leading, spacing: 8) {
                     
                     Text(beach.beachName)
+                        .accessibilityAddTraits(.isHeader)
                         .font(.title3)
                         .bold()
                         .foregroundStyle(.blueGreen)
@@ -49,6 +48,8 @@ struct BeachView: View {
                             .padding(.vertical, 4)
                             .background(Color(.systemGray6).opacity(0.6))
                             .clipShape(Capsule())
+                            .accessibilityElement(children: .combine)
+                            .accessibilityLabel(keyword.label)
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -66,6 +67,8 @@ struct BeachView: View {
                                 effective: quality.lastReading,
                                 expires: quality.lastReading
                             ))
+                            .accessibilityLabel("Water quality warning. E. coli levels are high. Swimming may not be safe.")
+                            .accessibilityHint("Tap info for more details")
                         }
                     }
                     
@@ -76,6 +79,8 @@ struct BeachView: View {
                             
                             ForEach(viewModel.alerts, id: \.event) { alert in
                                 AlertCard(alert: alert)
+                                    .accessibilityLabel("\(alert.event). \(alert.headline)")
+                                    .accessibilityHint("Tap info for more details")
                                     
                             }
                         }
@@ -99,8 +104,13 @@ struct BeachView: View {
                     .foregroundStyle(.beachViewText)
                     .frame(height: 3)
                     .padding(.vertical)
+                    .accessibilityHidden(true)
+
                 
                 Text("\(Image(systemName: "person.3.fill")) CROWD METER")
+                    .accessibilityLabel("Crowd Meter")
+                    .accessibilityLabel("Crowd Meter")
+                    .accessibilityAddTraits(.isHeader)
                     .foregroundStyle(.beachViewText)
                     .font(.footnote)
                     .bold()
@@ -121,12 +131,14 @@ struct BeachView: View {
                 Image(.beachViewBackground)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
+                    .accessibilityHidden(true)
             )
         }
         .ignoresSafeArea()
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 FavoriteButtonView(beach: beach, isToolbarButton: true)
+                    .accessibilityLabel("Favorite \(beach.beachName)")
             }
         }
         .task {
@@ -134,4 +146,16 @@ struct BeachView: View {
         }
         .environment(viewModel)
     }
+    
+    private func beachImage(at index: Int) -> some View {
+        Image(beach.images[index])
+            .resizable()
+            .scaledToFill()
+            .clipped()
+            .tag(index)
+            .accessibilityLabel("Beach photo \(index + 1) of \(beach.images.count)")
+    }
 }
+
+
+

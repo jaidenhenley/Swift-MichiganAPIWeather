@@ -23,6 +23,8 @@ struct DashboardView: View {
             DashboardContentView()
                 .blur(radius: viewModel.isSearching ? 10 : 0)
                 .animation(.easeInOut, value: viewModel.isSearching)
+                .accessibilityHidden(viewModel.isSearching)
+
             
             VStack(spacing: 0) {
                 
@@ -30,9 +32,13 @@ struct DashboardView: View {
                     HStack {
                         Image(systemName: "magnifyingglass")
                             .foregroundStyle(.secondary)
+                            .accessibilityHidden(true)
+
                         
                         TextField("Search", text: $viewModel.searchText)
                             .focused($isFocused)
+                            .accessibilityLabel("Search beaches")
+                            .accessibilityHint("Type a beach name or keyword to filter results")
                             .onChange(of: isFocused) { _, focused in
                                 if focused {
                                     withAnimation(.easeInOut) {
@@ -87,6 +93,8 @@ struct DashboardView: View {
                                 Text("No active filters")
                                     .font(.caption)
                                     .foregroundStyle(.white)
+                                    .accessibilityHidden(true)
+
                             }
                             
                             Spacer()
@@ -102,7 +110,10 @@ struct DashboardView: View {
                                     .foregroundStyle(viewModel.selectedKeywords.isEmpty ? AnyShapeStyle(.white) : AnyShapeStyle(Color.blue))
                             }
                             .buttonStyle(.plain)
+
                             .contentShape(Rectangle())
+                            .accessibilityLabel("Filter beaches")
+                            .accessibilityHint("Opens filter options")
                         }
                         .padding(.horizontal, 4)
                     }

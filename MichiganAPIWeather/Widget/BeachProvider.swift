@@ -14,7 +14,7 @@ struct BeachProvider: AppIntentTimelineProvider {
     }
 
     func snapshot(for configuration: SelectBeachIntent, in context: Context) async -> BeachWidgetEntry {
-        let beach = configuration.beach ?? BeachEntity(id: 2, name: "Grand Haven State Park")
+        let beach = configuration.beach ?? BeachEntity(id: 2, name: "Grand Haven State Park", aliases: [])
 
         return BeachWidgetEntry(
             date: .now,
@@ -27,7 +27,7 @@ struct BeachProvider: AppIntentTimelineProvider {
     }
 
     func timeline(for configuration: SelectBeachIntent, in context: Context) async -> Timeline<BeachWidgetEntry> {
-        let beach = configuration.beach ?? BeachEntity(id: 2, name: "Grand Haven State Park")
+        let beach = configuration.beach ?? BeachEntity(id: 2, name: "Grand Haven State Park", aliases: [])
         let beachID = beach.id
 
         var waterTemp = "N/A"

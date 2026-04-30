@@ -118,7 +118,7 @@ struct GetBeachAlertsIntent: AppIntent {
         
         if let wq = response.waterQuality, !wq.isEmpty {
             let readings = wq.map { "\($0.status) (\($0.value) \($0.unit))" }
-            parts.append("Water quality: \(readings.joined(separator: ", ")).")
+            parts.append("Water quality: E. coli levels are \(readings.joined(separator: ", ")).")
         }
         
         if let alerts = response.alerts, !alerts.isEmpty {

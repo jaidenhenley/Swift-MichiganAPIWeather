@@ -11,7 +11,7 @@ import Foundation
 @Model
 class FavoriteBeach {
     var beachId: Int
-    
+
     init(beachId: Int) {
         self.beachId = beachId
     }

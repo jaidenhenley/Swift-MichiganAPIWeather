@@ -18,7 +18,6 @@ class BeachViewModel {
     var beachName: String = ""
     var condition: String = ""
     var temperatureDisplay: String = ""
-    var buoyTempDisplay: String = ""
     var windMPH: String = ""
     var windDirection: String = ""
     var humidity: String = ""
@@ -121,7 +120,6 @@ class BeachViewModel {
         beachName = ""
         condition = ""
         temperatureDisplay = ""
-        buoyTempDisplay = ""
         windMPH = ""
         windDirection = ""
         humidity = ""
@@ -179,7 +177,6 @@ class BeachViewModel {
             rawTempCelsius = current.temperature
             
             temperatureDisplay = celsiusToFarenheit(rawTempCelsius!)
-            buoyTempDisplay = celsiusToFarenheit(buoyData?.waterTempC  ?? 0.0)
             
             windMPH = String(format: "%.1f mph", current.windSpeedMph)
             windDirection = ""

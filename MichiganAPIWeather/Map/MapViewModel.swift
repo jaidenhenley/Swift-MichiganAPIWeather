@@ -16,16 +16,6 @@ class MapViewModel {
     
     var lastRegion: MKCoordinateRegion?
     var isZoomedOut: Bool = true
-    private var lastClusteredSpan: MKCoordinateSpan?
-    private var zoomThreshold = 0.15 //adjust this
-    private(set) var clusters: [BeachCluster] = []
-
-    func updateClustersIfNeeded(for region: MKCoordinateRegion) {
-        guard shouldRecluster(for: region) else { return }
-        lastClusteredSpan = region.span
-        clusters = makeClusters()
-    }
-    
     
     func updateVisibleBeaches(in region: MKCoordinateRegion) {
         self.lastRegion = region
@@ -70,12 +60,6 @@ class MapViewModel {
                 beaches: beaches
             )
         }
-    }
-    func shouldRecluster(for region: MKCoordinateRegion) -> Bool {
-        guard let last = lastClusteredSpan else { return true }
-        let deltaLat = abs(region.span.latitudeDelta - last.latitudeDelta)
-        let deltaLon = abs(region.span.longitudeDelta - last.longitudeDelta)
-        return deltaLat > zoomThreshold || deltaLon > zoomThreshold
     }
 }
 

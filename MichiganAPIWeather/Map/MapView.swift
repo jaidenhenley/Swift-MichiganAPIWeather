@@ -26,7 +26,9 @@ struct MapView: View {
             
             Map(position: $position) {
                 if mapVM.isZoomedOut {
-                    ForEach(mapVM.clusters) { cluster in
+                    let clusters = mapVM.makeClusters()
+                    
+                    ForEach(clusters) { cluster in
                         Annotation("", coordinate: cluster.coordinate) {
                             clusterView(cluster)
                         }
@@ -40,10 +42,8 @@ struct MapView: View {
                     }
                 }
             }
-            .onMapCameraChange(frequency: .onEnd) { context in
-                mapVM.lastRegion = context.region
-                mapVM.updateClustersIfNeeded(for: context.region)
-                
+            .onMapCameraChange(frequency: .continuous) { context in
+                mapVM.updateVisibleBeaches(in: context.region)
             }
             .ignoresSafeArea()
 

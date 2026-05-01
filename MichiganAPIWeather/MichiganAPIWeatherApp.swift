@@ -25,6 +25,7 @@ struct MichiganAPIWeatherApp: App {
                 .environment(navManager)
                 .onAppear {
                     CoastCastShortcuts.updateAppShortcutParameters()
+                    print("Shortcuts Updated")
                 }
         }
         .modelContainer(for: [FavoriteBeach.self, UserBeachPreferences.self])

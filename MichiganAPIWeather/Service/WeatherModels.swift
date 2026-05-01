@@ -15,11 +15,7 @@ struct BeachDetailResponse: Decodable {
     let waterQuality: [WaterQuality]?
     let alerts: [AlertFeature]
     let holiday: Bool
-
-    enum CodingKeys: String, CodingKey {
-        case beach, alerts, holiday, waterQuality
-        case buoyData = "buoy_data"
-    }
+    
 }
 
 struct BeachAlertsResponse: Decodable {

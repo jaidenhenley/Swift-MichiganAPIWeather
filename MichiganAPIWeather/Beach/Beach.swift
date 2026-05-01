@@ -21,13 +21,42 @@ struct Beach: Identifiable {
     let phoneNumber: String
     let websiteURL: URL?
     let bodyOfWater: String
+    let parkType: ParkType
+    let isSwimmable: Bool
+    let hasCamping: Bool
     
     var clLocation: CLLocation {
         CLLocation(latitude: coordinates.latitude, longitude: coordinates.longitude)
     }
-    let parkType: ParkType
-    let isSwimmable: Bool
-    let hasCamping: Bool
+    
+    // Aliases are for better siri integration
+    var aliases: [String] {
+        var result: [String] = []
+        let name = beachName
+        
+        let suffixes = [" State Park", " County Park", " City Beach", " Metropark", " Beach", " National Park"]
+        
+        for suffix in suffixes {
+            if name.hasSuffix(suffix) {
+                let stripped = String(name.dropLast(suffix.count))
+                if !stripped.isEmpty && stripped != name {
+                    result.append(stripped)
+                    if !stripped.hasSuffix(" Beach") {
+                        result.append(stripped + " Beach")
+                    }
+                }
+                break
+            }
+        }
+        
+        if let first = name.split(separator: " ").first.map(String.init),
+           first != name && !result.contains(first) {
+            result.append(first)
+        }
+        
+        return result
+    }
+    
     
     enum ParkType: String {
         case statePark = "state_park"

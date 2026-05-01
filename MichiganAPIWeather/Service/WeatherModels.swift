@@ -22,6 +22,11 @@ struct BeachDetailResponse: Decodable {
     }
 }
 
+struct BeachAlertsResponse: Decodable {
+    let waterQuality: [WaterQuality]?
+    let alerts: [AlertFeature]?
+}
+
 // MARK: - Buoy
 
 struct BuoyData: Decodable {

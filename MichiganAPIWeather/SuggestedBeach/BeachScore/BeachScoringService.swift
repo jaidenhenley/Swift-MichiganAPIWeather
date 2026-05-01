@@ -129,7 +129,7 @@ class BeachScoringService {
         if snapshot.tempF >= 70 { return "warm and comfortable all day." }
         if snapshot.uvIndex >= 8 { return "great day out. Don't forget the sunscreen." }
         if snapshot.windSpeedMPH <= 10 && snapshot.precipChance <= 0.2 { return "calm and clear. Conditions are looking great." }
-        return "solid conditions. Not a bad day for the beach."
+        return "alright conditions."
     }
 
     private func tagScore(for beach: Beach) -> Double {

@@ -42,7 +42,7 @@ struct MapView: View {
                     }
                 }
             }
-            .onMapCameraChange(frequency: .continuous) { context in
+            .onMapCameraChange(frequency: .onEnd) { context in
                 mapVM.updateVisibleBeaches(in: context.region)
             }
             .ignoresSafeArea()

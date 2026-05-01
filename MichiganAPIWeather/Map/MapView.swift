@@ -45,6 +45,7 @@ struct MapView: View {
                 mapVM.updateClustersIfNeeded(for: context.region)
                 
             }
+            .ignoresSafeArea()
 
             beachListOverlay
         }

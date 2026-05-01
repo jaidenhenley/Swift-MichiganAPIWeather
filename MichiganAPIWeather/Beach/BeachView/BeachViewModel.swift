@@ -36,7 +36,6 @@ class BeachViewModel {
     
     var selectedKeywords: Set<String> = []
     
-    var filterCamping: Bool = false
     var filterSwimmable: Bool = false
     
     // Crowd Meter Data
@@ -68,9 +67,6 @@ class BeachViewModel {
             }
         }
         
-        if filterCamping {
-            results = results.filter { $0.hasCamping }
-        }
         if filterSwimmable {
             results = results.filter { $0.isSwimmable }
         }
@@ -84,8 +80,13 @@ class BeachViewModel {
                 }
                 // activity keyword filtering
                 let activityKeywords = selectedKeywords.subtracting(["state park", "national park", "city beach", "county park"])
-                if !activityKeywords.isEmpty {
-                    return !activityKeywords.isDisjoint(with: Set(beach.keywords))
+                if activityKeywords.contains("camping") && !beach.hasCamping {
+                    return false
+                }
+
+                let searchableActivityKeywords = activityKeywords.subtracting(["camping"])
+                if !searchableActivityKeywords.isEmpty {
+                    return !searchableActivityKeywords.isDisjoint(with: Set(beach.keywords))
                 }
                 return true
             }

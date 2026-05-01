@@ -22,11 +22,10 @@ struct FilterCard: View {
             
             // Header
             HStack {
-                if !viewModel.selectedKeywords.isEmpty || viewModel.filterCamping || viewModel.filterSwimmable || sortByDistance {
+                if !viewModel.selectedKeywords.isEmpty || viewModel.filterSwimmable || sortByDistance {
                     Button("Clear All") {
                         withAnimation(.snappy) {
                             viewModel.selectedKeywords.removeAll()
-                            viewModel.filterCamping = false
                             viewModel.filterSwimmable = false
                             sortByDistance = false
                             distanceRange = .all
@@ -121,7 +120,7 @@ struct FilterCard: View {
                     .bold()
                     .padding(.bottom, 8)
 
-                toggleRow(title: "Camping available", isOn: $viewModel.filterCamping)
+                keywordRow(title: "Camping available", keyword: "camping")
                 toggleRow(title: "Swimmable beach", isOn: $viewModel.filterSwimmable)
 
                 Divider().padding(.vertical, 12)

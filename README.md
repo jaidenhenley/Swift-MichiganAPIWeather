@@ -101,6 +101,41 @@ George Clinkscales | [Portfolio](https://geoclink.github.io/portfolio/) | [Linke
   - **License**: Licensed under [CC BY-NC 2.0](https://creativecommons.org/licenses/by-nc/2.0/deed.en)
 
   - **Image**: Lexington Harbor, Lake Huron, Lexington, Michigan
-  - **Author**: [Ken Lund](https://www.flickr.com/photos/kenlund/)
+  - **Author**: Ken Lund
   - **Source**: [Link to Image](https://www.flickr.com/photos/kenlund/21850301041)
   - **License**: Licensed under [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/deed.en)
+
+  - **Image**: Gooseberry Falls State Park
+  - **Author**: Joe Passe
+  - **Source**: [Link to Image](https://www.flickr.com/photos/98623843@N05/51060449263/)
+  - **License**: Licensed under [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/deed.en)
+
+  - **Image**: Norrfällsviken
+  - **Author**: Bengt A. Lundberg / Riksantikvarieämbetet
+  - **Source**: Wikimedia Commons
+  - **License**: Licensed under [CC BY 2.5](https://creativecommons.org/licenses/by/2.5/deed.en)
+
+  - **Image**: Whitefish Point Lighthouse
+  - **Author**: Browermd
+  - **Source**: Wikimedia Commons
+  - **License**: Licensed under [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/deed.en)
+
+  - **Image**: Cove
+  - **Author**: [jackshapiro3737](https://www.flickr.com/photos/jackshapiro3737/)
+  - **Source**: [Link to Image](https://www.flickr.com/photos/jackshapiro3737/52137364831/)
+  - **License**: Licensed under [CC BY-NC-SA 2.0](https://creativecommons.org/licenses/by-nc-sa/2.0/deed.en)
+
+  - **Image**: Bay City State Park
+  - **Author**: Notorious4life
+  - **Source**: Wikimedia Commons
+  - **License**: Licensed under [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)
+
+- **Image**: Sleeping Bear Dunes National Lakeshore
+- **Author**: National Parks Gallery
+- **Source**: [Link to Image](https://npgallery.nps.gov/)
+- **License**: Licensed under Public Domain
+
+- **Image**: Looking South Toward Sleeping Bear, Leland, MI
+- **Author**: [don hamerly](https://www.flickr.com/photos/donhamerly/)
+- **Source**: [Link to Image](https://www.flickr.com/photos/donhamerly/7503152442/)
+- **License**: Licensed under [CC BY-NC-SA 2.0](https://creativecommons.org/licenses/by-nc-sa/2.0/deed.en)

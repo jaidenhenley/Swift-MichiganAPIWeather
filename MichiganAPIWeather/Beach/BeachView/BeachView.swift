@@ -12,6 +12,10 @@ struct BeachView: View {
     @State private var selectedImageIndex = 0
     let beach: Beach
     let beachID: Int
+
+    private func activeAlerts(at date: Date) -> [AlertFeature] {
+        viewModel.alerts.filter { $0.isActive(at: date) }
+    }
     
     var body: some View {
         ScrollView {
@@ -73,15 +77,16 @@ struct BeachView: View {
                     }
                     
                     
-                    if !viewModel.alerts.isEmpty {
-                        VStack(alignment: .leading, spacing: 8) {
-                           
-                            
-                            ForEach(viewModel.alerts, id: \.event) { alert in
-                                AlertCard(alert: alert)
-                                    .accessibilityLabel("\(alert.event). \(alert.headline)")
-                                    .accessibilityHint("Tap info for more details")
-                                    
+                    TimelineView(.periodic(from: .now, by: 60)) { context in
+                        let activeAlerts = activeAlerts(at: context.date)
+
+                        if !activeAlerts.isEmpty {
+                            VStack(alignment: .leading, spacing: 8) {
+                                ForEach(activeAlerts, id: \.event) { alert in
+                                    AlertCard(alert: alert)
+                                        .accessibilityLabel("\(alert.event). \(alert.headline)")
+                                        .accessibilityHint("Tap info for more details")
+                                }
                             }
                         }
                     }
@@ -156,6 +161,5 @@ struct BeachView: View {
             .accessibilityLabel("Beach photo \(index + 1) of \(beach.images.count)")
     }
 }
-
 
 

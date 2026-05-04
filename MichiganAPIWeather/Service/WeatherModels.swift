@@ -69,6 +69,31 @@ struct AlertFeature: Decodable {
     let urgency: String
     let effective: String
     let expires: String
+
+    var expirationDate: Date? {
+        Self.iso8601Formatters
+            .lazy
+            .compactMap { $0.date(from: expires) }
+            .first
+    }
+
+    func isActive(at date: Date = .now) -> Bool {
+        guard let expirationDate else { return true }
+        return expirationDate > date
+    }
+
+    private static let iso8601Formatters: [ISO8601DateFormatter] = [
+        {
+            let formatter = ISO8601DateFormatter()
+            formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+            return formatter
+        }(),
+        {
+            let formatter = ISO8601DateFormatter()
+            formatter.formatOptions = [.withInternetDateTime]
+            return formatter
+        }()
+    ]
 }
 
 // MARK: - Holiday

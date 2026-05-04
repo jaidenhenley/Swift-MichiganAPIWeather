@@ -13,7 +13,7 @@ struct WeatherDashboard: View {
     private var dayStats: [WeatherStat] {
         [
             WeatherStat(icon: "thermometer.variable", name: "AIR TEMP", value: viewModel.temperatureDisplay, unit: ""),
-            WeatherStat(icon: "drop.fill", name: "WATER TEMP", value: String("\(viewModel.buoyData?.waterTempC)"), unit: "°"),
+            WeatherStat(icon: "drop.fill", name: "WATER TEMP", value: viewModel.buoyData?.waterTempC.map { String(format: "%.0f", $0 * 9/5 + 32) } ?? "--", unit: "°"),
             WeatherStat(icon: "wind", name: "WIND", value: viewModel.forecastDays.first?.windSpeed ?? "--", unit: viewModel.forecastDays.first.map { $0.windDirection.initials } ?? "--"),
             WeatherStat(icon: "humidity", name: "HUMIDITY", value: viewModel.humidity, unit: ""),
             WeatherStat(icon: "sunrise.fill", name: "SUNRISE", value: viewModel.forecastDays.first?.sunrise ?? "--", unit: ""),

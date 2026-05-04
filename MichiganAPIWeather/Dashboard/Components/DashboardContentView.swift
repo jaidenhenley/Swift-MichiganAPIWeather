@@ -100,7 +100,7 @@ struct DashboardContentView: View {
                                     } label: {
                                         Text("Plan Your Trip")
                                             .font(.footnote)
-                                            .foregroundStyle(.blueGreen)
+                                            .foregroundStyle(.bluegreen1)
                                             .fontWeight(.bold)
                                             .padding(.horizontal, 14)
                                             .padding(.vertical, 12)

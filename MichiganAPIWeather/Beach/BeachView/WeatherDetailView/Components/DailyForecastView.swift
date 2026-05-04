@@ -19,8 +19,6 @@ struct DailyForecastView: View {
             return a.temp < b.temp
         })
     }
-
-    // in the ForEach:
     
     var body: some View {
         VStack(spacing: 0) {
@@ -41,12 +39,11 @@ struct DailyForecastView: View {
                 .presentationDetents([.fraction(0.35), .medium])
                 .presentationDragIndicator(.visible)
         }
-
-        
     }
 }
 
 struct DailyForecastRow: View {
+    @Environment(\.colorScheme) var colorScheme
     
     let day: ForecastDay
     let onTap: (ForecastDay) -> Void
@@ -71,35 +68,43 @@ struct DailyForecastRow: View {
     }
     
     private var rowBackground: some View {
-        let base = RoundedRectangle(cornerRadius: 12)
-            .fill(isBestDay ? Color.yellow.opacity(0.15) : Color.gray.opacity(0.1))
-        let gradient = RoundedRectangle(cornerRadius: 12)
-            .fill(
-                isBestDay ?
-                    LinearGradient(
-                        colors: [
-                            Color(hex:"F1F2F3"),
-                            Color(hex:"FEFCEC"),
-                            Color(hex:"D4E3EC")
-                        ],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    ) :
-                    LinearGradient(
-                        colors: [Color.gray.opacity(0.1)],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-            )
+        let isDark = colorScheme == .dark
+        
+        // Adaptive "Golden" Palette
+        let goldTop = isDark ? Color(hex: "3D3000") : Color(hex: "F1F2F3")
+        let goldMid = isDark ? Color(hex: "2A2100") : Color(hex: "FEFCEC")
+        let goldBottom = isDark ? Color(hex: "1A1A1A") : Color(hex: "D4E3EC")
+        
+        // Adaptive Standard Palette
+        let standardFill = isDark ? Color.white.opacity(0.05) : Color.gray.opacity(0.1)
+
         return ZStack {
-            base
-            gradient
+            RoundedRectangle(cornerRadius: 12)
+                .fill(isBestDay ? Color.yellow.opacity(isDark ? 0.1 : 0.15) : standardFill)
+            
+            RoundedRectangle(cornerRadius: 12)
+                .fill(
+                    isBestDay ?
+                        LinearGradient(
+                            colors: [goldTop, goldMid, goldBottom],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        ) :
+                        LinearGradient(
+                            colors: [standardFill],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                )
         }
     }
 
     private var rowOverlay: some View {
         RoundedRectangle(cornerRadius: 12)
-            .stroke(isBestDay ? Color(.yellow) : Color.clear, lineWidth: 1.5)
+            .stroke(
+                isBestDay ? Color.yellow.opacity(colorScheme == .dark ? 0.5 : 1.0) : Color.clear,
+                lineWidth: 1.5
+            )
     }
     
     var body: some View {
@@ -108,13 +113,16 @@ struct DailyForecastRow: View {
         } label: {
             VStack(alignment: .leading) {
                 HStack {
-                    VStack{
+                    VStack(alignment: .leading) {
                         Text(day.name)
                             .font(.caption)
                             .fontWeight(.bold)
                             .foregroundColor(.blueGreen)
                         Text(day.dateText.uppercased())
+                            .font(.system(size: 10))
                     }
+                    .frame(width: 60, alignment: .leading)
+                    
                     HStack {
                         iconView
                         Spacer()
@@ -130,7 +138,7 @@ struct DailyForecastRow: View {
             .background(rowBackground)
             .overlay(rowOverlay)
             .shadow(
-                color: isBestDay ? Color(.yellow).opacity(0.4) : Color.clear,
+                color: isBestDay ? Color.yellow.opacity(colorScheme == .dark ? 0.2 : 0.4) : Color.clear,
                 radius: isBestDay ? 8 : 0
             )
         }
@@ -143,7 +151,6 @@ struct DailyForecastRow: View {
         .accessibilityAddTraits(.isButton)
     }
 }
-
 
 extension Color {
     init(hex: String) {

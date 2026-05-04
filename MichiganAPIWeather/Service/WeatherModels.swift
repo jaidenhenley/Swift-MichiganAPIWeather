@@ -18,7 +18,7 @@ struct BeachDetailResponse: Decodable {
 
     enum CodingKeys: String, CodingKey {
         case beach, alerts, holiday, waterQuality
-        case buoyData = "buoy_data"
+        case buoyData = "buoyData"
     }
 }
 

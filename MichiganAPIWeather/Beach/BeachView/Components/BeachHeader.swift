@@ -53,13 +53,13 @@ struct BeachHeader: View {
                             .font(.caption)
                             .bold()
                             .foregroundColor(.beachViewText)
-                        Text(viewModel.buoyData?.waterTempC.map { String(format: "%.1f°C", $0) } ?? "N/A")
+                        Text(viewModel.buoyData?.waterTempC.map { String(format: "%.0f°", $0 * 9/5 + 32) } ?? "N/A")
                             .font(.largeTitle)
                     }
-                    
+
                 }
                 .accessibilityElement(children: .ignore)
-                .accessibilityLabel("Water temperature, \(viewModel.buoyData?.waterTempC.map { String(format: "%.1f degrees Celsius", $0) } ?? "not available")")
+                .accessibilityLabel("Water temperature, \(viewModel.buoyData?.waterTempC.map { String(format: "%.0f degrees Fahrenheit", $0 * 9/5 + 32) } ?? "not available")")
             }
             UVView()
                 

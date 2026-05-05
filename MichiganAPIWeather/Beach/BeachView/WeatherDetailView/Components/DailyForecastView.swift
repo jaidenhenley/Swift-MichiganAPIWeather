@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DailyForecastView: View {
     @State private var selectedDay: ForecastDay?
+    @State private var infoDay: ForecastDay?
     @Environment(BeachViewModel.self) var viewModel
 
     var bestDay: ForecastDay? {
@@ -23,9 +24,11 @@ struct DailyForecastView: View {
     var body: some View {
         VStack(spacing: 0) {
             ForEach(viewModel.forecastDays.dropFirst()) { day in
-                DailyForecastRow(day: day, isBestDay: day.id == bestDay?.id) { tappedDay in
+                DailyForecastRow(day: day, onTap: { tappedDay in
                     selectedDay = tappedDay
-                }
+                }, onInfoTap: { tappedDay in
+                    infoDay = tappedDay
+                }, isBestDay: day.id == bestDay?.id)
             }
         }
         .padding(.vertical, 10)
@@ -39,6 +42,14 @@ struct DailyForecastView: View {
                 .presentationDetents([.fraction(0.35), .medium])
                 .presentationDragIndicator(.visible)
         }
+        .alert("Best Beach Day", isPresented: Binding(
+            get: { infoDay != nil },
+            set: { if !$0 { infoDay = nil } }
+        )) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text("\(infoDay?.name ?? "This day") is highlighted because it is the warmest upcoming day with the lowest chance of rain in this forecast.")
+        }
     }
 }
 
@@ -47,6 +58,7 @@ struct DailyForecastRow: View {
     
     let day: ForecastDay
     let onTap: (ForecastDay) -> Void
+    let onInfoTap: (ForecastDay) -> Void
     var isBestDay: Bool = false
 
     private var iconView: some View {
@@ -120,6 +132,11 @@ struct DailyForecastRow: View {
                             .foregroundColor(.blueGreen)
                         Text(day.dateText.uppercased())
                             .font(.system(size: 10))
+                        if isBestDay {
+                            Text("BEST")
+                                .font(.system(size: 9, weight: .bold))
+                                .foregroundStyle(.yellow)
+                        }
                     }
                     .frame(width: 60, alignment: .leading)
                     
@@ -130,6 +147,22 @@ struct DailyForecastRow: View {
                         Spacer()
                         tempView
                         Spacer()
+                    }
+
+                    if isBestDay {
+                        Button {
+                            onInfoTap(day)
+                        } label: {
+                            Image(systemName: "info.circle")
+                                .font(.headline)
+                                .foregroundStyle(.primary)
+                                .padding(6)
+                                .background(Color.white.opacity(colorScheme == .dark ? 0.12 : 0.55))
+                                .clipShape(Circle())
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel("Explain best beach day")
+                        .accessibilityHint("Shows why this forecast day is highlighted")
                     }
                 }
             }

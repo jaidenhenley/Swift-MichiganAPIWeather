@@ -1,11 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "baycity1.jpg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "baycity1.jpg",
       "idiom" : "universal",
       "scale" : "2x"
     },

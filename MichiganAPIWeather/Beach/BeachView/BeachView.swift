@@ -9,9 +9,13 @@ import SwiftUI
 
 struct BeachView: View {
     @Environment(BeachViewModel.self) var viewModel
+    @Environment(\.dismiss) var dismiss
     @State private var selectedImageIndex = 0
+    @State private var showCrowdMeterAlert: Bool = false
     let beach: Beach
     let beachID: Int
+    var isSheet: Bool = false
+
 
     private func activeAlerts(at date: Date) -> [AlertFeature] {
         viewModel.alerts.filter { $0.isActive(at: date) }
@@ -59,24 +63,12 @@ struct BeachView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
                     // Water Quality Alert
-                    if let quality = viewModel.waterQuality?.first, quality.status != "safe" {
-                        VStack(alignment: .leading, spacing: 8) {
-                            
-                            
-                            AlertCard(alert: AlertFeature(
-                                event: "E. coli Warning",
-                                headline: "Warning! E. coli levels are high. Swimming may not be safe.",
-                                severity: quality.status == "unsafe" ? "Moderate" : "Minor",
-                                urgency: "Expected",
-                                effective: quality.lastReading,
-                                expires: quality.lastReading
-                            ))
-                            .accessibilityLabel("Water quality warning. E. coli levels are high. Swimming may not be safe.")
-                            .accessibilityHint("Tap info for more details")
-                        }
+                    if let quality = viewModel.waterQuality,
+                       quality.isRecentEnoughToShow,
+                       quality.status != "safe",
+                       let message = quality.alertMessage {
+                        WaterQualityCard(wq: quality, message: message, highConfidence: quality.isHighConfidence)
                     }
-                    
-                    
                     TimelineView(.periodic(from: .now, by: 60)) { context in
                         let activeAlerts = activeAlerts(at: context.date)
 
@@ -111,16 +103,24 @@ struct BeachView: View {
                     .padding(.vertical)
                     .accessibilityHidden(true)
 
-                
-                Text("\(Image(systemName: "person.3.fill")) CROWD METER")
-                    .accessibilityLabel("Crowd Meter")
-                    .accessibilityLabel("Crowd Meter")
-                    .accessibilityAddTraits(.isHeader)
-                    .foregroundStyle(.beachViewText)
-                    .font(.footnote)
-                    .bold()
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding()
+                HStack {
+                    Text("\(Image(systemName: "person.3.fill")) CROWD METER")
+                        .accessibilityLabel("Crowd Meter")
+                        .accessibilityLabel("Crowd Meter")
+                        .accessibilityAddTraits(.isHeader)
+                        .foregroundStyle(.beachViewText)
+                        .font(.footnote)
+                        .bold()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding()
+                    
+                    
+                    Button("", systemImage: "info.circle") {
+                        showCrowdMeterAlert.toggle()
+                    }
+                    .buttonStyle(.plain)
+                    .padding(.horizontal, 8)
+                }
                 
                 CrowdMeterView(forecastCrowd: viewModel.forecastCrowd, forecastDays: viewModel.forecastDays)
                 BeachSummaryView(beachName: viewModel.beachName.isEmpty ? "" : viewModel.beachName, beachdescription: beach.description)
@@ -145,6 +145,21 @@ struct BeachView: View {
                 FavoriteButtonView(beach: beach, isToolbarButton: true)
                     .accessibilityLabel("Favorite \(beach.beachName)")
             }
+            if isSheet {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark")
+                            .fontWeight(.semibold)
+                    }
+                }
+            }
+        }
+        .alert("Crowd Meter", isPresented: $showCrowdMeterAlert) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text("The crowd meter predicts how busy a beach will be based on temperature, wind, precipitation, and whether it's a holiday or weekend. Predictions run on-device using a machine learning model trained on historical visitation data.")
         }
         .task {
             await viewModel.selectBeach(beach, beachID: beachID)

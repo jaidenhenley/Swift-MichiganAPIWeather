@@ -20,7 +20,7 @@ struct MapView: View {
             span: MKCoordinateSpan(latitudeDelta: 5.0, longitudeDelta: 5.0)
         )
     )
-
+    
     var body: some View {
         ZStack(alignment: .bottom) {
             
@@ -46,7 +46,7 @@ struct MapView: View {
                 mapVM.updateVisibleBeaches(in: context.region)
             }
             .ignoresSafeArea()
-
+            
             beachListOverlay
         }
         .task {
@@ -54,11 +54,13 @@ struct MapView: View {
         }
         .sheet(isPresented: $showDetail) {
             if let beach = selectedBeach {
-                BeachView(beach: beach, beachID: beach.id)
+                NavigationStack {
+                    BeachView(beach: beach, beachID: beach.id, isSheet: true)
+                }
             }
         }
     }
-
+    
     private func clusterView(_ cluster: BeachCluster) -> some View {
         Button {
             withAnimation(.easeInOut) {
@@ -84,7 +86,7 @@ struct MapView: View {
         .accessibilityLabel("\(cluster.beaches.count) beaches in this area")
         .accessibilityHint("Double tap to zoom in")
     }
-
+    
     private func beachAnnotation(_ beach: Beach) -> some View {
         Button {
             selectedBeach = beach
@@ -95,7 +97,7 @@ struct MapView: View {
                     .fill(.mapBlueGreen)
                 
                 Image(systemName: "beach.umbrella.fill")
-                    .font(.system(size: 24))  
+                    .font(.system(size: 24))
                     .foregroundStyle(.mapYellow)
             }
             .frame(width: 44, height: 44)
@@ -103,9 +105,9 @@ struct MapView: View {
             
         }
         .accessibilityLabel(beach.beachName)
-           .accessibilityHint("Double tap to view beach details")
+        .accessibilityHint("Double tap to view beach details")
     }
-
+    
     private var beachListOverlay: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 12) {

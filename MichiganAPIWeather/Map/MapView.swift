@@ -56,6 +56,16 @@ struct MapView: View {
             if let beach = selectedBeach {
                 NavigationStack {
                     BeachView(beach: beach, beachID: beach.id, isSheet: true)
+                        .navigationDestination(for: AppRoute.self) { route in
+                            switch route {
+                            case .beachDetail(let beachID):
+                                if let beach = Beach.allBeaches.first(where: { $0.id == beachID }) {
+                                    BeachView(beach: beach, beachID: beachID)
+                                }
+                            case .weatherDetail:
+                                WeatherDetailView()
+                            }
+                        }
                 }
             }
         }

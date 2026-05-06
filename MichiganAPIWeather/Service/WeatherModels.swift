@@ -12,7 +12,7 @@ import Foundation
 struct BeachDetailResponse: Decodable {
     let beach: String?
     let buoyData: BuoyData?
-    let waterQuality: [WaterQuality]?
+    let waterQuality: WaterQuality?
     let alerts: [AlertFeature]
     let holiday: Bool
 
@@ -58,6 +58,19 @@ struct WaterQuality: Decodable {
     let unit: String
     let status: String
     let source: String
+    
+    var lastReadingDate: Date? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        return formatter.date(from: lastReading)
+    }
+    
+    var isRecent: Bool {
+        guard let date = lastReadingDate else { return false }
+        let thirtyDays: TimeInterval = 30 * 24 * 60 * 60
+        return Date.now.timeIntervalSince(date) < thirtyDays
+    }
 }
 
 // MARK: - Alerts

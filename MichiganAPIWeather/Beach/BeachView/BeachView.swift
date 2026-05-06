@@ -60,23 +60,11 @@ struct BeachView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
                     // Water Quality Alert
-                    if let quality = viewModel.waterQuality?.first, quality.status != "safe" {
-                        VStack(alignment: .leading, spacing: 8) {
-                            
-                            
-                            AlertCard(alert: AlertFeature(
-                                event: "E. coli Warning",
-                                headline: "Warning! E. coli levels are high. Swimming may not be safe.",
-                                severity: quality.status == "unsafe" ? "Moderate" : "Minor",
-                                urgency: "Expected",
-                                effective: quality.lastReading,
-                                expires: quality.lastReading
-                            ))
-                            .accessibilityLabel("Water quality warning. E. coli levels are high. Swimming may not be safe.")
-                            .accessibilityHint("Tap info for more details")
-                        }
+                    if let quality = viewModel.waterQuality, quality.isRecent, quality.status != "safe" {
+                        WaterQualityCard(wq: quality)
+                            .accessibilityLabel("Water quality warning. E. coli levels are elevated. Swimming may not be safe.")
+                            .accessibilityHint("Tap for more details")
                     }
-                    
                     
                     TimelineView(.periodic(from: .now, by: 60)) { context in
                         let activeAlerts = activeAlerts(at: context.date)

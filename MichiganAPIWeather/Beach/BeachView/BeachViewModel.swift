@@ -46,7 +46,7 @@ class BeachViewModel {
     
     // Backend-only data
     var buoyData: BuoyData?
-    var waterQuality: [WaterQuality]?
+    var waterQuality: WaterQuality?
     var holiday: Bool = false
     
     // Search Filtering

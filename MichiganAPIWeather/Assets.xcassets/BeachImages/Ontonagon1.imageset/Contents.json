@@ -1,11 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "Ontonagon1.jpg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "Ontonagon1.jpg",
       "idiom" : "universal",
       "scale" : "2x"
     },

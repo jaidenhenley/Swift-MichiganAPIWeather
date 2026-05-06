@@ -1,11 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "CoastCast_Landing_01.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "CoastCast_Landing_01.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

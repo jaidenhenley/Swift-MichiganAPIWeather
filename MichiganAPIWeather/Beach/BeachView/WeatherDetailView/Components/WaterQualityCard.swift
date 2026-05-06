@@ -9,8 +9,10 @@ import SwiftUI
 
 struct WaterQualityCard: View {
     @State private var showDetail = false
-
+    
     let wq: WaterQuality
+    let message: String
+    let highConfidence: Bool
     
     var body: some View {
         HStack(spacing: 12) {
@@ -18,7 +20,7 @@ struct WaterQualityCard: View {
                 .foregroundColor(.yellow)
                 .font(.title2)
             
-            Text("Warning! E. coli levels are high. Swimming may not be safe.")
+            Text(message)
                 .font(.subheadline)
                 .bold()
                 .foregroundColor(.primary)
@@ -38,21 +40,20 @@ struct WaterQualityCard: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(Color(.systemGray5))
         .cornerRadius(16)
-        .alert("E. coli Warning", isPresented: $showDetail) {
-            Button("OK", role: .cancel) {
-            } } message: {
-                Text("E. coli Warning \n\nSeverity: \(wq.status)\nExpires: \(formattedDate(wq.lastReading))")
-
-            }
+        .alert("Water Quality Advisory", isPresented: $showDetail) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text("E. coli: \(wq.formattedValue)\nSampled: \(formattedDate(wq.lastReading))\nSource: \(wq.source)")
+        }
     }
     
     func formattedDate(_ iso: String) -> String {
-            let formatter = ISO8601DateFormatter()
-            formatter.formatOptions = [.withInternetDateTime]
-            guard let date = formatter.date(from: iso) else { return iso }
-            let display = DateFormatter()
-            display.dateFormat = "MMM d, h:mm a"
-            return display.string(from: date)
-        }
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime]
+        guard let date = formatter.date(from: iso) else { return iso }
+        let display = DateFormatter()
+        display.dateFormat = "MMM d, h:mm a"
+        return display.string(from: date)
+    }
 }
 

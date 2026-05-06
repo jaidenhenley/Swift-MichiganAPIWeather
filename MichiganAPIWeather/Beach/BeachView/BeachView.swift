@@ -60,12 +60,12 @@ struct BeachView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
                     // Water Quality Alert
-                    if let quality = viewModel.waterQuality, quality.isRecent, quality.status != "safe" {
-                        WaterQualityCard(wq: quality)
-                            .accessibilityLabel("Water quality warning. E. coli levels are elevated. Swimming may not be safe.")
-                            .accessibilityHint("Tap for more details")
+                    if let quality = viewModel.waterQuality,
+                       quality.isRecentEnoughToShow,
+                       quality.status != "safe",
+                       let message = quality.alertMessage {
+                        WaterQualityCard(wq: quality, message: message, highConfidence: quality.isHighConfidence)
                     }
-                    
                     TimelineView(.periodic(from: .now, by: 60)) { context in
                         let activeAlerts = activeAlerts(at: context.date)
 

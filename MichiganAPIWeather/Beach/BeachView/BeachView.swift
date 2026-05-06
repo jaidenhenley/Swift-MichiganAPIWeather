@@ -9,10 +9,13 @@ import SwiftUI
 
 struct BeachView: View {
     @Environment(BeachViewModel.self) var viewModel
+    @Environment(\.dismiss) var dismiss
     @State private var selectedImageIndex = 0
     @State private var showCrowdMeterAlert: Bool = false
     let beach: Beach
     let beachID: Int
+    var isSheet: Bool = false
+
 
     private func activeAlerts(at date: Date) -> [AlertFeature] {
         viewModel.alerts.filter { $0.isActive(at: date) }
@@ -141,6 +144,16 @@ struct BeachView: View {
             ToolbarItem(placement: .confirmationAction) {
                 FavoriteButtonView(beach: beach, isToolbarButton: true)
                     .accessibilityLabel("Favorite \(beach.beachName)")
+            }
+            if isSheet {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark")
+                            .fontWeight(.semibold)
+                    }
+                }
             }
         }
         .alert("Crowd Meter", isPresented: $showCrowdMeterAlert) {

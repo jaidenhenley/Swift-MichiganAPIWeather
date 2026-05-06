@@ -10,6 +10,7 @@ import SwiftUI
 struct BeachView: View {
     @Environment(BeachViewModel.self) var viewModel
     @State private var selectedImageIndex = 0
+    @State private var showCrowdMeterAlert: Bool = false
     let beach: Beach
     let beachID: Int
 
@@ -111,16 +112,24 @@ struct BeachView: View {
                     .padding(.vertical)
                     .accessibilityHidden(true)
 
-                
-                Text("\(Image(systemName: "person.3.fill")) CROWD METER")
-                    .accessibilityLabel("Crowd Meter")
-                    .accessibilityLabel("Crowd Meter")
-                    .accessibilityAddTraits(.isHeader)
-                    .foregroundStyle(.beachViewText)
-                    .font(.footnote)
-                    .bold()
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding()
+                HStack {
+                    Text("\(Image(systemName: "person.3.fill")) CROWD METER")
+                        .accessibilityLabel("Crowd Meter")
+                        .accessibilityLabel("Crowd Meter")
+                        .accessibilityAddTraits(.isHeader)
+                        .foregroundStyle(.beachViewText)
+                        .font(.footnote)
+                        .bold()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding()
+                    
+                    
+                    Button("", systemImage: "info.circle") {
+                        showCrowdMeterAlert.toggle()
+                    }
+                    .buttonStyle(.plain)
+                    .padding(.horizontal, 8)
+                }
                 
                 CrowdMeterView(forecastCrowd: viewModel.forecastCrowd, forecastDays: viewModel.forecastDays)
                 BeachSummaryView(beachName: viewModel.beachName.isEmpty ? "" : viewModel.beachName, beachdescription: beach.description)
@@ -145,6 +154,11 @@ struct BeachView: View {
                 FavoriteButtonView(beach: beach, isToolbarButton: true)
                     .accessibilityLabel("Favorite \(beach.beachName)")
             }
+        }
+        .alert("Crowd Meter", isPresented: $showCrowdMeterAlert) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text("The crowd meter predicts how busy a beach will be based on temperature, wind, precipitation, and whether it's a holiday or weekend. Predictions run on-device using a machine learning model trained on historical visitation data.")
         }
         .task {
             await viewModel.selectBeach(beach, beachID: beachID)

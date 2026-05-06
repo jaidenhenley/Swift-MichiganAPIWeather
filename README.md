@@ -139,3 +139,33 @@ George Clinkscales | [Portfolio](https://geoclink.github.io/portfolio/) | [Linke
 - **Author**: [don hamerly](https://www.flickr.com/photos/donhamerly/)
 - **Source**: [Link to Image](https://www.flickr.com/photos/donhamerly/7503152442/)
 - **License**: Licensed under [CC BY-NC-SA 2.0](https://creativecommons.org/licenses/by-nc-sa/2.0/deed.en)
+
+- **Image**: I love you today, tomorrow and forever
+- **Author**: [churl](https://www.flickr.com/photos/churl/)
+- **Source**: [Link to Image](https://www.flickr.com/photos/churl/2451397200)
+- **License**: Licensed under [CC BY-NC-ND 2.0](https://creativecommons.org/licenses/by-nc-nd/2.0/deed.en)
+
+- **Image**: New Buffalo Lighthouse, MI
+- **Author**: BigBear_in_IN
+- **Source**: [Link to Image](https://web.archive.org/web/20161024130553/http://www.panoramio.com/photo/74818913)
+- **License**: Licensed under [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/deed.en)
+
+- **Image**: St. Joseph North Pier Lighthouse (St. Joseph, Michigan)
+- **Author**: [Corey Seeman](https://www.flickr.com/photos/cseeman/)
+- **Source**: [Link to Image](https://www.flickr.com/photos/cseeman/7349968278)
+- **License**: Licensed under [CC BY-NC-SA 2.0](https://creativecommons.org/licenses/by-nc-sa/2.0/deed.en)
+
+- **Image**: Lake Erie Beach
+- **Author**: [Jen Goellnitz](https://www.flickr.com/photos/goellnitz/)
+- **Source**: [Link to Image](https://www.flickr.com/photos/goellnitz/25978562584)
+- **License**: Licensed under [CC BY-NC 2.0](https://creativecommons.org/licenses/by-nc/2.0/deed.en)
+
+- **Image**: North Beach Park on Lake Michigan near Ferrysburg
+- **Author**: Gpwitteveen
+- **Source**: [Link to Image](https://commons.wikimedia.org/wiki/File:North_Beach_Park_on_Lake_Michigan_near_Ferrysburg.jpg)
+- **License**: Licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.en)
+
+- **Image**: Michigan Shore (pingnews)
+- **Author**: [pingnews.com](https://www.flickr.com/photos/pingnews/)
+- **Source**: [Link to Image](https://www.flickr.com/photos/pingnews/2640560675)
+- **License**: Licensed under [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/deed.en)

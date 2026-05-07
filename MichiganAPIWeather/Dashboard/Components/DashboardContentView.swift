@@ -98,7 +98,7 @@ struct DashboardContentView: View {
                                     Button {
                                         viewModel.isSearching = true
                                     } label: {
-                                        Text("Plan Your Trip")
+                                        Text("Explore")
                                             .font(.footnote)
                                             .foregroundStyle(.bluegreen1)
                                             .fontWeight(.bold)
@@ -107,7 +107,7 @@ struct DashboardContentView: View {
                                             .background(Color.yellow)
                                             .clipShape(Capsule())
                                     }
-                                    .accessibilityLabel("Plan Your Trip")
+                                    .accessibilityLabel("Explore")
                                     .accessibilityHint("Opens beach search")
                                     
                                     

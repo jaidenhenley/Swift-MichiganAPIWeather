@@ -988,7 +988,7 @@ struct Beach: Identifiable {
                     DisplayKeyword(icon: "water.waves", label: "Lake Michigan"),
                     DisplayKeyword(icon: "building.columns", label: "City Beach"),
                 ],
-                images: [.ludington1, .ludington2, .ludington3],
+                images: [.noImageAvailable],
                 phoneNumber: "(231) 723-2575",
                 websiteURL: URL(string: "https://www.manisteecounty.net"),
                 bodyOfWater: "Lake Michigan",

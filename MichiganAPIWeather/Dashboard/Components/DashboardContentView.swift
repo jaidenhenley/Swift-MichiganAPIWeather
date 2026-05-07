@@ -98,7 +98,7 @@ struct DashboardContentView: View {
                                     Button {
                                         viewModel.isSearching = true
                                     } label: {
-                                        Text("Explore")
+                                        Text("Explore Now")
                                             .font(.footnote)
                                             .foregroundStyle(.bluegreen1)
                                             .fontWeight(.bold)
@@ -107,7 +107,7 @@ struct DashboardContentView: View {
                                             .background(Color.yellow)
                                             .clipShape(Capsule())
                                     }
-                                    .accessibilityLabel("Explore")
+                                    .accessibilityLabel("Explore Now")
                                     .accessibilityHint("Opens beach search")
                                     
                                     
@@ -127,7 +127,7 @@ struct DashboardContentView: View {
                         IconStripView()
                         Divider()
                         if let nearby {
-                            Headline(text: "Beaches near you")
+                            Headline(text: "Beaches Near You")
                                 .padding(.vertical)
                             ScrollView(.horizontal) {
                                 HStack {

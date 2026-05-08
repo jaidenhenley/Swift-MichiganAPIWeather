@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WeatherKit
 
 struct BeachView: View {
     @Environment(BeachViewModel.self) var viewModel
@@ -94,13 +95,25 @@ struct BeachView: View {
                 WeatherForecastRow()
                     .padding(.top, 11)
                     .padding(.horizontal)
-                
-                
-                    
+
+                if let attribution = viewModel.weatherAttribution {
+                    Link(destination: attribution.legalPageURL) {
+                        AsyncImage(url: attribution.combinedMarkLightURL) { image in
+                            image.resizable().scaledToFit()
+                        } placeholder: {
+                            EmptyView()
+                        }
+                        .frame(height: 12)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.leading, 24)
+                    .padding(.top, 8)
+                }
+
                 Divider()
                     .foregroundStyle(.beachViewText)
                     .frame(height: 3)
-                    .padding(.vertical)
+                    .padding(.vertical, 12)
                     .accessibilityHidden(true)
 
                 HStack {

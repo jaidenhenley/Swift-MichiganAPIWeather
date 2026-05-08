@@ -16,7 +16,6 @@ struct WeatherDetailView: View {
                 Spacer()
                 WeatherDashboard()
                 DailyForecastView()
-
             }
         }
         .background(

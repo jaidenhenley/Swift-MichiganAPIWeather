@@ -92,10 +92,15 @@ class WeatherKitService {
     var current: CurrentWeatherSnapshot?
     var dailyForecast: [DailyForecastSnapshot] = []
     var hourlyForecast: [HourForecastSnapshot] = []
+    var attribution: WeatherAttribution?
     var isLoading = false
     var error: Error?
-    
+
     private let service = WeatherService.shared
+
+    func loadAttribution() async {
+        attribution = try? await service.attribution
+    }
     
     /// Fetch current weather + 7-day daily forecast for a coordinate.
     func fetchWeather(latitude: Double, longitude: Double) async {

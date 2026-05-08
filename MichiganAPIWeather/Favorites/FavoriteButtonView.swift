@@ -28,9 +28,15 @@ struct FavoriteButtonView: View {
         if isToolbarButton {
             favoriteButton
         } else {
-            favoriteButton
-                .buttonStyle(.glass)
-                .buttonBorderShape(.circle)
+            if #available(iOS 26.0, *) {
+                favoriteButton
+                    .buttonStyle(.glass)
+                    .buttonBorderShape(.circle)
+            } else {
+               favoriteButton
+                    .buttonStyle(.plain)
+                    .buttonBorderShape(.circle)
+            }
         }
     }
     

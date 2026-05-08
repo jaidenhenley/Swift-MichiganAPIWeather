@@ -29,41 +29,78 @@ struct DashboardView: View {
             VStack(spacing: 0) {
                 
                 VStack(spacing: 8) {
-                    HStack {
-                        Image(systemName: "magnifyingglass")
-                            .foregroundStyle(.secondary)
-                            .accessibilityHidden(true)
-
-                        
-                        TextField("Search", text: $viewModel.searchText)
-                            .focused($isFocused)
-                            .accessibilityLabel("Search beaches")
-                            .accessibilityHint("Type a beach name or keyword to filter results")
-                            .onChange(of: isFocused) { _, focused in
-                                if focused {
-                                    withAnimation(.easeInOut) {
-                                        viewModel.isSearching = true
+                    if #available(iOS 26.0, *) {
+                        HStack {
+                            Image(systemName: "magnifyingglass")
+                                .foregroundStyle(.secondary)
+                                .accessibilityHidden(true)
+                            
+                            
+                            TextField("Search", text: $viewModel.searchText)
+                                .focused($isFocused)
+                                .accessibilityLabel("Search beaches")
+                                .accessibilityHint("Type a beach name or keyword to filter results")
+                                .onChange(of: isFocused) { _, focused in
+                                    if focused {
+                                        withAnimation(.easeInOut) {
+                                            viewModel.isSearching = true
+                                        }
                                     }
                                 }
-                            }
-                        
-                        
-                        if viewModel.isSearching {
-                            Button("Cancel") {
-                                isFocused = false
-                                withAnimation {
-                                    viewModel.isSearching = false
+                            
+                            
+                            if viewModel.isSearching {
+                                Button("Cancel") {
+                                    isFocused = false
+                                    withAnimation {
+                                        viewModel.isSearching = false
+                                    }
+                                    viewModel.searchText = ""
+                                    viewModel.selectedKeywords = []
                                 }
-                                viewModel.searchText = ""
-                                viewModel.selectedKeywords = []
+                                .transition(.move(edge: .trailing).combined(with: .opacity))
+                                .buttonStyle(.plain)
                             }
-                            .transition(.move(edge: .trailing).combined(with: .opacity))
-                            .buttonStyle(.plain)
                         }
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 10)
+                        .glassEffect()
+                    } else {
+                        HStack {
+                            Image(systemName: "magnifyingglass")
+                                .foregroundStyle(.secondary)
+                                .accessibilityHidden(true)
+                            
+                            
+                            TextField("Search", text: $viewModel.searchText)
+                                .focused($isFocused)
+                                .accessibilityLabel("Search beaches")
+                                .accessibilityHint("Type a beach name or keyword to filter results")
+                                .onChange(of: isFocused) { _, focused in
+                                    if focused {
+                                        withAnimation(.easeInOut) {
+                                            viewModel.isSearching = true
+                                        }
+                                    }
+                                }
+                            
+                            
+                            if viewModel.isSearching {
+                                Button("Cancel") {
+                                    isFocused = false
+                                    withAnimation {
+                                        viewModel.isSearching = false
+                                    }
+                                    viewModel.searchText = ""
+                                    viewModel.selectedKeywords = []
+                                }
+                                .transition(.move(edge: .trailing).combined(with: .opacity))
+                                .buttonStyle(.plain)
+                            }
+                        }
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 10)
                     }
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 10)
-                    .glassEffect()
                     
                     if viewModel.isSearching {
                         HStack(spacing: 12) {

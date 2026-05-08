@@ -11,14 +11,25 @@ struct CustomSearchBar: View {
     @Binding var searchText: String
     
     var body: some View {
-        HStack {
-            Image(systemName: "magnifyingglass")
-                .foregroundStyle(.secondary)
-            TextField("Search", text: $searchText)
+        if #available(iOS 26.0, *) {
+            HStack {
+                Image(systemName: "magnifyingglass")
+                    .foregroundStyle(.secondary)
+                TextField("Search", text: $searchText)
+            }
+            .padding(.horizontal, 12)
+            .padding(.vertical, 10)
+            .glassEffect()
+            .padding(.horizontal)
+        } else {
+            HStack {
+                Image(systemName: "magnifyingglass")
+                    .foregroundStyle(.secondary)
+                TextField("Search", text: $searchText)
+            }
+            .padding(.horizontal, 12)
+            .padding(.vertical, 10)
+            .padding(.horizontal)
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 10)
-        .glassEffect()
-        .padding(.horizontal)
     }
 }

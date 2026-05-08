@@ -100,6 +100,8 @@ struct DashboardView: View {
                         }
                         .padding(.horizontal, 12)
                         .padding(.vertical, 10)
+                        .background(Color(.systemGray6))
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
                     
                     if viewModel.isSearching {

@@ -30,6 +30,8 @@ struct CustomSearchBar: View {
             .padding(.horizontal, 12)
             .padding(.vertical, 10)
             .padding(.horizontal)
+            .background(Color(.systemGray6))
+            .clipShape(RoundedRectangle(cornerRadius: 10))
         }
     }
 }

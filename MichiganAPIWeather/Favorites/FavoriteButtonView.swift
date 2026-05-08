@@ -34,7 +34,7 @@ struct FavoriteButtonView: View {
                     .buttonBorderShape(.circle)
             } else {
                favoriteButton
-                    .buttonStyle(.plain)
+                    .buttonStyle(.borderedProminent)
                     .buttonBorderShape(.circle)
             }
         }

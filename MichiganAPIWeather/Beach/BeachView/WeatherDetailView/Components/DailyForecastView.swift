@@ -82,12 +82,10 @@ struct DailyForecastRow: View {
     private var rowBackground: some View {
         let isDark = colorScheme == .dark
         
-        // Adaptive "Golden" Palette
         let goldTop = isDark ? Color(hex: "3D3000") : Color(hex: "F1F2F3")
         let goldMid = isDark ? Color(hex: "2A2100") : Color(hex: "FEFCEC")
         let goldBottom = isDark ? Color(hex: "1A1A1A") : Color(hex: "D4E3EC")
         
-        // Adaptive Standard Palette
         let standardFill = isDark ? Color.white.opacity(0.05) : Color.gray.opacity(0.1)
 
         return ZStack {

@@ -12,7 +12,7 @@ import Foundation
 struct BeachDetailResponse: Decodable {
     let beach: String?
     let buoyData: BuoyData?
-    let waterQuality: [WaterQuality]?
+    let waterQuality: WaterQuality?
     let alerts: [AlertFeature]
     let holiday: Bool
 
@@ -58,6 +58,50 @@ struct WaterQuality: Decodable {
     let unit: String
     let status: String
     let source: String
+    
+    var lastReadingDate: Date? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        return formatter.date(from: lastReading)
+    }
+    
+    var readingAgeInDays: Int? {
+        guard let date = lastReadingDate else { return nil }
+        return Calendar.current.dateComponents([.day], from: date, to: .now).day
+    }
+    
+    // Show at all — 14 day hard cutoff
+    var isRecentEnoughToShow: Bool {
+        guard let age = readingAgeInDays else { return false }
+        return age <= 14
+    }
+    
+    // High confidence — within 5 days
+    var isHighConfidence: Bool {
+        guard let age = readingAgeInDays else { return false }
+        return age <= 5
+    }
+    
+    var formattedValue: String {
+        let formatted = value.formatted(.number.precision(.fractionLength(0)))
+        return "\(formatted) \(unit)"
+    }
+    
+    var alertMessage: String? {
+        guard let age = readingAgeInDays, isRecentEnoughToShow else { return nil }
+        switch age {
+        case 0...2:
+            let when = age == 0 ? "today" : "\(age) day\(age == 1 ? "" : "s") ago"
+            return "E. coli levels exceeded safe thresholds \(when). Avoid water contact."
+        case 3...5:
+            return "E. coli levels exceeded safe thresholds \(age) days ago. Avoid water contact."
+        case 6...14:
+            return "E. coli levels exceeded safe thresholds \(age) days ago. Conditions may have changed — check local advisories."
+        default:
+            return nil
+        }
+    }
 }
 
 // MARK: - Alerts

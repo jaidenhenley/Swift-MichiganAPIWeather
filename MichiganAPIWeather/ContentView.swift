@@ -13,6 +13,7 @@ struct ContentView: View {
     @Environment(LocationManager.self) var locationManager
     
     @State private var navManager = NavigationManager.shared
+    @AppStorage("hasOnboarded") var hasOnboarded: Bool = false
     
     var body: some View {
         TabView(selection: $navManager.selectedTab) {
@@ -53,5 +54,14 @@ struct ContentView: View {
             .tag(AppTab.favorites)
         }
         .environment(navManager)
+        .fullScreenCover(isPresented: Binding(
+            get: { !hasOnboarded },
+            set: { _ in }
+        )) {
+            LocationOnboardingView {
+                locationManager.requestLocation()
+                hasOnboarded = true
+            }
+        }
     }
 }

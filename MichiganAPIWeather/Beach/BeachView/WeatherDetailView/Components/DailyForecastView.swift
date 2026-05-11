@@ -87,7 +87,6 @@ struct DailyForecastRow: View {
         let goldMid = isDark ? Color(hex: "D39F84") : Color(hex: "FEFCEC")
         let goldBottom = isDark ? Color(hex: "617278") : Color(hex: "D4E3EC")
         
-        // Adaptive Standard Palette
         let standardFill = isDark ? Color.white.opacity(0.05) : Color.gray.opacity(0.1)
 
         return ZStack {

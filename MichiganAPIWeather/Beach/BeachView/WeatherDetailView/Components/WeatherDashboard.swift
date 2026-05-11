@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WeatherKit
 
 struct WeatherDashboard: View {
     @Environment(BeachViewModel.self) var viewModel
@@ -31,11 +32,24 @@ struct WeatherDashboard: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("TODAY")
-                .font(.headline)
-                .bold()
-                .foregroundColor(.primary)
-                .padding(.leading, 24)
+            HStack {
+                Text("TODAY")
+                    .font(.headline)
+                    .bold()
+                    .foregroundColor(.primary)
+                Spacer()
+                if let attribution = viewModel.weatherAttribution {
+                    Link(destination: attribution.legalPageURL) {
+                        AsyncImage(url: attribution.combinedMarkLightURL) { image in
+                            image.resizable().scaledToFit()
+                        } placeholder: {
+                            EmptyView()
+                        }
+                        .frame(height: 12)
+                    }
+                }
+            }
+            .padding(.horizontal, 24)
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
                     ForEach(dayStats) { item in

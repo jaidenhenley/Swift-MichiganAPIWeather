@@ -16,7 +16,7 @@ struct WeatherForecastRow: View {
         VStack(alignment: .leading, spacing: 0) {
             ScrollView(.horizontal) {
                 HStack(spacing: 25) {
-                    ForEach(viewModel.hourForecast.enumerated(), id: \.offset) {index, hour in
+                    ForEach(Array(viewModel.hourForecast.enumerated()), id: \.offset) { index, hour in
                         HourColumn(hour: hour, label: index == 0 ? "Now" : hour.time)
                     }
                 }

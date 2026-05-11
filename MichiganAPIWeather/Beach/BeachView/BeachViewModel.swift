@@ -9,6 +9,7 @@ import Combine
 import CoreLocation
 import Foundation
 import SwiftUI
+import WeatherKit
 
 // MARK: - View Model
 
@@ -48,6 +49,7 @@ class BeachViewModel {
     var buoyData: BuoyData?
     var waterQuality: WaterQuality?
     var holiday: Bool = false
+    var weatherAttribution: WeatherAttribution?
     
     // Search Filtering
     var searchText: String = ""
@@ -156,6 +158,8 @@ class BeachViewModel {
         // Await both
         let response = await backendResult
         await weatherDone
+        await weatherKitService.loadAttribution()
+        weatherAttribution = weatherKitService.attribution
 
         // Apply backend data
         if let response {

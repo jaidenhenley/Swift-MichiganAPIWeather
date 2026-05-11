@@ -195,68 +195,161 @@ struct CoastCastWidgetView: View {
 
     private var smallView: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text(entry.beachName)
-                .bold()
-                .font(.caption)
+            Text(shortBeachName)
+                .font(.system(size: 16, weight: .black, design: .rounded))
                 .lineLimit(1)
-            Text("💧 \(entry.waterTemp)")
-                .font(.caption)
-            Text("👥 \(entry.crowdLevel)")
-                .font(.caption)
-            Text("☀️ UV \(entry.uvIndex)")
-                .font(.caption)
+                .minimumScaleFactor(0.65)
+                .foregroundStyle(Color(red: 0.00, green: 0.38, blue: 0.45))
+                .frame(height: 19, alignment: .bottom)
+
+            HStack(spacing: 8) {
+                WidgetSmallTempCard(label: "AIR", value: entry.airTemp)
+                WidgetSmallTempCard(label: "WATER", value: entry.waterTemp)
+            }
+
+            VStack(alignment: .leading, spacing: 5) {
+                HStack(spacing: 6) {
+                    Image(systemName: "person.3.fill")
+                        .font(.system(size: 12, weight: .bold))
+                    Text(entry.crowdLevel.uppercased())
+                        .font(.system(size: 10, weight: .heavy))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.65)
+                }
+                .foregroundStyle(Color(red: 0.00, green: 0.38, blue: 0.45))
+
+                WidgetSmallCrowdBar(level: entry.crowdLevel)
+            }
+            .padding(.horizontal, 8)
+            .padding(.vertical, 6)
+            .background(Color.white.opacity(0.18), in: RoundedRectangle(cornerRadius: 14))
+
+            Label("UV \(entry.uvIndex)", systemImage: "sun.max.fill")
+                .font(.system(size: 11, weight: .bold))
+                .foregroundStyle(Color(red: 0.00, green: 0.38, blue: 0.45))
+                .labelStyle(.titleAndIcon)
         }
-        .padding()
-        .containerBackground(.teal.opacity(0.2), for: .widget)
+        .padding(.horizontal, 14)
+        .padding(.top, 14)
+        .padding(.bottom, 18)
+        .containerBackground(
+            LinearGradient(
+                colors: [
+                    Color(red: 0.92, green: 0.82, blue: 0.04),
+                    Color(red: 0.74, green: 0.84, blue: 0.82)
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            ),
+            for: .widget
+        )
+    }
+
+    private var shortBeachName: String {
+        entry.beachName
+            .replacingOccurrences(of: " State Park", with: "")
+            .replacingOccurrences(of: " National Lakeshore", with: "")
+            .replacingOccurrences(of: " County Park", with: "")
+            .replacingOccurrences(of: " Beach", with: "")
     }
 
     private var mediumView: some View {
-        HStack(spacing: 10) {
-            VStack(alignment: .leading, spacing: 6) {
+        HStack(alignment: .top, spacing: 13) {
+            VStack(alignment: .leading, spacing: 8) {
                 Image(entry.imageName)
                     .resizable()
                     .scaledToFill()
-                    .frame(height: 72)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                    
+                    .frame(width: 124, height: 88)
+                    .clipped()
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
 
-                Text(entry.beachName)
-                    .font(.system(.subheadline, weight: .heavy))
-                    .foregroundStyle(Color(red: 0.1, green: 0.35, blue: 0.35))
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.8)
+                WidgetBeachNameText(entry.beachName)
+                    .frame(width: 124, alignment: .leading)
             }
-            .frame(width: 110)
+            .frame(width: 124)
 
-            VStack(spacing: 8) {
-                HStack(spacing: 6) {
+            VStack(alignment: .leading, spacing: 10) {
+                HStack(spacing: 10) {
                     WidgetTempCard(label: "AIR TEMP", value: entry.airTemp)
                     WidgetTempCard(label: "WATER TEMP", value: entry.waterTemp)
                 }
 
-                HStack(spacing: 4) {
-                    Image(systemName: "person.3.fill")
-                        .font(.system(size: 11))
-                    Text("CROWD METER")
-                        .font(.system(size: 11, weight: .bold))
+                VStack(alignment: .leading, spacing: 7) {
+                    WidgetCrowdHeader()
+                    WidgetCrowdBar(level: entry.crowdLevel)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .foregroundStyle(Color(red: 0.15, green: 0.35, blue: 0.35))
-
-                WidgetCrowdBar(level: entry.crowdLevel)
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .padding(12)
+        .padding(.horizontal, 18)
+        .padding(.vertical, 14)
         .containerBackground(
             LinearGradient(
                 colors: [
-                    Color(red: 0.65, green: 0.82, blue: 0.80),
-                    Color(red: 0.82, green: 0.85, blue: 0.60)
+                    Color(red: 0.92, green: 0.82, blue: 0.04),
+                    Color(red: 0.74, green: 0.84, blue: 0.82)
                 ],
-                startPoint: .leading,
-                endPoint: .trailing
+                startPoint: .top,
+                endPoint: .bottom
             ),
             for: .widget
+        )
+    }
+}
+
+private struct WidgetBeachNameText: View {
+    let name: String
+
+    init(_ name: String) {
+        self.name = name
+    }
+
+    var body: some View {
+        Text(shortName)
+            .font(.system(size: 20, weight: .black, design: .rounded))
+            .lineLimit(1)
+            .minimumScaleFactor(0.6)
+            .foregroundStyle(.white)
+            .shadow(color: .white, radius: 0, x: 0, y: 1)
+            .shadow(color: .white, radius: 0, x: 1, y: 0)
+            .shadow(color: Color(red: 0.00, green: 0.42, blue: 0.45), radius: 0, x: -1.3, y: 0)
+            .shadow(color: Color(red: 0.00, green: 0.42, blue: 0.45), radius: 0, x: 1.3, y: 0)
+            .shadow(color: Color(red: 0.00, green: 0.42, blue: 0.45), radius: 0, x: 0, y: -1.3)
+            .shadow(color: Color(red: 0.00, green: 0.42, blue: 0.45), radius: 0, x: 0, y: 1.3)
+    }
+
+    private var shortName: String {
+        name
+            .replacingOccurrences(of: " State Park", with: "")
+            .replacingOccurrences(of: " National Lakeshore", with: "")
+            .replacingOccurrences(of: " County Park", with: "")
+            .replacingOccurrences(of: " Beach", with: "")
+    }
+}
+
+private struct WidgetSmallTempCard: View {
+    let label: String
+    let value: String
+
+    var body: some View {
+        VStack(spacing: 3) {
+            Text(label)
+                .font(.system(size: 10, weight: .black))
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+                .foregroundStyle(Color(red: 0.00, green: 0.38, blue: 0.45))
+
+            Text(value)
+                .font(.system(size: 23, weight: .black))
+                .lineLimit(1)
+                .minimumScaleFactor(0.55)
+                .foregroundStyle(.black)
+        }
+        .frame(maxWidth: .infinity, minHeight: 52)
+        .background(Color.white.opacity(0.28), in: RoundedRectangle(cornerRadius: 18))
+        .overlay(
+            RoundedRectangle(cornerRadius: 18)
+                .stroke(Color(red: 0.00, green: 0.43, blue: 0.48).opacity(0.55), lineWidth: 1)
         )
     }
 }
@@ -266,17 +359,67 @@ private struct WidgetTempCard: View {
     let value: String
 
     var body: some View {
-        VStack(spacing: 2) {
+        VStack(spacing: 7) {
             Text(label)
-                .font(.system(size: 9, weight: .bold))
-                .foregroundStyle(Color(red: 0.25, green: 0.50, blue: 0.50))
+                .font(.system(size: 11, weight: .bold))
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+                .foregroundStyle(Color(red: 0.00, green: 0.38, blue: 0.45))
+
             Text(value)
-                .font(.system(size: 24, weight: .bold))
-                .foregroundStyle(Color(red: 0.1, green: 0.35, blue: 0.35))
+                .font(.system(size: 29, weight: .black))
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+                .foregroundStyle(.black)
         }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 10)
-        .background(.white.opacity(0.45), in: RoundedRectangle(cornerRadius: 10))
+        .frame(width: 72, height: 72)
+        .padding(.horizontal, 4)
+        .padding(.vertical, 3)
+        .background(Color(red: 0.75, green: 0.86, blue: 0.74).opacity(0.58), in: RoundedRectangle(cornerRadius: 21))
+        .overlay(
+            RoundedRectangle(cornerRadius: 21)
+                .stroke(Color(red: 0.00, green: 0.43, blue: 0.48).opacity(0.55), lineWidth: 1)
+        )
+    }
+}
+
+private struct WidgetCrowdHeader: View {
+    var body: some View {
+        HStack(spacing: 8) {
+            Image(systemName: "person.3.fill")
+                .font(.system(size: 20, weight: .bold))
+            Text("CROWD METER")
+                .font(.system(size: 18, weight: .heavy))
+                .lineLimit(1)
+                .minimumScaleFactor(0.55)
+        }
+        .foregroundStyle(Color(red: 0.00, green: 0.38, blue: 0.45))
+        .frame(maxWidth: .infinity, minHeight: 26, alignment: .leading)
+        .padding(.horizontal, 5)
+        .background(Color(red: 0.69, green: 0.84, blue: 0.85).opacity(0.72))
+    }
+}
+
+private struct WidgetSmallCrowdBar: View {
+    let level: String
+
+    private var filledSegments: Int {
+        switch level.lowercased() {
+        case "low", "not busy": return 1
+        case "moderate": return 2
+        case "high", "busy": return 5
+        default: return 0
+        }
+    }
+
+    var body: some View {
+        HStack(spacing: 5) {
+            ForEach(0..<6, id: \.self) { index in
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(index < filledSegments ? Color(red: 0.18, green: 0.82, blue: 0.36) : Color(red: 0.82, green: 0.86, blue: 0.82).opacity(0.7))
+            }
+        }
+        .frame(height: 13)
     }
 }
 
@@ -285,9 +428,9 @@ private struct WidgetCrowdBar: View {
 
     private var filledSegments: Int {
         switch level.lowercased() {
-        case "low", "not busy": return 2
-        case "moderate": return 4
-        case "high", "busy": return 6
+        case "low", "not busy": return 1
+        case "moderate": return 2
+        case "high", "busy": return 5
         default: return 0
         }
     }
@@ -302,13 +445,18 @@ private struct WidgetCrowdBar: View {
     }
 
     var body: some View {
-        HStack(spacing: 4) {
+        HStack(spacing: 5) {
             ForEach(0..<6, id: \.self) { index in
-                RoundedRectangle(cornerRadius: 3)
-                    .fill(index < filledSegments ? barColor : Color(red: 0.75, green: 0.80, blue: 0.75).opacity(0.5))
-                    .frame(height: 12)
+                Rectangle()
+                    .fill(index < filledSegments ? barColor : Color(red: 0.82, green: 0.86, blue: 0.82).opacity(0.75))
             }
         }
+        .frame(height: 22)
+        .clipShape(RoundedRectangle(cornerRadius: 6))
+        .overlay(
+            RoundedRectangle(cornerRadius: 6)
+                .stroke(Color(red: 0.00, green: 0.43, blue: 0.48).opacity(0.6), lineWidth: 1)
+        )
     }
 }
 
@@ -322,5 +470,6 @@ struct CoastCastWidget: Widget {
         .configurationDisplayName("Beach Conditions")
         .description("See current conditions at your favorite Michigan beach.")
         .supportedFamilies([.systemSmall, .systemMedium])
+        .contentMarginsDisabled()
     }
 }

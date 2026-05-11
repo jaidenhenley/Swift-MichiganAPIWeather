@@ -8,12 +8,16 @@
 import SwiftUI
 
 struct LocationOnboardingView: View {
-    let gradient1 = Color(hex: "E5EFF4")
-    let gradient2 = Color(hex: "C7DBE6")
-    let subtitleColor = Color(hex: "585858")
+    @Environment(\.colorScheme) var colorScheme
+    var isDark: Bool { colorScheme == .dark }
+
+    var gradient1: Color { isDark ? Color(hex: "005E6A") : Color(hex: "E5EFF4") }
+    var gradient2: Color { isDark ? Color(hex: "182C37") : Color(hex: "C7DBE6") }
+    var subtitleColor: Color { isDark ? Color(hex: "CCCCCC") : Color(hex: "585858")}
     
-    let button1 = Color(hex: "0097A3")
-    let button2 = Color(hex: "005E6A")
+    var button1: Color { isDark ? Color(hex: "C7DBE6") : Color(hex: "0097A3") }
+    var button2: Color { isDark ? Color(hex: "EFCA08") : Color(hex: "005E6A") }
+    
     @State private var currentPage = 0
 
     
@@ -57,7 +61,7 @@ struct LocationOnboardingView: View {
                            .frame(maxWidth: .infinity)
                            .padding(.vertical, 24)
                            .background(LinearGradient(colors: [button1, button2], startPoint: .leading, endPoint: .trailing))
-                           .foregroundStyle(.white)
+                           .foregroundStyle(isDark ? .black : .white)
                            .clipShape(RoundedRectangle(cornerRadius: 14))
                            .font(.subheadline)
                            .fontWeight(.semibold)
@@ -70,13 +74,14 @@ struct LocationOnboardingView: View {
 
        var pageOne: some View {
            VStack {
-               Image(.coastCastHeadline)
+               Image(isDark ? .coastCastHeadlineLight : .coastCastHeadline)
                Spacer()
                Image(.onboarding1)
                    .resizable()
                    .scaledToFit()
+                   .frame(width: 341, height: 336)
                Text("Discover,\nExplore, Relax")
-                   .foregroundStyle(.customWhite)
+                   .foregroundStyle(.customBlack)
                    .font(.system(size: 42))
                    .fontDesign(.rounded)
                    .bold()
@@ -88,18 +93,22 @@ struct LocationOnboardingView: View {
                    .font(.headline)
                    .fontDesign(.rounded)
                    .fontWeight(.semibold)
+               Spacer()
+
            }
        }
 
        var pageTwo: some View {
            VStack {
-               Image(.coastCastHeadline)
+               Image(isDark ? .coastCastHeadlineLight : .coastCastHeadline)
                Spacer()
-               Image(.onboarding2)
+               Image(isDark ? .onboarding2Dark : .onboarding2)
                    .resizable()
                    .scaledToFit()
+                   .frame(width: 338, height: 325)
+               Spacer()
                Text("Perfect Weather.\nPerfect Waves.")
-                   .foregroundStyle(.customWhite)
+                   .foregroundStyle(.customBlack)
                    .font(.system(size: 42))
                    .fontDesign(.rounded)
                    .bold()
@@ -111,29 +120,35 @@ struct LocationOnboardingView: View {
                    .font(.headline)
                    .fontDesign(.rounded)
                    .fontWeight(.semibold)
+               Spacer()
+
            }
        }
 
        var pageThree: some View {
            VStack {
-               Image(.coastCastHeadline)
+               Image(isDark ? .coastCastHeadlineLight : .coastCastHeadline)
                Spacer()
                Image(.onboarding3)
                    .resizable()
                    .scaledToFit()
+                   .frame(width: 322, height: 321)
+               Spacer()
                Text("Explore Endless\nSummer")
-                   .foregroundStyle(.customWhite)
+                   .foregroundStyle(.customBlack)
                    .font(.system(size: 42))
                    .fontDesign(.rounded)
                    .bold()
                    .multilineTextAlignment(.center)
                    .padding(.bottom, 10)
-               Text("Find new beaches, chase sunny skies,\nand create your next coastal\nadventure")
+               Text("CoastCast uses your location to\noptimize how you find new beaches,\nchase sunny skies, and create your\nnext coastal adventure.")
                    .foregroundStyle(subtitleColor)
                    .multilineTextAlignment(.center)
                    .font(.headline)
                    .fontDesign(.rounded)
                    .fontWeight(.semibold)
+               Spacer()
+
            }
        }
 }

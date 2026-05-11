@@ -176,10 +176,5 @@ struct DashboardView: View {
         }
         .animation(.snappy, value: viewModel.selectedKeywords)
         .animation(.easeInOut, value: viewModel.isSearching)
-        .onAppear {
-            print("[Location] Auth status: \(locationManager.authStatus)")
-            locationManager.requestLocation()
-            
-        }
     }
 }

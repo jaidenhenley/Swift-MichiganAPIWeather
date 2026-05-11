@@ -79,13 +79,13 @@ struct DailyForecastRow: View {
             .foregroundColor(.primary)
     }
     
-    private var rowBackground: some View {
+    var rowBackground: some View {
         let isDark = colorScheme == .dark
         
         // Adaptive "Golden" Palette
-        let goldTop = isDark ? Color(hex: "3D3000") : Color(hex: "F1F2F3")
-        let goldMid = isDark ? Color(hex: "2A2100") : Color(hex: "FEFCEC")
-        let goldBottom = isDark ? Color(hex: "1A1A1A") : Color(hex: "D4E3EC")
+        let goldTop = isDark ? Color(hex: "617278") : Color(hex: "F1F2F3")
+        let goldMid = isDark ? Color(hex: "D39F84") : Color(hex: "FEFCEC")
+        let goldBottom = isDark ? Color(hex: "617278") : Color(hex: "D4E3EC")
         
         // Adaptive Standard Palette
         let standardFill = isDark ? Color.white.opacity(0.05) : Color.gray.opacity(0.1)
@@ -97,11 +97,11 @@ struct DailyForecastRow: View {
             RoundedRectangle(cornerRadius: 12)
                 .fill(
                     isBestDay ?
-                        LinearGradient(
-                            colors: [goldTop, goldMid, goldBottom],
-                            startPoint: .top,
-                            endPoint: .bottom
-                        ) :
+                    LinearGradient(
+                        colors: [goldTop, goldMid, goldBottom],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    ) :
                         LinearGradient(
                             colors: [standardFill],
                             startPoint: .top,
@@ -112,9 +112,14 @@ struct DailyForecastRow: View {
     }
 
     private var rowOverlay: some View {
-        RoundedRectangle(cornerRadius: 12)
+        
+        let isDark = colorScheme == .dark
+
+        let bestDayBorder = isDark ? Color(hex: "EF7708") : Color(hex: "EFCA08")
+        
+        return RoundedRectangle(cornerRadius: 12)
             .stroke(
-                isBestDay ? Color.yellow.opacity(colorScheme == .dark ? 0.5 : 1.0) : Color.clear,
+                isBestDay ? bestDayBorder : Color.clear,
                 lineWidth: 1.5
             )
     }

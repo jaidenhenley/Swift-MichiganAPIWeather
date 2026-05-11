@@ -114,7 +114,7 @@ struct LocationOnboardingView: View {
                    .bold()
                    .multilineTextAlignment(.center)
                    .padding(.bottom, 10)
-               Text("Let us help you discover the best\nbeaches, track conditions, and\nplan the perfect day")
+               Text("Stay ahead of the forecast and enjoy\nthe beach at it's absolute best.\nDiscover the best in real\ntime.")
                    .foregroundStyle(subtitleColor)
                    .multilineTextAlignment(.center)
                    .font(.headline)

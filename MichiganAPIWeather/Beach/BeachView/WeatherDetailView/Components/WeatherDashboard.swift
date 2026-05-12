@@ -10,6 +10,7 @@ import WeatherKit
 
 struct WeatherDashboard: View {
     @Environment(BeachViewModel.self) var viewModel
+    @Environment(\.colorScheme) var colorScheme
 
     private var dayStats: [WeatherStat] {
         [
@@ -40,7 +41,9 @@ struct WeatherDashboard: View {
                 Spacer()
                 if let attribution = viewModel.weatherAttribution {
                     Link(destination: attribution.legalPageURL) {
-                        AsyncImage(url: attribution.combinedMarkLightURL) { image in
+                        AsyncImage(url: colorScheme == .dark
+                                   ? attribution.combinedMarkDarkURL
+                                   : attribution.combinedMarkLightURL) { image in
                             image.resizable().scaledToFit()
                         } placeholder: {
                             EmptyView()

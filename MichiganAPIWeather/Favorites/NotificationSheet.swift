@@ -63,13 +63,13 @@ struct NotificationSheet: View {
                 showingAlertSheet = false
             }
             .font(.footnote)
-            .foregroundStyle(.blueGreen)
+            .foregroundStyle(.bluegreen1)
             .fontWeight(.bold)
             .padding(.horizontal, 50)
             .padding(.vertical, 16)
             .background(Color.yellow)
             .clipShape(Capsule())
-            .overlay(Capsule().stroke(Color.blueGreen, lineWidth: 1))
+            .overlay(Capsule().stroke(Color.bluegreen1, lineWidth: 1))
             .frame(maxWidth: .infinity, alignment: .center)
             .padding(.bottom, 30)
         }

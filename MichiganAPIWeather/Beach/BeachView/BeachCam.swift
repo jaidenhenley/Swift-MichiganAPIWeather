@@ -68,6 +68,7 @@ struct BeachCamView: View {
             Text("Live Beach Cam")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
+                .padding(.bottom)
         }
         .padding(.top)
     }

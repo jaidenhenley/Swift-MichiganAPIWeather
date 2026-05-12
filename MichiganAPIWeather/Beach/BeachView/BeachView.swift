@@ -89,6 +89,8 @@ struct BeachView: View {
                 .padding(.horizontal)
                 .padding(.top)
                 
+                SouthHavenCamView()
+                
                 BeachHeader(image: beach.images[0])
                     .padding(.horizontal)
                     .padding(.top, 8)

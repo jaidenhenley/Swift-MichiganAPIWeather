@@ -44,6 +44,13 @@ struct FavoritesView: View {
                     BeachListView(beachList: favoriteBeaches, sortByDistance: false, distanceRange: .all, isFavorites: true)
                 }
             }
+            .background(
+                Image(.beachViewBackground)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .accessibilityHidden(true)
+                    .ignoresSafeArea()
+            )
             .navigationTitle("Favorites")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {

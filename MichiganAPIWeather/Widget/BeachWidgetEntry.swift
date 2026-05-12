@@ -11,6 +11,7 @@ import Foundation
 struct BeachWidgetEntry: TimelineEntry {
     let date: Date
     let beachName: String
+    let airTemp: String
     let waterTemp: String
     let crowdLevel: String
     let uvIndex: Int

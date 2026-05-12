@@ -6,6 +6,7 @@ struct BeachProvider: AppIntentTimelineProvider {
         BeachWidgetEntry(
             date: .now,
             beachName: "Grand Haven",
+            airTemp: "70°",
             waterTemp: "52°",
             crowdLevel: "Moderate",
             uvIndex: 5,
@@ -19,6 +20,7 @@ struct BeachProvider: AppIntentTimelineProvider {
         return BeachWidgetEntry(
             date: .now,
             beachName: beach.name,
+            airTemp: "70°",
             waterTemp: "52°",
             crowdLevel: "Moderate",
             uvIndex: 5,
@@ -48,6 +50,7 @@ struct BeachProvider: AppIntentTimelineProvider {
         let entry = BeachWidgetEntry(
             date: .now,
             beachName: beach.name,
+            airTemp: "N/A",
             waterTemp: waterTemp,
             crowdLevel: crowdLevel,
             uvIndex: uvIndex,

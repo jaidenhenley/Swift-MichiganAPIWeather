@@ -193,7 +193,7 @@ struct LocationPromptCard: View {
                 Text("Enable Location")
                     .font(.footnote)
                     .fontWeight(.bold)
-                    .foregroundStyle(.blueGreen)
+                    .foregroundStyle(.bluegreen1)
                     .padding(.horizontal, 14)
                     .padding(.vertical, 10)
                     .background(Color.yellow)

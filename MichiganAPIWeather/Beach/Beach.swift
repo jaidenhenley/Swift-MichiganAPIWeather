@@ -24,6 +24,7 @@ struct Beach: Identifiable {
     let parkType: ParkType
     let isSwimmable: Bool
     let hasCamping: Bool
+    let liveVideoID: String?
     
     var clLocation: CLLocation {
         CLLocation(latitude: coordinates.latitude, longitude: coordinates.longitude)
@@ -101,7 +102,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Detroit River",
                 parkType: .cityBeach,
                 isSwimmable: true,
-                hasCamping: false
+                hasCamping: false,
+                liveVideoID: nil
             ),
             Beach(
                 id: 2,
@@ -120,7 +122,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Michigan",
                 parkType: .statePark,
                 isSwimmable: true,
-                hasCamping: true
+                hasCamping: true,
+                liveVideoID: nil
             ),
             Beach(
                 id: 3,
@@ -139,7 +142,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Michigan",
                 parkType: .statePark,
                 isSwimmable: true,
-                hasCamping: true
+                hasCamping: true,
+                liveVideoID: nil
             ),
             Beach(
                 id: 4,
@@ -158,7 +162,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Michigan",
                 parkType: .nationalPark,
                 isSwimmable: true,
-                hasCamping: true
+                hasCamping: true,
+                liveVideoID: nil
             ),
             Beach(
                 id: 5,
@@ -177,7 +182,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Huron",
                 parkType: .statePark,
                 isSwimmable: true,
-                hasCamping: true
+                hasCamping: true,
+                liveVideoID: nil
             ),
             Beach(
                 id: 6,
@@ -196,7 +202,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Michigan",
                 parkType: .statePark,
                 isSwimmable: true,
-                hasCamping: true
+                hasCamping: true,
+                liveVideoID: nil
             ),
             Beach(
                 id: 7,
@@ -215,7 +222,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Michigan",
                 parkType: .statePark,
                 isSwimmable: true,
-                hasCamping: true
+                hasCamping: true,
+                liveVideoID: nil
             ),
             Beach(
                 id: 8,
@@ -234,7 +242,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Michigan",
                 parkType: .statePark,
                 isSwimmable: true,
-                hasCamping: true
+                hasCamping: true,
+                liveVideoID: nil
             ),
             Beach(
                 id: 9,
@@ -253,7 +262,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Michigan",
                 parkType: .statePark,
                 isSwimmable: true,
-                hasCamping: true
+                hasCamping: true,
+                liveVideoID: nil
             ),
             Beach(
                 id: 10,
@@ -272,7 +282,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Michigan",
                 parkType: .statePark,
                 isSwimmable: true,
-                hasCamping: true
+                hasCamping: true,
+                liveVideoID: nil
             ),
             Beach(
                 id: 11,
@@ -291,7 +302,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Superior",
                 parkType: .nationalPark,
                 isSwimmable: false,
-                hasCamping: true
+                hasCamping: true,
+                liveVideoID: nil
             ),
             Beach(
                 id: 12,
@@ -310,7 +322,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Superior",
                 parkType: .cityBeach,
                 isSwimmable: false,
-                hasCamping: false
+                hasCamping: false,
+                liveVideoID: nil
             ),
             Beach(
                 id: 13,
@@ -329,7 +342,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Huron",
                 parkType: .statePark,
                 isSwimmable: true,
-                hasCamping: true
+                hasCamping: true,
+                liveVideoID: nil
             ),
             Beach(
                 id: 14,
@@ -348,7 +362,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Erie",
                 parkType: .statePark,
                 isSwimmable: true,
-                hasCamping: true
+                hasCamping: true,
+                liveVideoID: nil
             ),
             Beach(
                 id: 15,
@@ -367,7 +382,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Michigan",
                 parkType: .statePark,
                 isSwimmable: true,
-                hasCamping: true
+                hasCamping: true,
+                liveVideoID: nil
             ),
             Beach(
                 id: 16,
@@ -386,7 +402,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Michigan",
                 parkType: .statePark,
                 isSwimmable: true,
-                hasCamping: false
+                hasCamping: false,
+                liveVideoID: nil
             ),
             Beach(
                 id: 17,
@@ -405,7 +422,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Michigan",
                 parkType: .cityBeach,
                 isSwimmable: true,
-                hasCamping: false
+                hasCamping: false,
+                liveVideoID: "G-tlKF32_p4"
             ),
             Beach(
                 id: 18,
@@ -424,7 +442,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Huron",
                 parkType: .statePark,
                 isSwimmable: true,
-                hasCamping: true
+                hasCamping: true,
+                liveVideoID: nil
             ),
             Beach(
                 id: 19,
@@ -443,7 +462,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Huron",
                 parkType: .statePark,
                 isSwimmable: true,
-                hasCamping: true
+                hasCamping: true,
+                liveVideoID: nil
             ),
             Beach(
                 id: 20,
@@ -462,7 +482,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Superior",
                 parkType: .statePark,
                 isSwimmable: true,
-                hasCamping: true
+                hasCamping: true,
+                liveVideoID: nil
             ),
             Beach(
                 id: 21,
@@ -481,7 +502,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Superior",
                 parkType: .statePark,
                 isSwimmable: true,
-                hasCamping: true
+                hasCamping: true,
+                liveVideoID: nil
             ),
             Beach(
                 id: 22,
@@ -500,7 +522,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Michigan",
                 parkType: .statePark,
                 isSwimmable: true,
-                hasCamping: true
+                hasCamping: true,
+                liveVideoID: nil
             ),
             Beach(
                 id: 23,
@@ -519,7 +542,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Michigan",
                 parkType: .wildernessArea,
                 isSwimmable: true,
-                hasCamping: true
+                hasCamping: true,
+                liveVideoID: nil
             ),
             Beach(
                 id: 24,
@@ -538,7 +562,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Huron",
                 parkType: .cityBeach,
                 isSwimmable: true,
-                hasCamping: false
+                hasCamping: false,
+                liveVideoID: nil
             ),
             Beach(
                 id: 25,
@@ -557,7 +582,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Superior",
                 parkType: .statePark,
                 isSwimmable: true,
-                hasCamping: true
+                hasCamping: true,
+                liveVideoID: nil
             ),
             Beach(
                 id: 26,
@@ -576,7 +602,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Superior",
                 parkType: .cityBeach,
                 isSwimmable: true,
-                hasCamping: false
+                hasCamping: false,
+                liveVideoID: nil
             ),
             Beach(
                 id: 27,
@@ -595,7 +622,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Michigan",
                 parkType: .cityBeach,
                 isSwimmable: true,
-                hasCamping: false
+                hasCamping: false,
+                liveVideoID: nil
             ),
             Beach(
                 id: 28,
@@ -614,7 +642,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Michigan",
                 parkType: .countyPark,
                 isSwimmable: true,
-                hasCamping: false
+                hasCamping: false,
+                liveVideoID: nil
             ),
             Beach(
                 id: 29,
@@ -633,7 +662,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Michigan",
                 parkType: .cityBeach,
                 isSwimmable: true,
-                hasCamping: false
+                hasCamping: false,
+                liveVideoID: nil
             ),
             Beach(
                 id: 30,
@@ -652,7 +682,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Michigan",
                 parkType: .countyPark,
                 isSwimmable: true,
-                hasCamping: false
+                hasCamping: false,
+                liveVideoID: nil
             ),
             Beach(
                 id: 31,
@@ -671,7 +702,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Michigan",
                 parkType: .countyPark,
                 isSwimmable: true,
-                hasCamping: false
+                hasCamping: false,
+                liveVideoID: nil
             ),
             Beach(
                 id: 32,
@@ -690,7 +722,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Huron",
                 parkType: .countyPark,
                 isSwimmable: true,
-                hasCamping: true
+                hasCamping: true,
+                liveVideoID: nil
             ),
             Beach(
                 id: 33,
@@ -709,7 +742,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Huron",
                 parkType: .cityBeach,
                 isSwimmable: true,
-                hasCamping: false
+                hasCamping: false,
+                liveVideoID: nil
             ),
             Beach(
                 id: 34,
@@ -728,7 +762,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Huron",
                 parkType: .cityBeach,
                 isSwimmable: true,
-                hasCamping: false
+                hasCamping: false,
+                liveVideoID: nil
             ),
             Beach(
                 id: 35,
@@ -747,7 +782,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Superior",
                 parkType: .cityBeach,
                 isSwimmable: false,
-                hasCamping: false
+                hasCamping: false,
+                liveVideoID: nil
             ),
             Beach(
                 id: 36,
@@ -766,7 +802,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Superior",
                 parkType: .cityBeach,
                 isSwimmable: true,
-                hasCamping: false
+                hasCamping: false,
+                liveVideoID: nil
             ),
             Beach(
                 id: 37,
@@ -785,7 +822,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Superior",
                 parkType: .wildernessArea,
                 isSwimmable: false,
-                hasCamping: false
+                hasCamping: false,
+                liveVideoID: nil
             ),
             Beach(
                 id: 38,
@@ -804,7 +842,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Superior",
                 parkType: .cityBeach,
                 isSwimmable: true,
-                hasCamping: false
+                hasCamping: false,
+                liveVideoID: nil
             ),
             Beach(
                 id: 39,
@@ -823,7 +862,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Huron",
                 parkType: .statePark,
                 isSwimmable: true,
-                hasCamping: true
+                hasCamping: true,
+                liveVideoID: nil
             ),
             Beach(
                 id: 40,
@@ -842,7 +882,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Huron",
                 parkType: .statePark,
                 isSwimmable: true,
-                hasCamping: true
+                hasCamping: true,
+                liveVideoID: nil
             ),
             Beach(
                 id: 41,
@@ -861,7 +902,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Huron",
                 parkType: .statePark,
                 isSwimmable: true,
-                hasCamping: true
+                hasCamping: true,
+                liveVideoID: "13j5iZkMpbE"
             ),
             Beach(
                 id: 42,
@@ -880,7 +922,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Huron",
                 parkType: .statePark,
                 isSwimmable: true,
-                hasCamping: true
+                hasCamping: true,
+                liveVideoID: nil
             ),
             Beach(
                 id: 43,
@@ -899,7 +942,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Michigan",
                 parkType: .statePark,
                 isSwimmable: true,
-                hasCamping: true
+                hasCamping: true,
+                liveVideoID: nil
             ),
             Beach(
                 id: 44,
@@ -918,7 +962,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Michigan",
                 parkType: .statePark,
                 isSwimmable: true,
-                hasCamping: true
+                hasCamping: true,
+                liveVideoID: nil
             ),
             Beach(
                 id: 45,
@@ -937,7 +982,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Michigan",
                 parkType: .nationalPark,
                 isSwimmable: true,
-                hasCamping: false
+                hasCamping: false,
+                liveVideoID: nil
             ),
             Beach(
                 id: 46,
@@ -956,7 +1002,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Michigan",
                 parkType: .cityBeach,
                 isSwimmable: true,
-                hasCamping: false
+                hasCamping: false,
+                liveVideoID: nil
             ),
             Beach(
                 id: 47,
@@ -975,7 +1022,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Michigan",
                 parkType: .cityBeach,
                 isSwimmable: true,
-                hasCamping: false
+                hasCamping: false,
+                liveVideoID: nil
             ),
             Beach(
                 id: 48,
@@ -994,7 +1042,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Michigan",
                 parkType: .cityBeach,
                 isSwimmable: true,
-                hasCamping: false
+                hasCamping: false,
+                liveVideoID: nil
             ),
             Beach(
                 id: 49,
@@ -1013,7 +1062,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Michigan",
                 parkType: .cityBeach,
                 isSwimmable: true,
-                hasCamping: false
+                hasCamping: false,
+                liveVideoID: nil
             ),
             Beach(
                 id: 50,
@@ -1032,7 +1082,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Michigan",
                 parkType: .cityBeach,
                 isSwimmable: true,
-                hasCamping: false
+                hasCamping: false,
+                liveVideoID: nil
             ),
             Beach(
                 id: 51,
@@ -1051,7 +1102,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Michigan",
                 parkType: .cityBeach,
                 isSwimmable: true,
-                hasCamping: false
+                hasCamping: false,
+                liveVideoID: nil
             ),
             Beach(
                 id: 52,
@@ -1070,7 +1122,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Michigan",
                 parkType: .cityBeach,
                 isSwimmable: true,
-                hasCamping: false
+                hasCamping: false,
+                liveVideoID: nil
             ),
             Beach(
                 id: 53,
@@ -1089,7 +1142,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Michigan",
                 parkType: .cityBeach,
                 isSwimmable: true,
-                hasCamping: false
+                hasCamping: false,
+                liveVideoID: nil
             ),
             Beach(
                 id: 54,
@@ -1108,7 +1162,8 @@ struct Beach: Identifiable {
                 bodyOfWater: "Lake Erie",
                 parkType: .metropark,
                 isSwimmable: true,
-                hasCamping: false
+                hasCamping: false,
+                liveVideoID: nil
             ),
         ]
 }

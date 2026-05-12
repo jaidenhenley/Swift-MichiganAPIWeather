@@ -89,7 +89,9 @@ struct BeachView: View {
                 .padding(.horizontal)
                 .padding(.top)
                 
-                SouthHavenCamView()
+                if let videoID = beach.liveVideoID {
+                    BeachCamView(videoID: videoID)
+                }
                 
                 BeachHeader(image: beach.images[0])
                     .padding(.horizontal)

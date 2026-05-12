@@ -62,13 +62,16 @@ class BeachViewModel {
         // Text Search
         if !searchText.isEmpty {
             let query = searchText.lowercased()
-            results = results.filter{ beach in
-                beach.beachName.lowercased().contains(query) ||
-                beach.shortDescription.lowercased().contains(query) ||
-                beach.keywords.contains { $0.lowercased().contains(query) }
+            results = results.filter {
+                $0.beachName.lowercased().contains(query) ||
+                $0.keywords.contains { $0.lowercased().contains(query) }
+            }
+            .sorted { a, b in
+                let aTitle = a.beachName.lowercased().contains(query)
+                let bTitle = b.beachName.lowercased().contains(query)
+                return aTitle && !bTitle
             }
         }
-        
         if filterSwimmable {
             results = results.filter { $0.isSwimmable }
         }

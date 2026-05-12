@@ -11,6 +11,7 @@ import WeatherKit
 struct BeachView: View {
     @Environment(BeachViewModel.self) var viewModel
     @Environment(\.dismiss) var dismiss
+    @Environment(\.colorScheme) var colorScheme
     @State private var selectedImageIndex = 0
     @State private var showCrowdMeterAlert: Bool = false
     let beach: Beach
@@ -98,7 +99,9 @@ struct BeachView: View {
 
                 if let attribution = viewModel.weatherAttribution {
                     Link(destination: attribution.legalPageURL) {
-                        AsyncImage(url: attribution.combinedMarkLightURL) { image in
+                        AsyncImage(url: colorScheme == .dark
+                                   ? attribution.combinedMarkDarkURL
+                                   : attribution.combinedMarkLightURL) { image in
                             image.resizable().scaledToFit()
                         } placeholder: {
                             EmptyView()

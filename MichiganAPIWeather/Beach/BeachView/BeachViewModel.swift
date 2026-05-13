@@ -59,41 +59,38 @@ class BeachViewModel {
     var filteredBeaches: [Beach] {
         var results = Beach.allBeaches
 
-        // Text Search
         if !searchText.isEmpty {
             let query = searchText.lowercased()
             results = results.filter {
                 $0.beachName.lowercased().contains(query) ||
                 $0.keywords.contains { $0.lowercased().contains(query) }
             }
-            .sorted { a, b in
-                let aTitle = a.beachName.lowercased().contains(query)
-                let bTitle = b.beachName.lowercased().contains(query)
-                return aTitle && !bTitle
-            }
         }
+
         if filterSwimmable {
             results = results.filter { $0.isSwimmable }
         }
-        if !selectedKeywords.isEmpty {
-            results = results.filter { beach in
-                // park type filtering via keywords
-                let parkTypeMatch = selectedKeywords.intersection(["state park", "national park", "city beach", "county park"])
-                if !parkTypeMatch.isEmpty {
-                    let beachParkKeyword = beach.parkType.rawValue.replacingOccurrences(of: "_", with: " ")
-                    if !parkTypeMatch.contains(beachParkKeyword) { return false }
-                }
-                // activity keyword filtering
-                let activityKeywords = selectedKeywords.subtracting(["state park", "national park", "city beach", "county park"])
-                if activityKeywords.contains("camping") && !beach.hasCamping {
-                    return false
-                }
 
-                let searchableActivityKeywords = activityKeywords.subtracting(["camping"])
-                if !searchableActivityKeywords.isEmpty {
-                    return !searchableActivityKeywords.isDisjoint(with: Set(beach.keywords))
-                }
-                return true
+        if selectedKeywords.contains("state park") {
+            results = results.filter { $0.parkType == .statePark }
+        }
+        if selectedKeywords.contains("national park") {
+            results = results.filter { $0.parkType == .nationalPark }
+        }
+        if selectedKeywords.contains("city beach") {
+            results = results.filter { $0.parkType == .cityBeach }
+        }
+        if selectedKeywords.contains("county park") {
+            results = results.filter { $0.parkType == .countyPark }
+        }
+        if selectedKeywords.contains("camping") {
+            results = results.filter { $0.hasCamping }
+        }
+
+        let activityKeywords = selectedKeywords.subtracting(["state park", "national park", "city beach", "county park", "camping"])
+        if !activityKeywords.isEmpty {
+            results = results.filter { beach in
+                activityKeywords.contains { beach.keywords.contains($0) }
             }
         }
 
